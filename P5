@@ -1,0 +1,5 @@
+P5. How to determine whether the pose can be changed to minimize instability due to the upcoming 
+   force change?
+===============================================================================================
+The solution to this problem will only be devised once we know the math of P6 (i.e. How to change
+pose to minimize instability). Once we know how to do it we will know whether or not it can be done!

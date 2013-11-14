@@ -1,0 +1,22 @@
+How to predict a large force is about to be applied to the robot?
+=================================================================
+This force may be either:
+I) Due to an action to be initiated by the robot e.g. robot is about to lift a heavy object
+II) Due to action to be initiated by an external agent e.g. some agents is going to put some
+heavy object in the arms of the robot
+
+In Case I:
+----------
+The robot has to assess his future actions in terms of force interactions in order to determine
+whether a force change is about to occur (P2.1 How to determine this?)
+
+In Case II:
+-----------
+The robot needs to perceive the intentions of the external agent to predict the future force
+interactions (P2.2 How to do this?). This is obviously a very hard problem!
+
+List of Subproblems:
+====================
+P2.1 How to determine, based on an intended future action, what is going to be the change in 
+external force?
+P2.2 How to perceive whether an external agent intends to apply a force?
