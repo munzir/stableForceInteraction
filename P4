@@ -1,3 +1,8 @@
 P4. How to control force change?
 ================================
-Force control algorithms. Research to be done. Experiments to be performed.
+Based on the reading so far, the following steps are going to be employed for force control:
+1. Derivation of the full dynamic model of the robot (MICR ch 9)
+2. Calculation of a minimum number of inertial parameters through emilimination and grouping (MICR ch 9)
+3. Performing experiments to find out the inertial parameters of the robot (using trajectories,
+collecting data, using best-fit approximations etc.) (MICR ch 12)
+4. Use feedback linearization to achieve force control (MICR ch 14-15)
