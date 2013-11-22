@@ -50,12 +50,12 @@ w7 = [0; 0; -dq7] + Tf_7from6(1:3,1:3)*w6;
 
 V0 = [0; 0; 0];
 V1 = Tf_1from0(1:3,1:3)*(V0 + cross(w0, -Tf_1from0(1:3,1:3)'*Tf_1from0(1:3,4)));
-V2 = Tf_2from1(1:3,1:3)*(V0 + cross(w0, -Tf_2from1(1:3,1:3)'*Tf_2from1(1:3,4)));
-V3 = Tf_3from2(1:3,1:3)*(V0 + cross(w0, -Tf_3from2(1:3,1:3)'*Tf_3from2(1:3,4)));
-V4 = Tf_4from3(1:3,1:3)*(V0 + cross(w0, -Tf_4from3(1:3,1:3)'*Tf_4from3(1:3,4)));
-V5 = Tf_5from4(1:3,1:3)*(V0 + cross(w0, -Tf_5from4(1:3,1:3)'*Tf_5from4(1:3,4)));
-V6 = Tf_6from5(1:3,1:3)*(V0 + cross(w0, -Tf_6from5(1:3,1:3)'*Tf_6from5(1:3,4)));
-V7 = Tf_7from6(1:3,1:3)*(V0 + cross(w0, -Tf_7from6(1:3,1:3)'*Tf_7from6(1:3,4)));
+V2 = Tf_2from1(1:3,1:3)*(V1 + cross(w1, -Tf_2from1(1:3,1:3)'*Tf_2from1(1:3,4)));
+V3 = Tf_3from2(1:3,1:3)*(V2 + cross(w2, -Tf_3from2(1:3,1:3)'*Tf_3from2(1:3,4)));
+V4 = Tf_4from3(1:3,1:3)*(V3 + cross(w3, -Tf_4from3(1:3,1:3)'*Tf_4from3(1:3,4)));
+V5 = Tf_5from4(1:3,1:3)*(V4 + cross(w4, -Tf_5from4(1:3,1:3)'*Tf_5from4(1:3,4)));
+V6 = Tf_6from5(1:3,1:3)*(V5 + cross(w5, -Tf_6from5(1:3,1:3)'*Tf_6from5(1:3,4)));
+V7 = Tf_7from6(1:3,1:3)*(V6 + cross(w6, -Tf_7from6(1:3,1:3)'*Tf_7from6(1:3,4)));
 
 E1 = (w1'*J1*w1 + m1*(V1'*V1) + 2*MS1'*cross(V1, w1))/2;
 E2 = (w2'*J2*w2 + m2*(V2'*V2) + 2*MS2'*cross(V2, w2))/2;
