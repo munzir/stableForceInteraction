@@ -43,145 +43,82 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The program to use to edit the cache.
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl"
+CMAKE_SOURCE_DIR = /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build"
+CMAKE_BINARY_DIR = /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/00-visualizePath.dir
+# Target rules for target CMakeFiles/01-gatherData.dir
 
 # All Build rule for target.
-CMakeFiles/00-visualizePath.dir/all:
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/depend
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles"  1
-	@echo "Built target 00-visualizePath"
-.PHONY : CMakeFiles/00-visualizePath.dir/all
+CMakeFiles/01-gatherData.dir/all:
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/depend
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  1
+	@echo "Built target 01-gatherData"
+.PHONY : CMakeFiles/01-gatherData.dir/all
 
 # Include target in all.
-all: CMakeFiles/00-visualizePath.dir/all
+all: CMakeFiles/01-gatherData.dir/all
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/00-visualizePath.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 1
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/00-visualizePath.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 0
-.PHONY : CMakeFiles/00-visualizePath.dir/rule
+CMakeFiles/01-gatherData.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-gatherData.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/01-gatherData.dir/rule
 
 # Convenience name for target.
-00-visualizePath: CMakeFiles/00-visualizePath.dir/rule
-.PHONY : 00-visualizePath
+01-gatherData: CMakeFiles/01-gatherData.dir/rule
+.PHONY : 01-gatherData
 
 # clean rule for target.
-CMakeFiles/00-visualizePath.dir/clean:
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/clean
-.PHONY : CMakeFiles/00-visualizePath.dir/clean
+CMakeFiles/01-gatherData.dir/clean:
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/clean
+.PHONY : CMakeFiles/01-gatherData.dir/clean
 
 # clean rule for target.
-clean: CMakeFiles/00-visualizePath.dir/clean
+clean: CMakeFiles/01-gatherData.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/00-visualizePath.run.dir
+# Target rules for target CMakeFiles/01-gatherData.run.dir
 
 # All Build rule for target.
-CMakeFiles/00-visualizePath.run.dir/all: CMakeFiles/00-visualizePath.dir/all
-	$(MAKE) -f CMakeFiles/00-visualizePath.run.dir/build.make CMakeFiles/00-visualizePath.run.dir/depend
-	$(MAKE) -f CMakeFiles/00-visualizePath.run.dir/build.make CMakeFiles/00-visualizePath.run.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 
-	@echo "Built target 00-visualizePath.run"
-.PHONY : CMakeFiles/00-visualizePath.run.dir/all
+CMakeFiles/01-gatherData.run.dir/all: CMakeFiles/01-gatherData.dir/all
+	$(MAKE) -f CMakeFiles/01-gatherData.run.dir/build.make CMakeFiles/01-gatherData.run.dir/depend
+	$(MAKE) -f CMakeFiles/01-gatherData.run.dir/build.make CMakeFiles/01-gatherData.run.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 
+	@echo "Built target 01-gatherData.run"
+.PHONY : CMakeFiles/01-gatherData.run.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/00-visualizePath.run.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 1
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/00-visualizePath.run.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 0
-.PHONY : CMakeFiles/00-visualizePath.run.dir/rule
+CMakeFiles/01-gatherData.run.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-gatherData.run.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/01-gatherData.run.dir/rule
 
 # Convenience name for target.
-00-visualizePath.run: CMakeFiles/00-visualizePath.run.dir/rule
-.PHONY : 00-visualizePath.run
+01-gatherData.run: CMakeFiles/01-gatherData.run.dir/rule
+.PHONY : 01-gatherData.run
 
 # clean rule for target.
-CMakeFiles/00-visualizePath.run.dir/clean:
-	$(MAKE) -f CMakeFiles/00-visualizePath.run.dir/build.make CMakeFiles/00-visualizePath.run.dir/clean
-.PHONY : CMakeFiles/00-visualizePath.run.dir/clean
+CMakeFiles/01-gatherData.run.dir/clean:
+	$(MAKE) -f CMakeFiles/01-gatherData.run.dir/build.make CMakeFiles/01-gatherData.run.dir/clean
+.PHONY : CMakeFiles/01-gatherData.run.dir/clean
 
 # clean rule for target.
-clean: CMakeFiles/00-visualizePath.run.dir/clean
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/01-testOneExperimentSim.dir
-
-# All Build rule for target.
-CMakeFiles/01-testOneExperimentSim.dir/all:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/depend
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles"  2
-	@echo "Built target 01-testOneExperimentSim"
-.PHONY : CMakeFiles/01-testOneExperimentSim.dir/all
-
-# Include target in all.
-all: CMakeFiles/01-testOneExperimentSim.dir/all
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/01-testOneExperimentSim.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 1
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-testOneExperimentSim.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 0
-.PHONY : CMakeFiles/01-testOneExperimentSim.dir/rule
-
-# Convenience name for target.
-01-testOneExperimentSim: CMakeFiles/01-testOneExperimentSim.dir/rule
-.PHONY : 01-testOneExperimentSim
-
-# clean rule for target.
-CMakeFiles/01-testOneExperimentSim.dir/clean:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/clean
-.PHONY : CMakeFiles/01-testOneExperimentSim.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/01-testOneExperimentSim.dir/clean
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/01-testOneExperimentSim.run.dir
-
-# All Build rule for target.
-CMakeFiles/01-testOneExperimentSim.run.dir/all: CMakeFiles/01-testOneExperimentSim.dir/all
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.run.dir/build.make CMakeFiles/01-testOneExperimentSim.run.dir/depend
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.run.dir/build.make CMakeFiles/01-testOneExperimentSim.run.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 
-	@echo "Built target 01-testOneExperimentSim.run"
-.PHONY : CMakeFiles/01-testOneExperimentSim.run.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/01-testOneExperimentSim.run.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 1
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-testOneExperimentSim.run.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 0
-.PHONY : CMakeFiles/01-testOneExperimentSim.run.dir/rule
-
-# Convenience name for target.
-01-testOneExperimentSim.run: CMakeFiles/01-testOneExperimentSim.run.dir/rule
-.PHONY : 01-testOneExperimentSim.run
-
-# clean rule for target.
-CMakeFiles/01-testOneExperimentSim.run.dir/clean:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.run.dir/build.make CMakeFiles/01-testOneExperimentSim.run.dir/clean
-.PHONY : CMakeFiles/01-testOneExperimentSim.run.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/01-testOneExperimentSim.run.dir/clean
+clean: CMakeFiles/01-gatherData.run.dir/clean
 .PHONY : clean
 
 #=============================================================================

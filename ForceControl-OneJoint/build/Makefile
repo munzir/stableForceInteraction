@@ -35,14 +35,17 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The program to use to edit the cache.
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl"
+CMAKE_SOURCE_DIR = /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build"
+CMAKE_BINARY_DIR = /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -69,9 +72,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/munzir/Me/5- Work/stableForceInteraction/ForceControl/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -99,104 +102,54 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named 00-visualizePath
+# Target rules for targets named 01-gatherData
 
 # Build rule for target.
-00-visualizePath: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 00-visualizePath
-.PHONY : 00-visualizePath
+01-gatherData: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 01-gatherData
+.PHONY : 01-gatherData
 
 # fast build rule for target.
-00-visualizePath/fast:
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/build
-.PHONY : 00-visualizePath/fast
+01-gatherData/fast:
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/build
+.PHONY : 01-gatherData/fast
 
 #=============================================================================
-# Target rules for targets named 00-visualizePath.run
+# Target rules for targets named 01-gatherData.run
 
 # Build rule for target.
-00-visualizePath.run: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 00-visualizePath.run
-.PHONY : 00-visualizePath.run
+01-gatherData.run: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 01-gatherData.run
+.PHONY : 01-gatherData.run
 
 # fast build rule for target.
-00-visualizePath.run/fast:
-	$(MAKE) -f CMakeFiles/00-visualizePath.run.dir/build.make CMakeFiles/00-visualizePath.run.dir/build
-.PHONY : 00-visualizePath.run/fast
+01-gatherData.run/fast:
+	$(MAKE) -f CMakeFiles/01-gatherData.run.dir/build.make CMakeFiles/01-gatherData.run.dir/build
+.PHONY : 01-gatherData.run/fast
 
-#=============================================================================
-# Target rules for targets named 01-testOneExperimentSim
-
-# Build rule for target.
-01-testOneExperimentSim: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 01-testOneExperimentSim
-.PHONY : 01-testOneExperimentSim
-
-# fast build rule for target.
-01-testOneExperimentSim/fast:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/build
-.PHONY : 01-testOneExperimentSim/fast
-
-#=============================================================================
-# Target rules for targets named 01-testOneExperimentSim.run
-
-# Build rule for target.
-01-testOneExperimentSim.run: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 01-testOneExperimentSim.run
-.PHONY : 01-testOneExperimentSim.run
-
-# fast build rule for target.
-01-testOneExperimentSim.run/fast:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.run.dir/build.make CMakeFiles/01-testOneExperimentSim.run.dir/build
-.PHONY : 01-testOneExperimentSim.run/fast
-
-exe/00-visualizePath.o: exe/00-visualizePath.cpp.o
-.PHONY : exe/00-visualizePath.o
+exe/01-gatherData.o: exe/01-gatherData.cpp.o
+.PHONY : exe/01-gatherData.o
 
 # target to build an object file
-exe/00-visualizePath.cpp.o:
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/exe/00-visualizePath.cpp.o
-.PHONY : exe/00-visualizePath.cpp.o
+exe/01-gatherData.cpp.o:
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/exe/01-gatherData.cpp.o
+.PHONY : exe/01-gatherData.cpp.o
 
-exe/00-visualizePath.i: exe/00-visualizePath.cpp.i
-.PHONY : exe/00-visualizePath.i
-
-# target to preprocess a source file
-exe/00-visualizePath.cpp.i:
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/exe/00-visualizePath.cpp.i
-.PHONY : exe/00-visualizePath.cpp.i
-
-exe/00-visualizePath.s: exe/00-visualizePath.cpp.s
-.PHONY : exe/00-visualizePath.s
-
-# target to generate assembly for a file
-exe/00-visualizePath.cpp.s:
-	$(MAKE) -f CMakeFiles/00-visualizePath.dir/build.make CMakeFiles/00-visualizePath.dir/exe/00-visualizePath.cpp.s
-.PHONY : exe/00-visualizePath.cpp.s
-
-exe/01-testOneExperimentSim.o: exe/01-testOneExperimentSim.cpp.o
-.PHONY : exe/01-testOneExperimentSim.o
-
-# target to build an object file
-exe/01-testOneExperimentSim.cpp.o:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/exe/01-testOneExperimentSim.cpp.o
-.PHONY : exe/01-testOneExperimentSim.cpp.o
-
-exe/01-testOneExperimentSim.i: exe/01-testOneExperimentSim.cpp.i
-.PHONY : exe/01-testOneExperimentSim.i
+exe/01-gatherData.i: exe/01-gatherData.cpp.i
+.PHONY : exe/01-gatherData.i
 
 # target to preprocess a source file
-exe/01-testOneExperimentSim.cpp.i:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/exe/01-testOneExperimentSim.cpp.i
-.PHONY : exe/01-testOneExperimentSim.cpp.i
+exe/01-gatherData.cpp.i:
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/exe/01-gatherData.cpp.i
+.PHONY : exe/01-gatherData.cpp.i
 
-exe/01-testOneExperimentSim.s: exe/01-testOneExperimentSim.cpp.s
-.PHONY : exe/01-testOneExperimentSim.s
+exe/01-gatherData.s: exe/01-gatherData.cpp.s
+.PHONY : exe/01-gatherData.s
 
 # target to generate assembly for a file
-exe/01-testOneExperimentSim.cpp.s:
-	$(MAKE) -f CMakeFiles/01-testOneExperimentSim.dir/build.make CMakeFiles/01-testOneExperimentSim.dir/exe/01-testOneExperimentSim.cpp.s
-.PHONY : exe/01-testOneExperimentSim.cpp.s
+exe/01-gatherData.cpp.s:
+	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/exe/01-gatherData.cpp.s
+.PHONY : exe/01-gatherData.cpp.s
 
 # Help Target
 help:
@@ -204,18 +157,13 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... 00-visualizePath"
-	@echo "... 00-visualizePath.run"
-	@echo "... 01-testOneExperimentSim"
-	@echo "... 01-testOneExperimentSim.run"
+	@echo "... 01-gatherData"
+	@echo "... 01-gatherData.run"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... exe/00-visualizePath.o"
-	@echo "... exe/00-visualizePath.i"
-	@echo "... exe/00-visualizePath.s"
-	@echo "... exe/01-testOneExperimentSim.o"
-	@echo "... exe/01-testOneExperimentSim.i"
-	@echo "... exe/01-testOneExperimentSim.s"
+	@echo "... exe/01-gatherData.o"
+	@echo "... exe/01-gatherData.i"
+	@echo "... exe/01-gatherData.s"
 .PHONY : help
 
 
