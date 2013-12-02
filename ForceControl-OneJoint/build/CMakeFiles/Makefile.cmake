@@ -59,4 +59,6 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/01-gatherData.dir/DependInfo.cmake"
   "CMakeFiles/01-gatherData.run.dir/DependInfo.cmake"
+  "CMakeFiles/02-controlPosition.dir/DependInfo.cmake"
+  "CMakeFiles/02-controlPosition.run.dir/DependInfo.cmake"
   )

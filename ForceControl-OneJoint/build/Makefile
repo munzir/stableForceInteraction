@@ -127,6 +127,32 @@ depend:
 	$(MAKE) -f CMakeFiles/01-gatherData.run.dir/build.make CMakeFiles/01-gatherData.run.dir/build
 .PHONY : 01-gatherData.run/fast
 
+#=============================================================================
+# Target rules for targets named 02-controlPosition
+
+# Build rule for target.
+02-controlPosition: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 02-controlPosition
+.PHONY : 02-controlPosition
+
+# fast build rule for target.
+02-controlPosition/fast:
+	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/build
+.PHONY : 02-controlPosition/fast
+
+#=============================================================================
+# Target rules for targets named 02-controlPosition.run
+
+# Build rule for target.
+02-controlPosition.run: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 02-controlPosition.run
+.PHONY : 02-controlPosition.run
+
+# fast build rule for target.
+02-controlPosition.run/fast:
+	$(MAKE) -f CMakeFiles/02-controlPosition.run.dir/build.make CMakeFiles/02-controlPosition.run.dir/build
+.PHONY : 02-controlPosition.run/fast
+
 exe/01-gatherData.o: exe/01-gatherData.cpp.o
 .PHONY : exe/01-gatherData.o
 
@@ -151,6 +177,30 @@ exe/01-gatherData.cpp.s:
 	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/exe/01-gatherData.cpp.s
 .PHONY : exe/01-gatherData.cpp.s
 
+exe/02-controlPosition.o: exe/02-controlPosition.cpp.o
+.PHONY : exe/02-controlPosition.o
+
+# target to build an object file
+exe/02-controlPosition.cpp.o:
+	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/exe/02-controlPosition.cpp.o
+.PHONY : exe/02-controlPosition.cpp.o
+
+exe/02-controlPosition.i: exe/02-controlPosition.cpp.i
+.PHONY : exe/02-controlPosition.i
+
+# target to preprocess a source file
+exe/02-controlPosition.cpp.i:
+	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/exe/02-controlPosition.cpp.i
+.PHONY : exe/02-controlPosition.cpp.i
+
+exe/02-controlPosition.s: exe/02-controlPosition.cpp.s
+.PHONY : exe/02-controlPosition.s
+
+# target to generate assembly for a file
+exe/02-controlPosition.cpp.s:
+	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/exe/02-controlPosition.cpp.s
+.PHONY : exe/02-controlPosition.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,11 +209,16 @@ help:
 	@echo "... depend"
 	@echo "... 01-gatherData"
 	@echo "... 01-gatherData.run"
+	@echo "... 02-controlPosition"
+	@echo "... 02-controlPosition.run"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... exe/01-gatherData.o"
 	@echo "... exe/01-gatherData.i"
 	@echo "... exe/01-gatherData.s"
+	@echo "... exe/02-controlPosition.o"
+	@echo "... exe/02-controlPosition.i"
+	@echo "... exe/02-controlPosition.s"
 .PHONY : help
 
 
