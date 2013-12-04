@@ -10,16 +10,16 @@ E1 = (w1'*J1*w1 + m1*(V1'*V1) + 2*MS1'*cross(V1, w1))/2;
 for i=1:length(TTT); if(TTT(i)==dq1^2); A = CCC(i); end; end
 A=A+A';
 
-g = [0 0 -9.8]';
+g = [0 0 9.8]';
 Tf_0from1 = simplify(inv(Tf_1from0));
 U1 = -[g' 0]*Tf_0from1*[MS1; m1];
-Q = diff(U1, q1);
+Q = diff(U1, q1); 
 
 C = 0;
 
 A = A + Ia1;
 
-Gamma = A*ddq1 + C*dq1 + Q*q1 + Fv1*dq1 + Fc1*sign(dq1);
+Gamma = A*ddq1 + C*dq1 + Q + Fv1*dq1 + Fc1*sign(dq1);
 K = [MY1; MZ1; XX1; Ia1; Fc1; Fv1];
 D = m1*zeros(1,length(K));
 for i=1:length(K)

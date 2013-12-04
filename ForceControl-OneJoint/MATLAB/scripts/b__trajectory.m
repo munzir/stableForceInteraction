@@ -6,7 +6,7 @@ ddq4_max = 1.6581;
 dq4_min = 0.1745; % rad/s = 10 deg/s
 q4_A = -pi/2;
 q4_B = pi/2;
-cycles = 10; 
+cycles = 2; 
 T = 0.001; % sampling time
 
 % Derived params
@@ -36,7 +36,7 @@ end
 
 % Position
 q4_traj(1) = q4_A;
-for i = 2:N_total
+for i = 2:N_total 
     q4_traj(i) = q4_traj(i-1) + dq4_traj(i-1)*T + 0.5*ddq4_traj(i-1)*T^2;
 end
 
@@ -50,7 +50,7 @@ Fv1 = 0.0056;
 KKR = [ MY1, MZ1, Ia1+XX1, Fc1, Fv1]';
 
 
-DD = [ -(49*q4_traj.*cos(q4_traj))/5, -(49*q4_traj.*sin(q4_traj))/5, ddq4_traj, sign(dq4_traj), dq4_traj];
+DD = [ (49*cos(q4_traj))/5, (49*sin(q4_traj))/5, ddq4_traj, sign(dq4_traj), dq4_traj];
 Gamma = DD*KKR;
 
 KKR_estimated = pinv(DD)*Gamma;
