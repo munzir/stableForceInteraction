@@ -212,6 +212,9 @@ GLUT_glut_LIBRARY:FILEPATH=/usr/lib/i386-linux-gnu/libglut.so
 //The directory containing a CMake configuration file for GRIP.
 GRIP_DIR:PATH=/usr/share/grip
 
+//Dependencies for the target
+Main_LIB_DEPENDS:STATIC=general;protobuf-c;general;amino;general;ach;general;kore;general;somatic;general;filter;general;stdc++;general;ncurses;general;blas;general;lapack;
+
 //Path to a file.
 OPENGL_INCLUDE_DIR:PATH=/usr/include
 

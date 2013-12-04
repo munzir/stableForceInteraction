@@ -84,6 +84,7 @@ CMakeFiles/02-controlPosition.dir/exe/02-controlPosition.cpp.o.provides.build: C
 
 02-controlPosition: CMakeFiles/02-controlPosition.dir/exe/02-controlPosition.cpp.o
 02-controlPosition: CMakeFiles/02-controlPosition.dir/build.make
+02-controlPosition: libMain.so
 02-controlPosition: /usr/lib/i386-linux-gnu/libglut.so
 02-controlPosition: /usr/lib/i386-linux-gnu/libXmu.so
 02-controlPosition: /usr/lib/i386-linux-gnu/libXi.so

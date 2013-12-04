@@ -102,6 +102,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named 01-balance-kore
+
+# Build rule for target.
+01-balance-kore: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 01-balance-kore
+.PHONY : 01-balance-kore
+
+# fast build rule for target.
+01-balance-kore/fast:
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/build
+.PHONY : 01-balance-kore/fast
+
+#=============================================================================
+# Target rules for targets named 01-balance-kore.run
+
+# Build rule for target.
+01-balance-kore.run: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 01-balance-kore.run
+.PHONY : 01-balance-kore.run
+
+# fast build rule for target.
+01-balance-kore.run/fast:
+	$(MAKE) -f CMakeFiles/01-balance-kore.run.dir/build.make CMakeFiles/01-balance-kore.run.dir/build
+.PHONY : 01-balance-kore.run/fast
+
+#=============================================================================
 # Target rules for targets named 01-gatherData
 
 # Build rule for target.
@@ -153,6 +179,69 @@ depend:
 	$(MAKE) -f CMakeFiles/02-controlPosition.run.dir/build.make CMakeFiles/02-controlPosition.run.dir/build
 .PHONY : 02-controlPosition.run/fast
 
+#=============================================================================
+# Target rules for targets named 03-compliantPositionControl
+
+# Build rule for target.
+03-compliantPositionControl: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 03-compliantPositionControl
+.PHONY : 03-compliantPositionControl
+
+# fast build rule for target.
+03-compliantPositionControl/fast:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/build
+.PHONY : 03-compliantPositionControl/fast
+
+#=============================================================================
+# Target rules for targets named 03-compliantPositionControl.run
+
+# Build rule for target.
+03-compliantPositionControl.run: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 03-compliantPositionControl.run
+.PHONY : 03-compliantPositionControl.run
+
+# fast build rule for target.
+03-compliantPositionControl.run/fast:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.run.dir/build.make CMakeFiles/03-compliantPositionControl.run.dir/build
+.PHONY : 03-compliantPositionControl.run/fast
+
+#=============================================================================
+# Target rules for targets named Main
+
+# Build rule for target.
+Main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Main
+.PHONY : Main
+
+# fast build rule for target.
+Main/fast:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/build
+.PHONY : Main/fast
+
+exe/01-balance-kore.o: exe/01-balance-kore.cpp.o
+.PHONY : exe/01-balance-kore.o
+
+# target to build an object file
+exe/01-balance-kore.cpp.o:
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/exe/01-balance-kore.cpp.o
+.PHONY : exe/01-balance-kore.cpp.o
+
+exe/01-balance-kore.i: exe/01-balance-kore.cpp.i
+.PHONY : exe/01-balance-kore.i
+
+# target to preprocess a source file
+exe/01-balance-kore.cpp.i:
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/exe/01-balance-kore.cpp.i
+.PHONY : exe/01-balance-kore.cpp.i
+
+exe/01-balance-kore.s: exe/01-balance-kore.cpp.s
+.PHONY : exe/01-balance-kore.s
+
+# target to generate assembly for a file
+exe/01-balance-kore.cpp.s:
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/exe/01-balance-kore.cpp.s
+.PHONY : exe/01-balance-kore.cpp.s
+
 exe/01-gatherData.o: exe/01-gatherData.cpp.o
 .PHONY : exe/01-gatherData.o
 
@@ -201,24 +290,113 @@ exe/02-controlPosition.cpp.s:
 	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/exe/02-controlPosition.cpp.s
 .PHONY : exe/02-controlPosition.cpp.s
 
+exe/03-compliantPositionControl.o: exe/03-compliantPositionControl.cpp.o
+.PHONY : exe/03-compliantPositionControl.o
+
+# target to build an object file
+exe/03-compliantPositionControl.cpp.o:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/exe/03-compliantPositionControl.cpp.o
+.PHONY : exe/03-compliantPositionControl.cpp.o
+
+exe/03-compliantPositionControl.i: exe/03-compliantPositionControl.cpp.i
+.PHONY : exe/03-compliantPositionControl.i
+
+# target to preprocess a source file
+exe/03-compliantPositionControl.cpp.i:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/exe/03-compliantPositionControl.cpp.i
+.PHONY : exe/03-compliantPositionControl.cpp.i
+
+exe/03-compliantPositionControl.s: exe/03-compliantPositionControl.cpp.s
+.PHONY : exe/03-compliantPositionControl.s
+
+# target to generate assembly for a file
+exe/03-compliantPositionControl.cpp.s:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/exe/03-compliantPositionControl.cpp.s
+.PHONY : exe/03-compliantPositionControl.cpp.s
+
+src/helpers.o: src/helpers.cpp.o
+.PHONY : src/helpers.o
+
+# target to build an object file
+src/helpers.cpp.o:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/helpers.cpp.o
+.PHONY : src/helpers.cpp.o
+
+src/helpers.i: src/helpers.cpp.i
+.PHONY : src/helpers.i
+
+# target to preprocess a source file
+src/helpers.cpp.i:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/helpers.cpp.i
+.PHONY : src/helpers.cpp.i
+
+src/helpers.s: src/helpers.cpp.s
+.PHONY : src/helpers.s
+
+# target to generate assembly for a file
+src/helpers.cpp.s:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/helpers.cpp.s
+.PHONY : src/helpers.cpp.s
+
+src/sensors.o: src/sensors.cpp.o
+.PHONY : src/sensors.o
+
+# target to build an object file
+src/sensors.cpp.o:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/sensors.cpp.o
+.PHONY : src/sensors.cpp.o
+
+src/sensors.i: src/sensors.cpp.i
+.PHONY : src/sensors.i
+
+# target to preprocess a source file
+src/sensors.cpp.i:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/sensors.cpp.i
+.PHONY : src/sensors.cpp.i
+
+src/sensors.s: src/sensors.cpp.s
+.PHONY : src/sensors.s
+
+# target to generate assembly for a file
+src/sensors.cpp.s:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/src/sensors.cpp.s
+.PHONY : src/sensors.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... 01-balance-kore"
+	@echo "... 01-balance-kore.run"
 	@echo "... 01-gatherData"
 	@echo "... 01-gatherData.run"
 	@echo "... 02-controlPosition"
 	@echo "... 02-controlPosition.run"
+	@echo "... 03-compliantPositionControl"
+	@echo "... 03-compliantPositionControl.run"
+	@echo "... Main"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... exe/01-balance-kore.o"
+	@echo "... exe/01-balance-kore.i"
+	@echo "... exe/01-balance-kore.s"
 	@echo "... exe/01-gatherData.o"
 	@echo "... exe/01-gatherData.i"
 	@echo "... exe/01-gatherData.s"
 	@echo "... exe/02-controlPosition.o"
 	@echo "... exe/02-controlPosition.i"
 	@echo "... exe/02-controlPosition.s"
+	@echo "... exe/03-compliantPositionControl.o"
+	@echo "... exe/03-compliantPositionControl.i"
+	@echo "... exe/03-compliantPositionControl.s"
+	@echo "... src/helpers.o"
+	@echo "... src/helpers.i"
+	@echo "... src/helpers.s"
+	@echo "... src/sensors.o"
+	@echo "... src/sensors.i"
+	@echo "... src/sensors.s"
 .PHONY : help
 
 

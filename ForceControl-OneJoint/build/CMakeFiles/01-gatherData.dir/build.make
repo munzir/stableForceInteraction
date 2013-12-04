@@ -84,6 +84,7 @@ CMakeFiles/01-gatherData.dir/exe/01-gatherData.cpp.o.provides.build: CMakeFiles/
 
 01-gatherData: CMakeFiles/01-gatherData.dir/exe/01-gatherData.cpp.o
 01-gatherData: CMakeFiles/01-gatherData.dir/build.make
+01-gatherData: libMain.so
 01-gatherData: /usr/lib/i386-linux-gnu/libglut.so
 01-gatherData: /usr/lib/i386-linux-gnu/libXmu.so
 01-gatherData: /usr/lib/i386-linux-gnu/libXi.so

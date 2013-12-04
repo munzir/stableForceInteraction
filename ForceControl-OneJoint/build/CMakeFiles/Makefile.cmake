@@ -57,8 +57,13 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 SET(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/01-balance-kore.dir/DependInfo.cmake"
+  "CMakeFiles/01-balance-kore.run.dir/DependInfo.cmake"
   "CMakeFiles/01-gatherData.dir/DependInfo.cmake"
   "CMakeFiles/01-gatherData.run.dir/DependInfo.cmake"
   "CMakeFiles/02-controlPosition.dir/DependInfo.cmake"
   "CMakeFiles/02-controlPosition.run.dir/DependInfo.cmake"
+  "CMakeFiles/03-compliantPositionControl.dir/DependInfo.cmake"
+  "CMakeFiles/03-compliantPositionControl.run.dir/DependInfo.cmake"
+  "CMakeFiles/Main.dir/DependInfo.cmake"
   )

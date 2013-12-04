@@ -1,3 +1,5 @@
 # Hashes of file build rules.
+ce77bc4bcbbe08bf4095bebf251cdec3 CMakeFiles/01-balance-kore.run
 7502f0bdeabf02d8ae68aa52eea0a552 CMakeFiles/01-gatherData.run
 8632cc447de73f09477efbd123c9b1a6 CMakeFiles/02-controlPosition.run
+d8b641e67174ab89bf0d15ae9c30e24a CMakeFiles/03-compliantPositionControl.run

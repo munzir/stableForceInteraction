@@ -56,13 +56,79 @@ CMAKE_SOURCE_DIR = /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-On
 CMAKE_BINARY_DIR = /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build
 
 #=============================================================================
+# Target rules for target CMakeFiles/01-balance-kore.dir
+
+# All Build rule for target.
+CMakeFiles/01-balance-kore.dir/all: CMakeFiles/Main.dir/all
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/depend
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  1
+	@echo "Built target 01-balance-kore"
+.PHONY : CMakeFiles/01-balance-kore.dir/all
+
+# Include target in all.
+all: CMakeFiles/01-balance-kore.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/01-balance-kore.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-balance-kore.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/01-balance-kore.dir/rule
+
+# Convenience name for target.
+01-balance-kore: CMakeFiles/01-balance-kore.dir/rule
+.PHONY : 01-balance-kore
+
+# clean rule for target.
+CMakeFiles/01-balance-kore.dir/clean:
+	$(MAKE) -f CMakeFiles/01-balance-kore.dir/build.make CMakeFiles/01-balance-kore.dir/clean
+.PHONY : CMakeFiles/01-balance-kore.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/01-balance-kore.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/01-balance-kore.run.dir
+
+# All Build rule for target.
+CMakeFiles/01-balance-kore.run.dir/all: CMakeFiles/01-balance-kore.dir/all
+	$(MAKE) -f CMakeFiles/01-balance-kore.run.dir/build.make CMakeFiles/01-balance-kore.run.dir/depend
+	$(MAKE) -f CMakeFiles/01-balance-kore.run.dir/build.make CMakeFiles/01-balance-kore.run.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 
+	@echo "Built target 01-balance-kore.run"
+.PHONY : CMakeFiles/01-balance-kore.run.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/01-balance-kore.run.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-balance-kore.run.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/01-balance-kore.run.dir/rule
+
+# Convenience name for target.
+01-balance-kore.run: CMakeFiles/01-balance-kore.run.dir/rule
+.PHONY : 01-balance-kore.run
+
+# clean rule for target.
+CMakeFiles/01-balance-kore.run.dir/clean:
+	$(MAKE) -f CMakeFiles/01-balance-kore.run.dir/build.make CMakeFiles/01-balance-kore.run.dir/clean
+.PHONY : CMakeFiles/01-balance-kore.run.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/01-balance-kore.run.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/01-gatherData.dir
 
 # All Build rule for target.
-CMakeFiles/01-gatherData.dir/all:
+CMakeFiles/01-gatherData.dir/all: CMakeFiles/Main.dir/all
 	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/depend
 	$(MAKE) -f CMakeFiles/01-gatherData.dir/build.make CMakeFiles/01-gatherData.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  2
 	@echo "Built target 01-gatherData"
 .PHONY : CMakeFiles/01-gatherData.dir/all
 
@@ -72,7 +138,7 @@ all: CMakeFiles/01-gatherData.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/01-gatherData.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-gatherData.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
 .PHONY : CMakeFiles/01-gatherData.dir/rule
@@ -103,7 +169,7 @@ CMakeFiles/01-gatherData.run.dir/all: CMakeFiles/01-gatherData.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/01-gatherData.run.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/01-gatherData.run.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
 .PHONY : CMakeFiles/01-gatherData.run.dir/rule
@@ -125,10 +191,10 @@ clean: CMakeFiles/01-gatherData.run.dir/clean
 # Target rules for target CMakeFiles/02-controlPosition.dir
 
 # All Build rule for target.
-CMakeFiles/02-controlPosition.dir/all:
+CMakeFiles/02-controlPosition.dir/all: CMakeFiles/Main.dir/all
 	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/depend
 	$(MAKE) -f CMakeFiles/02-controlPosition.dir/build.make CMakeFiles/02-controlPosition.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  3
 	@echo "Built target 02-controlPosition"
 .PHONY : CMakeFiles/02-controlPosition.dir/all
 
@@ -138,7 +204,7 @@ all: CMakeFiles/02-controlPosition.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/02-controlPosition.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/02-controlPosition.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
 .PHONY : CMakeFiles/02-controlPosition.dir/rule
@@ -169,7 +235,7 @@ CMakeFiles/02-controlPosition.run.dir/all: CMakeFiles/02-controlPosition.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/02-controlPosition.run.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/02-controlPosition.run.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
 .PHONY : CMakeFiles/02-controlPosition.run.dir/rule
@@ -185,6 +251,107 @@ CMakeFiles/02-controlPosition.run.dir/clean:
 
 # clean rule for target.
 clean: CMakeFiles/02-controlPosition.run.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/03-compliantPositionControl.dir
+
+# All Build rule for target.
+CMakeFiles/03-compliantPositionControl.dir/all: CMakeFiles/Main.dir/all
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/depend
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  4
+	@echo "Built target 03-compliantPositionControl"
+.PHONY : CMakeFiles/03-compliantPositionControl.dir/all
+
+# Include target in all.
+all: CMakeFiles/03-compliantPositionControl.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/03-compliantPositionControl.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/03-compliantPositionControl.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/03-compliantPositionControl.dir/rule
+
+# Convenience name for target.
+03-compliantPositionControl: CMakeFiles/03-compliantPositionControl.dir/rule
+.PHONY : 03-compliantPositionControl
+
+# clean rule for target.
+CMakeFiles/03-compliantPositionControl.dir/clean:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.dir/build.make CMakeFiles/03-compliantPositionControl.dir/clean
+.PHONY : CMakeFiles/03-compliantPositionControl.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/03-compliantPositionControl.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/03-compliantPositionControl.run.dir
+
+# All Build rule for target.
+CMakeFiles/03-compliantPositionControl.run.dir/all: CMakeFiles/03-compliantPositionControl.dir/all
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.run.dir/build.make CMakeFiles/03-compliantPositionControl.run.dir/depend
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.run.dir/build.make CMakeFiles/03-compliantPositionControl.run.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 
+	@echo "Built target 03-compliantPositionControl.run"
+.PHONY : CMakeFiles/03-compliantPositionControl.run.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/03-compliantPositionControl.run.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/03-compliantPositionControl.run.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/03-compliantPositionControl.run.dir/rule
+
+# Convenience name for target.
+03-compliantPositionControl.run: CMakeFiles/03-compliantPositionControl.run.dir/rule
+.PHONY : 03-compliantPositionControl.run
+
+# clean rule for target.
+CMakeFiles/03-compliantPositionControl.run.dir/clean:
+	$(MAKE) -f CMakeFiles/03-compliantPositionControl.run.dir/build.make CMakeFiles/03-compliantPositionControl.run.dir/clean
+.PHONY : CMakeFiles/03-compliantPositionControl.run.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/03-compliantPositionControl.run.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/Main.dir
+
+# All Build rule for target.
+CMakeFiles/Main.dir/all:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/depend
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles  5 6
+	@echo "Built target Main"
+.PHONY : CMakeFiles/Main.dir/all
+
+# Include target in all.
+all: CMakeFiles/Main.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/Main.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Main.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles 0
+.PHONY : CMakeFiles/Main.dir/rule
+
+# Convenience name for target.
+Main: CMakeFiles/Main.dir/rule
+.PHONY : Main
+
+# clean rule for target.
+CMakeFiles/Main.dir/clean:
+	$(MAKE) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/clean
+.PHONY : CMakeFiles/Main.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/Main.dir/clean
 .PHONY : clean
 
 #=============================================================================

@@ -28,30 +28,30 @@ The CXX compiler identification is GNU, found in "/home/munzir/Me/5-Work/stableF
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec1521278746/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec1521278746.dir/build.make CMakeFiles/cmTryCompileExec1521278746.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec3925019551/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3925019551.dir/build.make CMakeFiles/cmTryCompileExec3925019551.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1521278746.dir/testCCompiler.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec1521278746.dir/testCCompiler.c.o   -c /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTryCompileExec1521278746
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1521278746.dir/link.txt --verbose=1
-/usr/bin/gcc         CMakeFiles/cmTryCompileExec1521278746.dir/testCCompiler.c.o  -o cmTryCompileExec1521278746 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec3925019551.dir/testCCompiler.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec3925019551.dir/testCCompiler.c.o   -c /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec3925019551
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3925019551.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec3925019551.dir/testCCompiler.c.o  -o cmTryCompileExec3925019551 -rdynamic 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec2269467565/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec2269467565.dir/build.make CMakeFiles/cmTryCompileExec2269467565.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec3818501893/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3818501893.dir/build.make CMakeFiles/cmTryCompileExec3818501893.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-2.8/Modules/CMakeCCompilerABI.c
-Linking C executable cmTryCompileExec2269467565
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2269467565.dir/link.txt --verbose=1
-/usr/bin/gcc       -v CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec2269467565 -rdynamic  
+Building C object CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-2.8/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec3818501893
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3818501893.dir/link.txt --verbose=1
+/usr/bin/gcc       -v CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec3818501893 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/i486-linux-gnu/4.7/lto-wrapper
@@ -61,8 +61,8 @@ Thread model: posix
 gcc version 4.7.2 (Debian 4.7.2-4) 
 COMPILER_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib/:/lib/i386-linux-gnu/:/lib/../lib/:/usr/lib/i386-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec2269467565' '-rdynamic' '-mtune=generic' '-march=i586'
- /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec2269467565 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3818501893' '-rdynamic' '-mtune=generic' '-march=i586'
+ /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec3818501893 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
@@ -70,15 +70,15 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec2269467565/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec2269467565.dir/build.make CMakeFiles/cmTryCompileExec2269467565.dir/build]
+  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec3818501893/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec3818501893.dir/build.make CMakeFiles/cmTryCompileExec3818501893.dir/build]
   ignore line: [make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp']
   ignore line: [/usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
-  ignore line: [Building C object CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-2.8/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTryCompileExec2269467565]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2269467565.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/gcc       -v CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec2269467565 -rdynamic  ]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-2.8/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec3818501893]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3818501893.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/gcc       -v CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec3818501893 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/gcc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/i486-linux-gnu/4.7/lto-wrapper]
@@ -88,8 +88,8 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 4.7.2 (Debian 4.7.2-4) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib/:/lib/i386-linux-gnu/:/lib/../lib/:/usr/lib/i386-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec2269467565' '-rdynamic' '-mtune=generic' '-march=i586']
-  link line: [ /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec2269467565 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3818501893' '-rdynamic' '-mtune=generic' '-march=i586']
+  link line: [ /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec3818501893 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/collect2] ==> ignore
     arg [--sysroot=/] ==> ignore
     arg [--build-id] ==> ignore
@@ -102,7 +102,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib/ld-linux.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTryCompileExec2269467565] ==> ignore
+    arg [cmTryCompileExec3818501893] ==> ignore
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o] ==> ignore
@@ -114,7 +114,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/i386-linux-gnu] ==> dir [/usr/lib/i386-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/i486-linux-gnu/4.7/../../..] ==> dir [/usr/lib/gcc/i486-linux-gnu/4.7/../../..]
-    arg [CMakeFiles/cmTryCompileExec2269467565.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec3818501893.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -145,30 +145,30 @@ Parsed C implicit link information from above output:
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec742193689/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec742193689.dir/build.make CMakeFiles/cmTryCompileExec742193689.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec1357718719/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1357718719.dir/build.make CMakeFiles/cmTryCompileExec1357718719.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec742193689.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTryCompileExec742193689.dir/testCXXCompiler.cxx.o -c /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTryCompileExec742193689
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec742193689.dir/link.txt --verbose=1
-/usr/bin/c++          CMakeFiles/cmTryCompileExec742193689.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec742193689 -rdynamic 
+Building CXX object CMakeFiles/cmTryCompileExec1357718719.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec1357718719.dir/testCXXCompiler.cxx.o -c /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec1357718719
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1357718719.dir/link.txt --verbose=1
+/usr/bin/c++          CMakeFiles/cmTryCompileExec1357718719.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec1357718719 -rdynamic 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec4171661304/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec4171661304.dir/build.make CMakeFiles/cmTryCompileExec4171661304.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec3264077911/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3264077911.dir/build.make CMakeFiles/cmTryCompileExec3264077911.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTryCompileExec4171661304
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4171661304.dir/link.txt --verbose=1
-/usr/bin/c++        -v CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec4171661304 -rdynamic  
+Building CXX object CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec3264077911
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3264077911.dir/link.txt --verbose=1
+/usr/bin/c++        -v CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3264077911 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/i486-linux-gnu/4.7/lto-wrapper
@@ -178,8 +178,8 @@ Thread model: posix
 gcc version 4.7.2 (Debian 4.7.2-4) 
 COMPILER_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib/:/lib/i386-linux-gnu/:/lib/../lib/:/usr/lib/i386-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4171661304' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=i586'
- /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec4171661304 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3264077911' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=i586'
+ /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec3264077911 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
@@ -187,15 +187,15 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec4171661304/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec4171661304.dir/build.make CMakeFiles/cmTryCompileExec4171661304.dir/build]
+  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec3264077911/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec3264077911.dir/build.make CMakeFiles/cmTryCompileExec3264077911.dir/build]
   ignore line: [make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp']
   ignore line: [/usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
-  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTryCompileExec4171661304]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4171661304.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++        -v CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec4171661304 -rdynamic  ]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec3264077911]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3264077911.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++        -v CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3264077911 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/i486-linux-gnu/4.7/lto-wrapper]
@@ -205,8 +205,8 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 4.7.2 (Debian 4.7.2-4) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/i486-linux-gnu/4.7/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib/:/lib/i386-linux-gnu/:/lib/../lib/:/usr/lib/i386-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/i486-linux-gnu/4.7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec4171661304' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=i586']
-  link line: [ /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec4171661304 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3264077911' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=i586']
+  link line: [ /usr/lib/gcc/i486-linux-gnu/4.7/collect2 --sysroot=/ --build-id --no-add-needed --eh-frame-hdr -m elf_i386 --hash-style=both -export-dynamic -dynamic-linker /lib/ld-linux.so.2 -o cmTryCompileExec3264077911 /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o -L/usr/lib/gcc/i486-linux-gnu/4.7 -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu -L/usr/lib/gcc/i486-linux-gnu/4.7/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i486-linux-gnu/4.7/../../.. CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/i486-linux-gnu/4.7/crtend.o /usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/collect2] ==> ignore
     arg [--sysroot=/] ==> ignore
     arg [--build-id] ==> ignore
@@ -219,7 +219,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib/ld-linux.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTryCompileExec4171661304] ==> ignore
+    arg [cmTryCompileExec3264077911] ==> ignore
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/../../../i386-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/i486-linux-gnu/4.7/crtbegin.o] ==> ignore
@@ -231,7 +231,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/i386-linux-gnu] ==> dir [/usr/lib/i386-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/i486-linux-gnu/4.7/../../..] ==> dir [/usr/lib/gcc/i486-linux-gnu/4.7/../../..]
-    arg [CMakeFiles/cmTryCompileExec4171661304.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec3264077911.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -260,90 +260,90 @@ Parsed CXX implicit link information from above output:
 Determining if the function XOpenDisplay exists in the /usr/lib/i386-linux-gnu/libX11.so;/usr/lib/i386-linux-gnu/libXext.so passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec1942923454/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec1942923454.dir/build.make CMakeFiles/cmTryCompileExec1942923454.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec748477749/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec748477749.dir/build.make CMakeFiles/cmTryCompileExec748477749.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1942923454.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTryCompileExec1942923454.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec1942923454
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1942923454.dir/link.txt --verbose=1
-/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=XOpenDisplay    CMakeFiles/cmTryCompileExec1942923454.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1942923454 -rdynamic -lX11 -lXext 
+Building C object CMakeFiles/cmTryCompileExec748477749.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTryCompileExec748477749.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec748477749
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec748477749.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=XOpenDisplay    CMakeFiles/cmTryCompileExec748477749.dir/CheckFunctionExists.c.o  -o cmTryCompileExec748477749 -rdynamic -lX11 -lXext 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function gethostbyname exists passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec368992149/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec368992149.dir/build.make CMakeFiles/cmTryCompileExec368992149.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec867829760/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec867829760.dir/build.make CMakeFiles/cmTryCompileExec867829760.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec368992149.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTryCompileExec368992149.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec368992149
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec368992149.dir/link.txt --verbose=1
-/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=gethostbyname    CMakeFiles/cmTryCompileExec368992149.dir/CheckFunctionExists.c.o  -o cmTryCompileExec368992149 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec867829760.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTryCompileExec867829760.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec867829760
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec867829760.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=gethostbyname    CMakeFiles/cmTryCompileExec867829760.dir/CheckFunctionExists.c.o  -o cmTryCompileExec867829760 -rdynamic 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function connect exists passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec606079954/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec606079954.dir/build.make CMakeFiles/cmTryCompileExec606079954.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec2096173596/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2096173596.dir/build.make CMakeFiles/cmTryCompileExec2096173596.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec606079954.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTryCompileExec606079954.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec606079954
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec606079954.dir/link.txt --verbose=1
-/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=connect    CMakeFiles/cmTryCompileExec606079954.dir/CheckFunctionExists.c.o  -o cmTryCompileExec606079954 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec2096173596.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTryCompileExec2096173596.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2096173596
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2096173596.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=connect    CMakeFiles/cmTryCompileExec2096173596.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2096173596 -rdynamic 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function remove exists passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec217797489/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec217797489.dir/build.make CMakeFiles/cmTryCompileExec217797489.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec4251511582/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4251511582.dir/build.make CMakeFiles/cmTryCompileExec4251511582.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec217797489.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTryCompileExec217797489.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec217797489
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec217797489.dir/link.txt --verbose=1
-/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=remove    CMakeFiles/cmTryCompileExec217797489.dir/CheckFunctionExists.c.o  -o cmTryCompileExec217797489 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec4251511582.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTryCompileExec4251511582.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec4251511582
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4251511582.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=remove    CMakeFiles/cmTryCompileExec4251511582.dir/CheckFunctionExists.c.o  -o cmTryCompileExec4251511582 -rdynamic 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function shmat exists passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec3267658792/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec3267658792.dir/build.make CMakeFiles/cmTryCompileExec3267658792.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec1348376198/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1348376198.dir/build.make CMakeFiles/cmTryCompileExec1348376198.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec3267658792.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTryCompileExec3267658792.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec3267658792
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3267658792.dir/link.txt --verbose=1
-/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=shmat    CMakeFiles/cmTryCompileExec3267658792.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3267658792 -rdynamic 
+Building C object CMakeFiles/cmTryCompileExec1348376198.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTryCompileExec1348376198.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1348376198
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1348376198.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=shmat    CMakeFiles/cmTryCompileExec1348376198.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1348376198 -rdynamic 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function IceConnectionNumber exists in the ICE passed with the following output:
 Change Dir: /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec2673164054/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec2673164054.dir/build.make CMakeFiles/cmTryCompileExec2673164054.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec3160859241/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3160859241.dir/build.make CMakeFiles/cmTryCompileExec3160859241.dir/build
 make[1]: Entering directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2673164054.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTryCompileExec2673164054.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec2673164054
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2673164054.dir/link.txt --verbose=1
-/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    CMakeFiles/cmTryCompileExec2673164054.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2673164054 -rdynamic -lICE 
+Building C object CMakeFiles/cmTryCompileExec3160859241.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTryCompileExec3160859241.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec3160859241
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3160859241.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    CMakeFiles/cmTryCompileExec3160859241.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3160859241 -rdynamic -lICE 
 make[1]: Leaving directory `/home/munzir/Me/5-Work/stableForceInteraction/ForceControl-OneJoint/build/CMakeFiles/CMakeTmp'
 
 
