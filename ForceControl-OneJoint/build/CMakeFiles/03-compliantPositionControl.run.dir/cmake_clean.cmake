@@ -1,8 +1,0 @@
-FILE(REMOVE_RECURSE
-  "CMakeFiles/03-compliantPositionControl.run"
-)
-
-# Per-language clean rules from dependency scanning.
-FOREACH(lang)
-  INCLUDE(CMakeFiles/03-compliantPositionControl.run.dir/cmake_clean_${lang}.cmake OPTIONAL)
-ENDFOREACH(lang)
