@@ -1,8 +1,8 @@
 /**
  * @file 03-compliantPositionControl.cpp
  * @author Munzir Zafar
- * @date Dec 2, 2013
- * @brief This file controls the position of the 4th joint of the right arm compliantly 
+ * @date Dec 4, 2013
+ * @brief Controls the force at end-effector based on control of one joint (right arm M7) 
  */
 
 #include <unistd.h>
@@ -51,11 +51,14 @@ double r = 0.47; // distance in meters of the FT sensor to the joint
 double Kp = 24.0;
 double Kd = 0.0;
 double Ki = 1.0;
+double Kpf = 2.40;
+double Kdf = 0.0;
+double Kif = 0.3;
 double Km = 81.5/4.0; // Torque per Ampere of the motor  r*F/I = Km => F = I*Km/r => I = r*F/Km
-double KComply = 3.0; // Desired inertia (torque per unit angular accleration (Nm-s^2/rad)) of the impedence controller
+double KComply = 3.0; // Inverse of the desired inertia of the impedence controller
 
 // Global variables for the algo
-double qref = 0.0;
+double qref = 0.0, fRef = 5.0;
 bool dynComp = false;
 Eigen::Matrix<double, 3, 3> R;
 FT * fts;
@@ -66,28 +69,40 @@ void *kbhit(void *) {
 	char input;
 	while(true) { 
 		input=cin.get(); 
-		if(input=='a') { Kp += 0.1; cout << "Kp = " << Kp << endl; }
-		else if(input=='s') { Kp -= 0.1; cout << "Kp = " << Kp << endl; }
-		else if(input=='A') { Kp += 0.5; cout << "Kp = " << Kp << endl; }
-		else if(input=='S') { Kp -= 0.5; cout << "Kp = " << Kp << endl; }
-		else if(input=='q') { Ki += 0.1; cout << "Ki = " << Ki << endl; }
-		else if(input=='w') { Ki -= 0.1; cout << "Ki = " << Ki << endl; }
-		else if(input=='Q') { Ki += 0.5; cout << "Ki = " << Ki << endl; }
-		else if(input=='W') { Ki -= 0.5; cout << "Ki = " << Ki << endl; }
-		else if(input=='z') { Kd += 0.1; cout << "Kd = " << Kd << endl; }
-		else if(input=='x') { Kd -= 0.1; cout << "Kd = " << Kd << endl; }
-		else if(input=='Z') { Kd += 0.5; cout << "Kd = " << Kd << endl; }
-		else if(input=='X') { Kd -= 0.5; cout << "Kd = " << Kd << endl; }
-		else if(input=='o') { KComply += 0.01; cout << "KComply = " << KComply << endl; }
-		else if(input=='p') { KComply -= 0.01; cout << "KComply = " << KComply << endl; }
-		else if(input=='d') { dynComp = true; cout << "Dynamic Compensation: ON" << Kd << endl; }
-		else if(input=='D') { dynComp = false; cout << "Dynamic Compensation: OFF" << Kd << endl; }
+		if(input=='a') { Kp += 0.1; cout << "\nKp = " << Kp << endl; }
+		else if(input=='s') { Kp -= 0.1; cout << "\nKp = " << Kp << endl; }
+		else if(input=='A') { Kp += 0.5; cout << "\nKp = " << Kp << endl; }
+		else if(input=='S') { Kp -= 0.5; cout << "\nKp = " << Kp << endl; }
+		else if(input=='q') { Ki += 0.1; cout << "\nKi = " << Ki << endl; }
+		else if(input=='w') { Ki -= 0.1; cout << "\nKi = " << Ki << endl; }
+		else if(input=='Q') { Ki += 0.5; cout << "\nKi = " << Ki << endl; }
+		else if(input=='W') { Ki -= 0.5; cout << "\nKi = " << Ki << endl; }
+		else if(input=='z') { Kd += 0.1; cout << "\nKd = " << Kd << endl; }
+		else if(input=='x') { Kd -= 0.1; cout << "\nKd = " << Kd << endl; }
+		else if(input=='Z') { Kd += 0.5; cout << "\nKd = " << Kd << endl; }
+		else if(input=='X') { Kd -= 0.5; cout << "\nKd = " << Kd << endl; }
+		else if(input=='k') { Kpf += 0.1; cout << "\nKpf = " << Kpf << endl; }
+		else if(input=='l') { Kpf -= 0.1; cout << "\nKpf = " << Kpf << endl; }
+		else if(input=='K') { Kpf += 0.5; cout << "\nKpf = " << Kpf << endl; }
+		else if(input=='L') { Kpf -= 0.5; cout << "\nKpf = " << Kpf << endl; }
+		else if(input=='o') { Kif += 0.1; cout << "\nKif = " << Kif << endl; }
+		else if(input=='p') { Kif -= 0.1; cout << "\nKif = " << Kif << endl; }
+		else if(input=='O') { Kif += 0.5; cout << "\nKif = " << Kif << endl; }
+		else if(input=='P') { Kif -= 0.5; cout << "\nKif = " << Kif << endl; }
+		else if(input=='n') { Kdf += 0.1; cout << "\nKdf = " << Kdf << endl; }
+		else if(input=='m') { Kdf -= 0.1; cout << "\nKdf = " << Kdf << endl; }
+		else if(input=='N') { Kdf += 0.5; cout << "\nKdf = " << Kdf << endl; }
+		else if(input=='M') { Kdf -= 0.5; cout << "\nKdf = " << Kdf << endl; }
+		else if(input=='v') { KComply += 0.01; cout << "\nKComply = " << KComply << endl; }
+		else if(input=='b') { KComply -= 0.01; cout << "\nKComply = " << KComply << endl; }
+		else if(input=='d') { dynComp = true; cout << "\nDynamic Compensation: ON" << Kd << endl; }
+		else if(input=='D') { dynComp = false; cout << "\nDynamic Compensation: OFF" << Kd << endl; }
 		else if(input=='t') { 
 			cout << "\n\n" << R(0,0) << "\t" << R(0,1) << "\t" << R(0,2) << endl; 
 			cout << R(1,0) << "\t" << R(1,1) << "\t" << R(1,2) << endl; 
 			cout << R(2,0) << "\t" << R(2,1) << "\t" << R(2,2) << "\n\n\n"; 
 		}
-		else if(input >= '0' & input <= '9') { qref = -2*M_PI/3.0 + (input-'0')*(4.0*M_PI/3.0/9.0); cout << "qref = " << qref << endl;}
+		else if(input >= '0' & input <= '9') { fRef = 5.0 + (input-'0')*3.0; cout << "\nfRef = " << fRef << endl;}
 	}
 }
 
@@ -167,6 +182,13 @@ void run() {
 	int c = 0;
 	double qRef_f = 0.0;
 	VectorXd qVectorXd (1);
+	int eHistSize = 200;  int eIter = 0;
+	double eHistory[eHistSize]; for(int i = 0; i < eHistSize; i++) eHistory[i] = 0.0;
+	double eAvg = 0.0;
+	double fSumError = 0.0;	
+	double u;
+	enum controlMode {POSITION_CONTROL_MODE = 0, FORCE_CONTROL_MODE};
+	controlMode ctrlMode = POSITION_CONTROL_MODE;
 
 	while(!somatic_sig_received) {
 
@@ -188,17 +210,41 @@ void run() {
 		Matrix<double, 3, 1> F = fts->lastExternal.topLeftCorner<3,1>();
 		R = robot->getNode("rGripper")->getWorldTransform().topLeftCorner<3,3>().transpose();
 		F = R*F;
-		if(F.topLeftCorner<3,1>().norm() > 7.0) f = F(1); else f = 0.0;
+		if(F.topLeftCorner<3,1>().norm() > 0.0) f = F(1); else f = 0.0;
 
-		// Control position compliantly
+		// Control position compliantly until the position reaches zero then control force
 		double error = qref - q; 
-		if(abs(error) < 0.3 && abs(f) < 10.0) sumError += error;
-		double w = Kp*error - Kd*dq + Ki*sumError;
-		double u = XX*w + (1/Km)*KComply*f*r + (dynComp? g*MY*cos(q) + g*MZ*sin(q) + ((abs(dq) > 0.5 
-				& abs(error) > 1.1 ) ? ( dq > 0.0 ? (Fc1 + Fv1*dq) : (Fc2 + Fv2*dq) ) : 0.0) : 0.0);
+		switch(ctrlMode) {
+			case POSITION_CONTROL_MODE: {
+				if(abs(error) < 0.3 && abs(f) < 10.0) sumError += error;
+				double w = Kp*error - Kd*dq + Ki*sumError;
+				u = XX*w + (1/Km)*KComply*f*r + (dynComp? g*MY*cos(q) + g*MZ*sin(q) + ((abs(dq) > 0.5 
+						& abs(error) > 1.1 ) ? ( dq > 0.0 ? (Fc1 + Fv1*dq) : (Fc2 + Fv2*dq) ) : 0.0) : 0.0);
+				if(abs(error) < 2e-2) { 
+					ctrlMode = FORCE_CONTROL_MODE;
+					cout << "\nmode changed to force control!!\n" ;
+					sumError = 0.0;
+				}
+				break;
+			}
+			case FORCE_CONTROL_MODE: {
+				double fApplied = -f;
+				double fError = fRef-fApplied;
+				if(abs(fError) < 30.0) fSumError += fError;
+				double wf = Kpf*fError - Kdf*dq + Kif*fSumError;
+				u = (1/Km)*wf*r;
+				if(abs(error) > 5e-2) {
+					ctrlMode = POSITION_CONTROL_MODE;
+					cout << "\nmode changed to position control!!\n" ;
+					fSumError = 0.0;
+				}
+				break; 
+			}
+		}
 		u = min(max(u, -14.0), 14.0);
 		somatic_motor_cmd(&daemon_cx, &rlwaM7, CURRENT, &u, 1, NULL);
-		cout << "f = " << f << "       q-qref = " << -error << "    Ki*sumError = " << Ki*sumError << "     \r";
+		cout << "f = " << f << "       q-qref = " << -error << "    Ki*sumError = " << (ctrlMode? (Kif*fSumError):(Ki*sumError)) << "     \r";
+		
 
 		// Free buffers allocated during this cycle
 		aa_mem_region_release(&daemon_cx.memreg);	
