@@ -1,0 +1,10 @@
+1. Understanding how the fourier transform preserves the parameters
+2. Understand how the Wall matrix will be reduced
+3. Take the readings from the fourth joint of the right by relaxing the current limits
+4. Write the email to Mike
+5. Write a code that builds Wall
+6. Write a code that reduces Wall to workable matrix
+7. Run the trajectories, estimate parameters
+8. Write a code to do position/force control for the entire arm
+
+

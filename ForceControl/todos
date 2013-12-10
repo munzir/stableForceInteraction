@@ -1,13 +1,11 @@
-todos:
+1. Understanding how the fourier transform preserves the parameters (2 hours)
+2. Understand how the Wall matrix will be reduced (3 hours)
+3. Take the readings from the fourth joint of the right by relaxing the current limits (1.5 hours)
+4. Write the email to Mike (0.5 hours)
+5. Write a code that builds Wall (5 hours)
+6. Write a code that reduces Wall to workable matrix (3 hours)
+7. Run the codes (12 hours)
+8. Run the trajectories, estimate parameters
+9. Write a code to do position/force control for the entire arm
 
-1. Read the identification paper again and decide the trajectories you want to implement (30 min)
-2. Write a code that:
-	a. Runs the motor through a specific trajectory (1.5 hour)
-	b. Logs the relevant states throughout the trajectory (1.5 hour)
-3. From the logged data perform the post-processing (1 hour)
-4. Through linear regression find the parameters (1 hour)
-5. Read the force-control methodology of Khateeb (3 hours)
-6. Make a plan to write a code to implement khateeb's methodology (30 min)
-7. Write the code step-by-step (5 hours)
-8. Live/play with the system (2 hours)
-9. Record a demo (2 hours)
+
