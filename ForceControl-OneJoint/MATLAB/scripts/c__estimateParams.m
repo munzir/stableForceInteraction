@@ -1,4 +1,4 @@
-data = csvread('../../data/03.csv');
+data = csvread('../../data/04.csv');
 
 t_m = data(:,1);
 q_m = data(:,2); 

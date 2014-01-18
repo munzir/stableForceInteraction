@@ -1,0 +1,198 @@
+load frictionAdded
+
+% Finding equations for trajectory generation
+%% Link 1
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L1T1 = subs(GGamma(1), {dq2, dq3, dq4 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L1T1 = subs(DD(1,:), {dq2, dq3, dq4 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L1T1 = abalakabala*zeros(1,size(DD,2));
+K_L1T1 = abalakabala*zeros(length(KKR),1);
+K_L1T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L1T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L1T1(j) = DD_L1T1(1,i);
+        K_L1T1(j) = KKR(i);
+        K_L1T1_ind(j) = i;
+    end
+end
+
+D_L1T1 = D_L1T1(1:j);
+K_L1T1 = K_L1T1(1:j);
+K_L1T1_ind = K_L1T1_ind(1:j);
+
+simplify(L1T1 - D_L1T1*K_L1T1)
+
+%% Link 2
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L2T1 = subs(GGamma(2), {dq1, dq3, dq4 ,dq5 ,dq6, dq7, ddq1, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L2T1 = subs(DD(2,:), {dq1, dq3, dq4 ,dq5 ,dq6, dq7, ddq1, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L2T1 = abalakabala*zeros(1,size(DD,2));
+K_L2T1 = abalakabala*zeros(length(KKR),1);
+K_L2T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L2T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L2T1(j) = DD_L2T1(1,i);
+        K_L2T1(j) = KKR(i);
+        K_L2T1_ind(j) = i;
+    end
+end
+
+D_L2T1 = D_L2T1(1:j);
+K_L2T1 = K_L2T1(1:j);
+K_L2T1_ind = K_L2T1_ind(1:j);
+
+simplify(L2T1 - D_L2T1*K_L2T1)
+
+%% Link 3
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L3T1 = subs(GGamma(3), {dq2, dq1, dq4 ,dq5 ,dq6, dq7, ddq2, ddq1, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L3T1 = subs(DD(3,:), {dq2, dq1, dq4 ,dq5 ,dq6, dq7, ddq2, ddq1, ddq4,...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L3T1 = abalakabala*zeros(1,size(DD,2));
+K_L3T1 = abalakabala*zeros(length(KKR),1);
+K_L3T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L3T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L3T1(j) = DD_L3T1(1,i);
+        K_L3T1(j) = KKR(i);
+        K_L3T1_ind(j) = i;
+    end
+end
+
+D_L3T1 = D_L3T1(1:j);
+K_L3T1 = K_L3T1(1:j);
+K_L3T1_ind = K_L3T1_ind(1:j);
+
+simplify(L3T1 - D_L3T1*K_L3T1)
+
+%% Link 4
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L4T1 = subs(GGamma(4), {dq2, dq3, dq1 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq1, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L4T1 = subs(DD(4,:), {dq2, dq3, dq1 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq1, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L4T1 = abalakabala*zeros(1,size(DD,2));
+K_L4T1 = abalakabala*zeros(length(KKR),1);
+K_L4T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L4T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L4T1(j) = DD_L4T1(1,i);
+        K_L4T1(j) = KKR(i);
+        K_L4T1_ind(j) = i;
+    end
+end
+
+D_L4T1 = D_L4T1(1:j);
+K_L4T1 = K_L4T1(1:j);
+K_L4T1_ind = K_L4T1_ind(1:j);
+
+simplify(L4T1 - D_L4T1*K_L4T1)
+
+%% Link 5
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L5T1 = subs(GGamma(5), {dq2, dq3, dq4 ,dq1 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq1, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L5T1 = subs(DD(5,:), {dq2, dq3, dq4 ,dq1 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq1, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L5T1 = abalakabala*zeros(1,size(DD,2));
+K_L5T1 = abalakabala*zeros(length(KKR),1);
+K_L5T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L5T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L5T1(j) = DD_L5T1(1,i);
+        K_L5T1(j) = KKR(i);
+        K_L5T1_ind(j) = i;
+    end
+end
+
+D_L5T1 = D_L5T1(1:j);
+K_L5T1 = K_L5T1(1:j);
+K_L5T1_ind = K_L5T1_ind(1:j);
+
+simplify(L5T1 - D_L5T1*K_L5T1)
+
+%% Link 6
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L6T1 = subs(GGamma(6), {dq2, dq3, dq4 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L6T1 = subs(DD(6,:), {dq2, dq3, dq4 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L6T1 = abalakabala*zeros(1,size(DD,2));
+K_L6T1 = abalakabala*zeros(length(KKR),1);
+K_L6T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L6T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L6T1(j) = DD_L6T1(1,i);
+        K_L6T1(j) = KKR(i);
+        K_L6T1_ind(j) = i;
+    end
+end
+
+D_L6T1 = D_L6T1(1:j);
+K_L6T1 = K_L6T1(1:j);
+K_L6T1_ind = K_L6T1_ind(1:j);
+
+simplify(L6T1 - D_L6T1*K_L6T1)
+
+%% Link 7
+% dq2:dq7 = 0, ddq1:ddq7 = 0 
+L7T1 = subs(GGamma(7), {dq2, dq3, dq4 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+DD_L7T1 = subs(DD(7,:), {dq2, dq3, dq4 ,dq5 ,dq6, dq7, ddq2, ddq3, ddq4, ...
+    dq5, ddq6, ddq7}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+syms abalakabala real
+D_L7T1 = abalakabala*zeros(1,size(DD,2));
+K_L7T1 = abalakabala*zeros(length(KKR),1);
+K_L7T1_ind = zeros(length(KKR),1);
+
+j = 0;
+for i=1:size(DD,2)
+    if(~isequaln(DD_L7T1(1,i),0) && ~isequaln(KKR(i),0))
+        j = j + 1;
+        D_L7T1(j) = DD_L7T1(1,i);
+        K_L7T1(j) = KKR(i);
+        K_L7T1_ind(j) = i;
+    end
+end
+
+D_L7T1 = D_L7T1(1:j);
+K_L7T1 = K_L7T1(1:j);
+K_L7T1_ind = K_L7T1_ind(1:j);
+
+simplify(L7T1 - D_L7T1*K_L7T1)

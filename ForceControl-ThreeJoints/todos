@@ -1,0 +1,11 @@
+1. Understanding how the fourier transform preserves the parameters (2 hours)
+2. Understand how the Wall matrix will be reduced (3 hours)
+3. Take the readings from the fourth joint of the right by relaxing the current limits (1.5 hours)
+4. Write the email to Mike (0.5 hours)
+5. Write a code that builds Wall (5 hours)
+6. Write a code that reduces Wall to workable matrix (3 hours)
+7. Run the codes (12 hours)
+8. Run the trajectories, estimate parameters
+9. Write a code to do position/force control for the entire arm
+
+
