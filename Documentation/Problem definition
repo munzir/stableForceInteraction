@@ -75,9 +75,8 @@ Five Realistic Solvable Issues
 1. How to determine, based on an intended future action, what the magnitude of force changes 
    is going to be? (P1.2 and P2.1)
 2. How to control force change? (P4, ->P3)
-	
-3. How to change the pose to minimize instability due to an upcoming force change?
-4. How to take help from a neighboring object to counter an upcoming force change? (P6, ->P5)
+3. How to change the pose to minimize instability due to an upcoming force change? (P6, ->P5)
+4. How to take help from a neighboring object to counter an upcoming force change? (P8, ->P7)
 5. How to change the control strategy in anticipation of a predicted force change to achieve
    better stability? (P9)
 
