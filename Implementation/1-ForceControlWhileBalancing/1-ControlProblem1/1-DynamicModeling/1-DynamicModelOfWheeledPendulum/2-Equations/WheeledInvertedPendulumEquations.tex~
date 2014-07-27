@@ -1,0 +1,124 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[thinlines]{easytable}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+%opening
+\title{Equations Of Motion Of a Wheeled Inverted Pendulum}
+\author{Munzir Zafar}
+
+\begin{document}
+
+\maketitle
+
+The equations derived in \cite{kim2005dynamic} for the motion of two-wheeled inverted pendulum robot are:
+\begin{align}
+ &3(m_c+m_s)\ddot{x}-m_sdcos\phi\ddot{\phi}+m_sdsin\phi({\dot{\phi}}^2+{\dot{\psi}}^2)=-\frac{\alpha_3+\beta_3}{R} \label{eq1}\\
+ &\left\lbrace(3L^2+1/2R^2)m_c+m_sd^2sin^2\phi+I_2\right\rbrace\ddot{\psi}+m_sd^2sin\phi cos\phi\dot{\psi}\dot{\phi}=\frac{L}{R}(\alpha_3-\beta_3) \label{eq2}\\
+ &m_sdcos\phi\ddot{x}+(-m_sd^2-I_3)\ddot{\phi}+m_sd^2sin\phi cos\phi {\dot{\phi}}^2+m_sgdsin\phi=\alpha_3+\beta_3 \label{eq3}
+\end{align} where,
+
+$\dot{x}$ is the heading speed of the robot 
+
+$\phi$ is the rotation of the C.G. about $n_3$-directional 
+
+$\psi$ is the heading angle (angle between $n_1$ and the world frame) 
+
+$\alpha_3$ is the torque of the left wheel 
+
+$\beta_3$ is the torque of the right wheel 
+
+$m_c$ is the mass of the wheel 
+
+$m_s$ is the mass of the body 
+
+$d$ is the distance between wheel axis to C.G. 
+
+$R$ is the radius of the wheel 
+
+$L$ is the half distance between wheels 
+
+$I_2$ is the $n_2$-directional rotational inertia of the body 
+
+$I_3$ is the $n_3$-directional rotational inertia of the body 
+
+$n_2$ is the unit vector pointing vertically upwards 
+
+$n_3$ is the unit vector pointing from the left wheel to the right wheel \newline
+
+The equations that we had derived in our earlier report \cite{munzir2013balancing} did not include
+the rotation about the vertical axis of the robot. One of the equations above represent that motion.
+We will try to first match the equations we had derived with the equations listed above as a sanity
+check. Then we will write down the thrid equation using the variables that we had used in our 
+earlier report. Then we will attempt to derive the equation using Newton-Euler method. Equations from
+our earlier report are listed here:
+
+\begin{align}
+ &[(m+M)r+I_w/r+\eta^2I_m/r]\ddot{x}+(mrlcos\theta-\eta^2I_m)\ddot{\theta} = K_fu-\tau_f+F_{ext}rcos\theta+mrl\dot{\theta}^2sin\theta \label{eq4}\\
+ &(mlcos\theta - \eta^2I_m/r)\ddot{x} + (ml^2 + I + \eta^2I_m)\ddot{\theta} = - K_fu + \tau_f + F_{ext}l + mglsin\theta \label{eq5}
+\end{align} where,
+
+$m$ is the mass of the body
+
+$M$ is the mass of the wheels
+
+$r$ is the radius of the wheel
+
+$I_w$ is the inertia of the wheel
+
+$\eta$ is the gear ratio of the motor
+
+$I_m$ is the motor inertia
+
+$\dot{x}$ is the heading speed
+
+$l$ is the distance between wheel axis and the C.G.
+
+$\theta$ is the rotation of the C.G. about the wheel axis
+
+$K_f$ is the torque to current ratio of the motor
+
+$\tau_f$ is the frictional torque on the wheels
+
+$F_{ext}$ is the external force being applied at the C.G. perpendicular to $l$
+
+$I$ is the inertia of the robot about the wheel axis \newline
+
+Using the symbols used in equations \ref{eq4}-\ref{eq5}, we re-write the equations \ref{eq1}-\ref{eq3}:
+\begin{align}
+ &3(M+m)\ddot{x}-mlcos\theta\ddot{\theta}+mlsin\theta({\dot{\theta}}^2+{\dot{\psi}}^2)=-\frac{K_f(u_1+u_2)}{r} \label{eq6} \\
+ &\left\lbrace(3L^2+1/2r^2)M+ml^2sin^2\theta+I_2\right\rbrace\ddot{\psi}+ml^2sin\theta cos\theta\dot{\psi}\dot{\theta}=\frac{L}{r}K_f(u_1-u_2) \label{eq7} \\
+ &mlcos\theta\ddot{x}+(-ml^2-I)\ddot{\theta}+ml^2sin\theta cos\theta {\dot{\theta}}^2+mglsin\theta=K_f(u_1+u_2) \label{eq8}
+\end{align} where, we have retained the symbols for quantities that do not appear in equations 
+\ref{eq4}-\ref{eq5} i.e. $\psi$ and $I_2$ which represent the heading direction and the inertia 
+about the vertical axis respectively.
+
+In equations \ref{eq6}-\ref{eq8}, we make the following observations:
+\begin{enumerate}[label=(\roman*)]
+ \item Equations \ref{eq6} and \ref{eq8} are the equivalents of the equations \ref{eq4} and \ref{eq5} respectively
+ \item The equations \ref{eq6} and \ref{eq8} ignore the effects of wheel inertia $I_w$, the motor inertia $I_m$, frictional
+ torque $\tau_f$ at the wheel motor and the external force $F_{ext}$, all of which were considered in equations \ref{eq4} and \ref{eq5}
+ \item The terms containing $\ddot{x}$ in equations \ref{eq4} and \ref{eq5} appear with opposite signs in equations \ref{eq6} and \ref{eq8} \label{item:ddotx}
+ \item The term $mrlsin\theta{\dot\theta}^2$ of equation \ref{eq4} appears as $mrlsin\theta({\dot\theta}^2+{\dot\psi}^2)$ in equation \ref{eq6} \label{item:psi}
+ \item Equation \ref{eq4} does not contain the coefficient $3$ with the $\ddot{x}$ term which appears in equation \ref{eq6} \label{item:coeff3}
+ \item Equation \ref{eq5} does not contain the term $ml^2sin\theta cos\theta {\dot{\theta}}^2$ which appears in equation \ref{eq8} \label{item:corriolis}
+\end{enumerate}
+
+ Point number \ref{item:ddotx} may be explained by assuming that the two derivations assumed $x$ increases in different directions.
+Point number \ref{item:psi} may be explained by the fact that equations \ref{eq4} and \ref{eq5} assume constant heading direction i.e. $\dot\psi=0$
+But the last two points are not easy to explain. An interesting fact regarding point regarding \ref{item:coeff3} is that the paper \cite{kim2005dynamic}
+changes the term from $3(m_c+m_s)$ in the original equation that we cited aboce to $3m_c+m_s$ in the later equations of the same paper. It appears that
+the latter expression is more accurate and basically $3m_c$ represents the mass of three wheels of equal mass, one of which is a supporting wheel.
+The paper discusses supporting wheels at length, so it won't be surprise. That solves the mystery of the second last point. What remains now is to
+discuss the very last point. Since we see that there is a typo done in the earlier equation, we can expect this term to have a typo, in that it
+is missing a $\dot\psi$ term. If this was true we will safely assume that the reason this term isn't present in our earlier analysis (i.e. equations 
+\ref{eq4} and \ref{eq5}) is because we assumed constant heading direction i.e. $\dot{\psi}=0$.
+
+
+
+\bibliographystyle{plain}
+\bibliography{reference}
+
+\end{document}
