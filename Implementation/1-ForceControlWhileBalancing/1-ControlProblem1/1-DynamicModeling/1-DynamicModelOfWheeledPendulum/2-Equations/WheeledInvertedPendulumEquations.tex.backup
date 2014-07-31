@@ -13,6 +13,13 @@
 
 \maketitle
 
+In an earlier report \cite{munzir2013balancing} we had derived using Newton-Euler method the equations of
+motion of a wheeled inverted pendulum. But this model did not take into account the spin motion of the
+robot. Before attempting to derive the new equations including the spin, we will look at the equations
+derived in the existing literature.
+
+\section{Using the equation from \cite{kim2005dynamic}}
+
 The equations derived in \cite{kim2005dynamic} for the motion of two-wheeled inverted pendulum robot are:
 \begin{align}
  &3(m_c+m_s)\ddot{x}-m_sdcos\phi\ddot{\phi}+m_sdsin\phi({\dot{\phi}}^2+{\dot{\psi}}^2)=-\frac{\alpha_3+\beta_3}{R} \label{eq1}\\
@@ -102,17 +109,101 @@ In equations \ref{eq6}-\ref{eq8}, we make the following observations:
  torque $\tau_f$ at the wheel motor and the external force $F_{ext}$, all of which were considered in equations \ref{eq4} and \ref{eq5}
  \item The terms containing $\ddot{x}$ in equations \ref{eq4} and \ref{eq5} appear with opposite signs in equations \ref{eq6} and \ref{eq8} \label{item:ddotx}
  \item The term $mrlsin\theta{\dot\theta}^2$ of equation \ref{eq4} appears as $mrlsin\theta({\dot\theta}^2+{\dot\psi}^2)$ in equation \ref{eq6} \label{item:psi}
- \item Equation \ref{eq4} does not contain the coefficient $3$ with the $\ddot{x}$ term which appears in equation \ref{eq6}
- \item Equation \ref{eq5} does not contain the term $ml^2sin\theta cos\theta {\dot{\theta}}^2$ which appears in equation \ref{eq8}
+ \item Equation \ref{eq4} does not contain the coefficient $3$ with the $\ddot{x}$ term which appears in equation \ref{eq6} \label{item:coeff3}
+ \item Equation \ref{eq5} does not contain the term $ml^2sin\theta cos\theta {\dot{\theta}}^2$ which appears in equation \ref{eq8} \label{item:corriolis}
 \end{enumerate}
 
-Point number \ref{item:ddotx} may be explained by assuming that the two derivations assumed $x$ increases in different directions.
+ Point number \ref{item:ddotx} may be explained by assuming that the two derivations assumed $x$ increases in different directions.
 Point number \ref{item:psi} may be explained by the fact that equations \ref{eq4} and \ref{eq5} assume constant heading direction i.e. $\dot\psi=0$
-But the last two points are not easy to explain.
+But the last two points are not easy to explain. An interesting fact regarding point regarding \ref{item:coeff3} is that the paper \cite{kim2005dynamic}
+changes the term from $3(m_c+m_s)$ in the original equation that we cited aboce to $3m_c+m_s$ in the later equations of the same paper. It appears that
+the latter expression is more accurate and basically $3m_c$ represents the mass of three wheels of equal mass, one of which is a supporting wheel.
+The paper discusses supporting wheels at length, so it won't be surprise. That solves the mystery of the second last point. What remains now is to
+discuss the very last point. Since we see that there is a typo done in the earlier equation, we can expect this term to have a typo, in that it
+is missing a $\dot\psi$ term. If this was true we will safely assume that the reason this term isn't present in our earlier analysis (i.e. equations 
+\ref{eq4} and \ref{eq5}) is because we assumed constant heading direction i.e. $\dot{\psi}=0$.
 
+\section{Using equations from \cite{li2012advanced}}
+In the book \cite{li2012advanced} following equations of motion are derived:
+
+\begin{align}
+ &\left(M+2M_w+m+2\frac{I_w}{r^2}\right)\dot{v}+ml\ddot{\alpha}cos\alpha-ml{\dot{\alpha}}^2sin\alpha = \frac{\tau_l}{r}+\frac{\tau_r}{r}+d_l+d_r \label{eq9} \\
+ &\left(I_p+2\left(M_w+\frac{I_w}{r^2}\right)d^2\right)\dot{\omega}=2d\left(\frac{\tau_l}{r}-\frac{\tau_r}{r}+d_l-d_r\right) \label{eq10} \\
+ &ml\dot{v}cos\alpha+\left(ml^2+I_M\right)\ddot{\alpha}-mglsin\alpha=0 \label{eq11}
+\end{align} where,
+
+$M$ is the mass of the platform
+
+$M_w$ is the mass of one wheel	
+
+$m$ is the mass of the robot
+
+$I_w$ is the inertia of one wheel
+
+$r$ is the radius of one wheel
+
+$v$ is the heading speed of the wheel
+
+$l$ is the distance from C.G. to wheel axis
+
+$\alpha$ is the rotation of C.G. about the wheel axis
+
+$\tau_l$ is the torque applied by left wheel motor
+
+$\tau_r$ is the torque applied by right wheem motor
+
+$d_l$ is the external force acting on the left wheel
+
+$d_r$ is the external force acting on the right wheel
+\newline
+Now, replacing these variables with the ones we had used in \cite{munzir2013balancing}, 
+equations, \ref{eq9}-\ref{eq11} become:
+
+\begin{align}
+ &\left(M_p+M+m+\frac{I_w}{r^2}\right)\ddot{x}+ml\ddot{\theta}cos\theta-ml{\dot{\theta}}^2sin\theta = \frac{K_fu_1}{r}+\frac{K_fu_2}{r}+d_l+d_r \label{eq12} \\
+ &\left(I_z+\left(M+\frac{I_w}{r^2}\right)L^2\right)\ddot{\psi}=2L\left(\frac{K_fu_1}{r}-\frac{K_fu_2}{r}+d_l-d_r\right) \label{eq13} \\
+ &ml\ddot{x}cos\theta+\left(ml^2+I\right)\ddot{\theta}-mglsin\theta=0 \label{eq14}
+\end{align}
+
+Following observation are made:
+\begin{itemize}[i]
+ \item Equations \ref{eq12} and \ref{eq14} are the equivalents of equations \ref{eq4} and \ref{eq5} respectively
+ \item Equation \ref{eq13} represents spin
+ \item There is no difference between equation \ref{eq12} and \ref{eq4} except that $(a)$ equation \ref{eq4} considers
+ motor inertia $I_m$ while \ref{eq12} does not and $(b)$ eq \ref{eq12} consider platform as different from the pendulum while 
+ krang has no such thing as a platform so the additional mass term $M_p$ in equation \ref{eq12} is not there in \ref{eq4}
+ \item There is no difference between equation \ref{eq12} and \ref{eq4} except that $(a)$ equation \ref{eq4} considers
+ motor inertia $I_m$ while \ref{eq12} does not and $(b)$ the effect of counter torque on the pendulum is not considered
+ in the eq \ref{eq12} as the pendulum does not experience the countertorque due to it being on a platform and not 
+ directly attached to the motor so we don't see any term on the right hand side of eq \ref{eq12}
+ \item Equation \ref{eq13} when compared with eq \ref{eq7} that represented spin in the previous section we see that
+ the coefficient of $\ddot{\psi}}$ was a funtion of $\theta$ there but here it is not. The reason is that $I_z$ term
+ in eq \ref{eq13} is actually a function of $\theta$. That function is written over there but not here.
+ \item Also there is a $\dot{\psi}}$ term in equation \ref{eq7} that is not there in eq \ref{eq13}. It seems like equation \ref{eq7}
+ makes more sense as a non-zero $\dot{\theta}$ will introduce a co
+ \item 
+\end{itemize}
 
 
 \bibliographystyle{plain}
 \bibliography{reference}
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

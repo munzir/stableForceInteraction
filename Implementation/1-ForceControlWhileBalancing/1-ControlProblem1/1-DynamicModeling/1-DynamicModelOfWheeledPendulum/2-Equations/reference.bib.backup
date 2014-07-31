@@ -8,3 +8,13 @@
   year={2005},
   publisher={Springer}
 }
+
+@techreport{munzir2013balancing,
+    author={Zafar, Munzir and Erdogan, Can and Stilman, Mike},
+    title={Towards Stable Balancing},
+    institution={Georgia Institute of Technology. Center for Robotics and Intelligent Machines},
+    type={Technical Report}, 
+    url={https://smartech.gatech.edu/handle/1853/51961},
+    year={2013}
+}
+

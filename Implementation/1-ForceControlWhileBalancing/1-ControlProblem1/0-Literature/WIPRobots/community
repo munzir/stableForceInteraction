@@ -1,0 +1,32 @@
+the first two-wheel inverted
+pendulum robot was built by Kazuo Yamafuji, a Professor Emeritus at the University
+of Electro-Communications in Tokyo, in 1986, according to an article in the Japan
+Times [8].
+---
+The Equibot shown in Fig. 1.2 is balancing robot developed by Dani Piponi [7].
+---
+The Segbot shown in Fig. 1.3 was developed in the spring of 2004 [1].
+---
+In Fig. 1.4, the UMASS uBot-5 [11] is another WIP robot, using two wheels in
+a differential drive configuration for mobility
+---
+Another example of an inverted pendulum that uses accelerometer and gyroscope
+is David P. Anderson’s nBot [9],
+---
+The Industrial Electronics Laboratory at the Swiss Federal Institute of Technology
+has developed robot JOE [56]
+---
+As an attempt to solve the robotic unicycle problem, in Fig. 1.7, Ballbot [82]
+has been developed to balance itself on its single spherical wheel while traveling
+around.
+---
+The Rezero shown in Fig. 1.8, is another ball-driven balancing robot [10]
+---
+In 2000, a two-wheeled vehicle named B2 show in Fig. 1.9 for urban transformation
+was developed and demonstrated at INRIA [104].
+---
+In Fig. 1.10, a commercialized WIP
+robot SEGWAY HT, invented by Dean Kamen [109], has been very popular in recent
+years
+---
+krang
