@@ -166,7 +166,7 @@ equations, \ref{eq9}-\ref{eq11} become:
 \end{align}
 
 Following observation are made:
-\begin{itemize}[i]
+\begin{enumerate}[label=(\roman*)]
  \item Equations \ref{eq12} and \ref{eq14} are the equivalents of equations \ref{eq4} and \ref{eq5} respectively
  \item Equation \ref{eq13} represents spin
  \item There is no difference between equation \ref{eq12} and \ref{eq4} except that $(a)$ equation \ref{eq4} considers
@@ -177,13 +177,95 @@ Following observation are made:
  in the eq \ref{eq12} as the pendulum does not experience the countertorque due to it being on a platform and not 
  directly attached to the motor so we don't see any term on the right hand side of eq \ref{eq12}
  \item Equation \ref{eq13} when compared with eq \ref{eq7} that represented spin in the previous section we see that
- the coefficient of $\ddot{\psi}}$ was a funtion of $\theta$ there but here it is not. The reason is that $I_z$ term
+ the coefficient of $\ddot{\psi}$ was a funtion of $\theta$ there but here it is not. The reason is that $I_z$ term
  in eq \ref{eq13} is actually a function of $\theta$. That function is written over there but not here.
- \item Also there is a $\dot{\psi}}$ term in equation \ref{eq7} that is not there in eq \ref{eq13}. It seems like equation \ref{eq7}
- makes more sense as a non-zero $\dot{\theta}$ will introduce a co
- \item 
-\end{itemize}
+ \item Also there is a $\dot{\psi}$ term in equation \ref{eq7} that is not there in eq \ref{eq13}. It seems like equation \ref{eq7}
+ makes more sense as a non-zero $\dot{\theta}$ will introduce a corriolis force in the system that is apparently not taken into
+ account by equation \ref{eq13}
+\end{enumerate}
 
+\section{Comparing \cite{kim2005dynamic} and \cite{li2012advanced}}
+
+It appears that the analysis done by \cite{kim2005dynamic} is more correct with regards to understanding of the dynamics,
+only that it seems to have introduced some typos and thus can't be trusted blindly. The analysis in \cite{li2012advanced}
+on the other hand is very cleanly explained and does not contain typos, it is weak in representation of all dynamic effects
+in the system. The way we will move forward is by using the expressions for velocities that are more completely derived
+in \cite{kim2005dynamic} and use the detailed procedures explained in \cite{li2012advanced} to come up with expressions
+of dynamics that are useful for our purposes.
+
+
+\section{Deriving the Dynamic Model for our robot}
+
+In \cite{kim2005dynamic} the expressions we have for the kinematics of the system are as follows:
+
+Angular velocity of the body and the velocity at the center of gravity in the body are governed as follows:
+\begin{align} \label{eq:kinem1} \begin{split}
+ {}^F\mathbf{\omega}^S &= u_2\mathbf{n}_2 + u_3\mathbf{n}_3 \\
+ {}^F\mathbf{v}^{S^C} &= u_1\mathbf{n}_1  \\
+ {}^F\mathbf{v}^{S^*} &= {}^F\mathbf{v}^{S^C} + {}^F\mathbf{\omega}^S\times \mathbf{d}\\
+  &= (u_1-u_3dcos\phi)\mathbf{n}_1 - u_3dsin\phi\mathbf{n}_2 + u_2dsin\phi\mathbf{n}_3  
+\end{split} \end{align} 
+
+The angular velocities of each wheel and the velocity at the center of each wheel are governed as follows:
+\begin{align} \label{eq:kinem2} \begin{split}
+ &{}^F\mathbf{\omega}^{C_1} = \left(-\frac{1}{R}u_1+\frac{L}{R}u_2\right)\mathbf{n}_3+u_2\mathbf{n}_2 \\
+ &{}^F\mathbf{v}^{C_1^*} = (u_1-u_2L)\mathbf{n}_1 
+\end{split} \end{align}  
+\begin{align} \label{eq:kinem3} \begin{split}
+ &{}^F\mathbf{\omega}^{C_2} = \left(-\frac{1}{R}u_1-\frac{L}{R}u_2\right)\mathbf{n}_3+u_2\mathbf{n}_2 \\
+ &{}^F\mathbf{v}^{C_2^*} = (u_1-u_2L)\mathbf{n}_1 
+\end{split} \end{align} 
+
+The angular accelerations for each left and right wheel are governed as follows:
+\begin{align} \label{eq:kinem4} \begin{split}
+ &{}^F\mathbf{\alpha}^S=\dot{u}_2\mathbf{n}_2+\dot{u}_3\mathbf{n}_3 \\
+ &{}^F\mathbf{\alpha}^{C_1}=\left(-\frac{1}{R}u_1u_2+\frac{L}{R}u_2^2\right)\mathbf{n}_1+\dot{u}_2\mathbf{n}_2 + 
+ \left(-\frac{1}{R}\dot{u}_1+\frac{L}{R}\dot{u}_2\right)\mathbf{n}_3 \\
+ &{}^F\mathbf{\alpha}^{C_2}=\left(-\frac{1}{R}u_1u_2-\frac{L}{R}u_2^2\right)\mathbf{n}_1+\dot{u}_2\mathbf{n}_2 + 
+ \left(-\frac{1}{R}\dot{u}_1-\frac{L}{R}\dot{u}_2\right)\mathbf{n}_3 
+\end{split} \end{align} 
+
+The acceleration of the robot's body and the acceleration at the center of each wheel are governed as follows:
+\begin{align} \label{eq:kinem5} \begin{split}
+ {}^F\mathbf{a}^{S^*} &= \frac{d{}^F\mathbf{v}^{S^C}}{dt}+{}^F\mathbf{\alpha}^S\times \overline{S^CS^*}+{}^F\mathbf{\omega}^S\times \left({}^F\mathbf{\omega}^S\times \overline{S^CS^*}\right) \\
+ &=\begin{cases}
+    \dot{u}_1-\dot{u}_3dcos\phi+\left(u_2^2+u_3^2\right)dsin\phi &\mathbf{n}_1 \\
+    -\dot{u}_3dsin\phi-u_3^2dcos\phi &\mathbf{n}_2 \\
+    +\dot{u}_2dsin\phi+u_2u_3dcos\phi &\mathbf{n}_3 
+   \end{cases} \\
+ {}^F\mathbf{a}^{C_1^*} &= \frac{d{}^F\mathbf{v}^{S^C}}{dt}+{}^F\mathbf{\alpha}^{S_C}\times \overline{S^CC_1^*}+{}^F\mathbf{\omega}^{S_C}\times \left({}^F\mathbf{\omega}^{S_C}\times \overline{S^CC_1^*}\right) \\
+ &=\begin{cases}
+    \dot{u}_1-L\dot{u}_2 &\mathbf{n}_1 \\
+    +0 &\mathbf{n}_2 \\
+    +Lu_2^2 &\mathbf{n}_3 
+   \end{cases} \\
+ {}^F\mathbf{a}^{C_2^*} &= \frac{d{}^F\mathbf{v}^{S^C}}{dt}+{}^F\mathbf{\alpha}^{S_C}\times \overline{S^CC_2^*}+{}^F\mathbf{\omega}^{S_C}\times \left({}^F\mathbf{\omega}^{S_C}\times \overline{S^CC_2^*}\right) \\
+ &=\begin{cases}
+    \dot{u}_1+L\dot{u}_2 &\mathbf{n}_1 \\
+    +0 &\mathbf{n}_2 \\
+    -Lu_2^2 &\mathbf{n}_3 
+   \end{cases} 
+\end{split} \end{align} where,
+$F$, $S$, $C_1$ and $C_2$ denote world, main body, left wheel and right wheel frames
+$\mathbf{n}_1$, $\mathbf{n}_2$, $\mathbf{n}_3$ are unit vectors along forward, upward and left-to-right-wheel directions respectively
+$u_1$, $u_2$, $u_3$ denote $x$ (forward motion), $\psi$ (spin motion) and $\phi$ (tilt of main body) 
+respectively and they are positive along/about the unit vectors $\mathbf{n}_1$, $\mathbf{n}_2$, $\mathbf{n}_3$
+$\mathbf{d}$ is the vector from wheel axis center to the center of mass of the main body
+$L$ is the distance between the wheels
+$R$ is the radius of the wheels
+${}^F\mathbf{\omega}^S$
+${}^F\mathbf{\omega}^{C_1}$
+${}^F\mathbf{\omega}^{C_2}$
+${}^F\mathbf{v}^{S^C}$
+${}^F\mathbf{v}^{S^*}$
+${}^F\mathbf{v}^{C_1^*}$
+${}^F\mathbf{v}^{C_2^*}$
+${}^F\mathbf{\alpha}^S$
+${}^F\mathbf{\alpha}^{C_1}$
+${}^F\mathbf{\alpha}^{C_2}$
+${}^F\mathbf{a}^{S^*}$
+${}^F\mathbf{a}^{C_1^*}$
+${}^F\mathbf{a}^{C_2^*}$
 
 \bibliographystyle{plain}
 \bibliography{reference}

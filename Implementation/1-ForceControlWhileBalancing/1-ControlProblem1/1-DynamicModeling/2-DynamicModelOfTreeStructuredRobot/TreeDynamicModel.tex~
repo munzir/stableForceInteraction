@@ -1,0 +1,126 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[thinlines]{easytable}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+% \scalemath{1.0}
+
+%opening
+\title{Equations Of Motion of Krang on Fixed Wheels}
+\author{Munzir Zafar}
+
+\begin{document}
+
+\maketitle
+
+In this report we attempt to find the dynamic model of Golem Krang with its wheels fixed. So it
+is reduced to a serial robot with a tree-structure (due to two arms branching out). Figure \ref{fig:frames}
+shows the frames of references we will be using to determine the transforms and the coordinates on the robot.
+We denote these frames using symbol $R_i$ where $i \in \lbrace 0$, $1$, $2$, $3$, $4l$, $5l$, $6l$, $7l$,
+$8l$, $9l$, $10l$, $4r$, $5r$, $6r$, $7r$, $8r$, $9r$, $10r \rbrace$. $R_0$ is the world frame fixed in the middle of
+the two wheels. $R_1, R_2, R_3$ are fixed on the base, spine and torso with their rotations represented
+by $q_{imu}$, $q_w$ and $q_{torso}$ respectively. Frames $R_{4l}, ... R_{10l}$ are frames fixed on the links left 7-DOF
+arm with their motion represented by $q_{1l}, ... q_{7l}$. Similarly, frames $R_{4r}, ... R_{10r}$ are frames 
+fixed on the links right 7-DOF arm with their motion represented by $q_{1r}, ... q_{7r}$. All equations that do not 
+show $r$ or $l$ in the subscript where they are supposed to, it will mean that the equation is valid for both
+subscripts.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=1.0\textwidth]{Figures/framesLHRule.png}
+ \caption{Frames of references on the robot}
+ \label{fig:frames}
+\end{figure}
+
+We will be using the Lagrange formulation with a systematic approach presented in \cite{khalil2004modeling} 
+to derive the equations of motion.
+
+\section{Transformations}
+
+The transformation of frame $R_i$ into frame $R_j$ is represented by the homogeneous transformation matrix
+${}^{i}T_j$ such that.
+\begin{align}
+ {}^{i}T_j = \left[\begin{matrix}{}^{i}s_j & {}^{i}n_j & {}^{i}a_j & {}^{i}P_j \end{matrix} \right] 
+  = \left[\begin{matrix} & {}^iA_j & & {}^iP_j \\ 0 & 0 & 0 & 1 \end{matrix}\right]
+  = \left[\begin{matrix}s_x & n_x & a_x & P_x  \\ s_y & n_y & a_y & P_y 
+  \\ s_z & n_z & a_z & P_z \\ 0 & 0 & 0 & 1 \end{matrix} \right]
+\end{align}
+where ${}^is_j$, ${}^in_j$ and ${}^ia_j$ contain the components of the unit vectors along the $x_j$, 
+$y_j$ and $z_j$ axes respectively expressed in frame $R_i$, and where ${}^iP_j$ is the vector representing
+the coordinates of the origin of frame $R_j$ expressed in frame $R_i$.
+
+The transformation matrix ${}^iT$ can be interpreted as: (a) the transformation from frame $R_i$ to frame $R_j$
+and (b) the representation of frame $R_j$ with respect to frame $R_i$. Using figure \ref{fig:frames}, we can
+write down these transformation matrices for our system as follows:
+
+\[
+ \scalemath{0.75}{{}^0T_1 = \left[\begin{matrix} 0 & sq_{imu} & -cq_{imu} & 0 \\ -1 & 0 & 0 & 0 \\ 0 & cq_{imu} & sq_{imu} & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right],
+ {}^1T_2 = \left[\begin{matrix} 1 & 0 & 0 & 0 \\ 0 & cq_w & sq_w & L_1 \\ 0 & -sq_w & cq_w & -L_2 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^2T_3 = \left[\begin{matrix} -cq_{torso} & 0 & -sq_{torso} & 0 \\ 0 & 1 & 0 & L_3 \\ sq_{torso} & 0 & -cq_{torso} & L_4 \\ 0 & 0 & 0 & 1 \end{matrix}\right],}
+\]
+
+\[
+ \scalemath{0.75}{{}^3T_{4l} = \left[\begin{matrix} 0 & 1 & 0 & L_6 \\ cq_{1l} & 0 & -sq_{1l} & L_5 \\ -sq_{1l} & 0 & -cq_{1l} & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^3T_{4r} = \left[\begin{matrix} 0 & -1 & 0 & -L_6 \\ cq_{1r} & 0 & -sq_{1r} & L_5 \\ sq_{1r} & 0 & cq_{1r} & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^4T_5 = \left[\begin{matrix} -1 & 0 & 0 & 0 \\ 0 & -cq_2 & -sq_2 & 0 \\ 0 & -sq_2 & cq_2 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], }
+\]
+ 
+\[
+ \scalemath{0.75}{ {}^5T_6 = \left[\begin{matrix} -cq_3 & 0 & sq_3 & 0 \\ 0 & -1 & 0 & -L_7 \\ sq_3 & 0 & cq_3 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^6T_7 = \left[\begin{matrix} -1 & 0 & 0 & 0 \\ 0 & -cq_4 & -sq_4 & 0 \\ 0 & -sq_4 & cq_4 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^7T_8 = \left[\begin{matrix} -cq_5 & 0 & sq_5 & 0 \\ 0 & -1 & 0 & -L_8 \\ sq_5 & 0 & cq_5 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], }
+\]
+ 
+\[
+ \scalemath{0.75}{{}^8T_9 = \left[\begin{matrix} -1 & 0 & 0 & 0 \\ 0 & -cq_6 & -sq_6 & 0 \\ 0 & -sq_6 & cq_6 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^9T_{10} = \left[\begin{matrix} -cq_7 & -sq_7 & 0 & 0 \\ 0 & 0 & -1 & -L_9 \\ sq_7 & -cq_7 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right] }
+\]
+
+
+\section{Angular and Linear Velocities of Frames}
+The angular and linear velocities of the frames can be calculated using the recursive formulation:
+
+\begin{align}
+ &{}^j\omega_j={}^jA_i{}^i\omega_i+{}^je_j \\
+ &{}^jV_j={}^jA_i\left({}^iV_i+{}^i\omega_i \times {}^iP_j\right)
+\end{align} where ${}^i\omega_j$ and ${}^iV_j$ denote the angular and linear velocities repectively of frame $j$ measured with respect to the 
+world frame and represented in frame $i$. ${}^je_j$ denotes the local angular velocity of frame $j$ represented in frame $j$. 
+$i, j \in \mathbb{F}$ identify the frames and $i$ identifies the antecedent frame of $j$. So, the rotation ${}^jA_i$ and the 
+translation ${}^jP_i$ that appear in these equations can not be directly deduced from the transformations listed in the previous section, 
+as the they all represent ${}^iT_j$ (note the position of $i$ and $j$). Rather, we need to use following expressions to deduce our matrices:
+\begin{align}
+ &{}^jA_i = {}^iA_j^T \nonumber \\ 
+ &{}^jP_i = -{}^iA_j^T\,{}^iP_j \nonumber
+\end{align}
+
+
+
+Since frame $R_0$ is fixed ${}^0\omega_0$ and ${}^0V_0$ are both $\left[\begin{matrix}0 & 0 & 0\end{matrix}\right]^T$. We can deduce local angular velocities
+of the frames using figure \ref{fig:frames} as follows.
+
+\[
+{}^1e_1 = \left[\begin{matrix}-\dot{q}_{imu} & 0 & 0\end{matrix}\right]^T, 
+{}^2e_2 = \left[\begin{matrix}-\dot{q}_w & 0 & 0\end{matrix}\right]^T, 
+{}^3e_3 = \left[\begin{matrix}0 & -\dot{q}_{torso} & 0\end{matrix}\right]^T, 
+{}^4e_4 = \left[\begin{matrix}0 & -\dot{q}_1 & 0\end{matrix}\right]^T,
+\]
+\[
+{}^5e_5 = \left[\begin{matrix}-\dot{q}_2 & 0 & 0\end{matrix}\right]^T, 
+{}^6e_6 = \left[\begin{matrix}0 & -\dot{q}_3 & 0\end{matrix}\right]^T, 
+{}^7e_7 = \left[\begin{matrix}-\dot{q}_4 & 0 & 0\end{matrix}\right]^T, 
+{}^8e_8 = \left[\begin{matrix}0 & -\dot{q}_5 & 0\end{matrix}\right]^T,
+\]
+\[
+{}^9e_9 = \left[\begin{matrix}-\dot{q}_6 & 0 & 0\end{matrix}\right]^T, 
+{}^{10}e_{10} = \left[\begin{matrix}0 & 0 & -\dot{q}_7\end{matrix}\right]^T
+\]
+
+\bibliographystyle{plain}
+\bibliography{reference}
+
+\end{document}
