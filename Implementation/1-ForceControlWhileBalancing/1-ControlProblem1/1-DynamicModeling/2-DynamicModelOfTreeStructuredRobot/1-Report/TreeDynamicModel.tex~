@@ -140,7 +140,7 @@ write down these transformation matrices for our system as follows:
 The angular and linear velocities of the frames can be calculated using the recursive formulation:
 
 \begin{align}
- &{}^j\omega_j={}^jA_i{}^i\omega_i+{}^je_jq_j \\
+ &{}^j\omega_j={}^jA_i{}^i\omega_i+{}^je_j\dot{q}_j \\
  &{}^jV_j={}^jA_i\left({}^iV_i+{}^i\omega_i \times {}^iP_j\right)
 \end{align} where ${}^i\omega_j$ and ${}^iV_j$ denote the angular and linear velocities repectively of frame $j$ measured with respect to the 
 world frame and represented in frame $i$. ${}^je_j$ denotes the direction of local angular velocity of frame $j$ represented in frame $j$. 

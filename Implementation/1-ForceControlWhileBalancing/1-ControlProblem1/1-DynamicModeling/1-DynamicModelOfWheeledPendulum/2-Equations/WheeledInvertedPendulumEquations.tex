@@ -4,6 +4,48 @@
 \usepackage[thinlines]{easytable}
 \usepackage{enumitem}
 \usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+ 
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+ 
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab, % Use MATLAB
+frame=single, % Single frame around code
+basicstyle=\tiny\ttfamily, % Use small true type font
+keywordstyle=[1]\color{Blue}\bfseries, % MATLAB functions bold and blue
+keywordstyle=[2]\color{Purple}, % MATLAB function arguments purple
+keywordstyle=[3]\color{Blue}\underbar, % User functions underlined and blue
+identifierstyle=, % Nothing special about identifiers
+% Comments small dark green courier
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+stringstyle=\color{Purple}, % Strings are purple
+showstringspaces=false, % Don't put marks in string spaces
+tabsize=5, % 5 spaces per tab
+%
+%%% Put standard MATLAB functions not included in the default
+%%% language here
+morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+%
+%%% Put MATLAB function parameters here
+morekeywords=[2]{on, off, interp},
+%
+%%% Put user defined functions here
+morekeywords=[3]{FindESS, homework_example},
+%
+morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+numbers=left, % Line numbers on left
+firstnumber=1, % Line numbers start with line 1
+numberstyle=\tiny\color{Blue}, % Line numbers are blue
+stepnumber=5 % Line numbers go in steps of 5
+}
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+
+
 
 %opening
 \title{Equations Of Motion Of a Wheeled Inverted Pendulum}
@@ -196,78 +238,271 @@ of dynamics that are useful for our purposes.
 
 \section{Deriving the Dynamic Model for our robot}
 
-In \cite{kim2005dynamic} the expressions we have for the kinematics of the system are as follows:
 
-Angular velocity of the body and the velocity at the center of gravity in the body are governed as follows:
-\begin{align} \label{eq:kinem1} \begin{split}
- {}^F\mathbf{\omega}^S &= u_2\mathbf{n}_2 + u_3\mathbf{n}_3 \\
- {}^F\mathbf{v}^{S^C} &= u_1\mathbf{n}_1  \\
- {}^F\mathbf{v}^{S^*} &= {}^F\mathbf{v}^{S^C} + {}^F\mathbf{\omega}^S\times \mathbf{d}\\
-  &= (u_1-u_3dcos\phi)\mathbf{n}_1 - u_3dsin\phi\mathbf{n}_2 + u_2dsin\phi\mathbf{n}_3  
-\end{split} \end{align} 
 
-The angular velocities of each wheel and the velocity at the center of each wheel are governed as follows:
-\begin{align} \label{eq:kinem2} \begin{split}
- &{}^F\mathbf{\omega}^{C_1} = \left(-\frac{1}{R}u_1+\frac{L}{R}u_2\right)\mathbf{n}_3+u_2\mathbf{n}_2 \\
- &{}^F\mathbf{v}^{C_1^*} = (u_1-u_2L)\mathbf{n}_1 
-\end{split} \end{align}  
-\begin{align} \label{eq:kinem3} \begin{split}
- &{}^F\mathbf{\omega}^{C_2} = \left(-\frac{1}{R}u_1-\frac{L}{R}u_2\right)\mathbf{n}_3+u_2\mathbf{n}_2 \\
- &{}^F\mathbf{v}^{C_2^*} = (u_1-u_2L)\mathbf{n}_1 
-\end{split} \end{align} 
+\begin{figure}
+ \centering
+ \includegraphics[width=0.3\textwidth]{Figures/referenceImage.png}
+ \caption{Frames of references on the robot}
+ \label{fig:frames}
+\end{figure}
 
-The angular accelerations for each left and right wheel are governed as follows:
-\begin{align} \label{eq:kinem4} \begin{split}
- &{}^F\mathbf{\alpha}^S=\dot{u}_2\mathbf{n}_2+\dot{u}_3\mathbf{n}_3 \\
- &{}^F\mathbf{\alpha}^{C_1}=\left(-\frac{1}{R}u_1u_2+\frac{L}{R}u_2^2\right)\mathbf{n}_1+\dot{u}_2\mathbf{n}_2 + 
- \left(-\frac{1}{R}\dot{u}_1+\frac{L}{R}\dot{u}_2\right)\mathbf{n}_3 \\
- &{}^F\mathbf{\alpha}^{C_2}=\left(-\frac{1}{R}u_1u_2-\frac{L}{R}u_2^2\right)\mathbf{n}_1+\dot{u}_2\mathbf{n}_2 + 
- \left(-\frac{1}{R}\dot{u}_1-\frac{L}{R}\dot{u}_2\right)\mathbf{n}_3 
-\end{split} \end{align} 
+\subsection{Kinetic and Potential Energy of the Body}
+\begin{align} \begin{split}
+ {}^0V_0 &= \left[\begin{matrix} \dot{x} & 0 & 0 \end{matrix}\right]^T \\
+ {}^0\omega_0 &= \left[\begin{matrix} 0 & \dot{\psi} & 0 \end{matrix}\right]^T \\
+ {}^0\mathbf{g} &= \left[\begin{matrix} 0 & -g & 0 \end{matrix}\right]^T \\
+ {}^0T_1 &= \left[\begin{matrix}  & {}^0A_1 & & {}^0P_1 \\ 0 & 0 & 0 & 1\end{matrix}\right]
+ = \left[\begin{matrix} {}^0\mathbf{x}_1 & {}^0\mathbf{y}_1 & {}0^\mathbf{z}_1 & {}^0P_1 \\ 0 & 0 & 0 & 1\end{matrix}\right] 
+ = \left[\begin{matrix} cos\phi & -sin\phi & 0 & 0 \\ sin\phi & cos\phi & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{matrix}\right] \\
+ {}^1e_1 &= \left[\begin{matrix} 0 & 0 & 1 \end{matrix}\right]^T \\
+ \dot{q}_1 &= \dot{\phi} \\
+\end{split} \end{align}
 
-The acceleration of the robot's body and the acceleration at the center of each wheel are governed as follows:
-\begin{align} \label{eq:kinem5} \begin{split}
- {}^F\mathbf{a}^{S^*} &= \frac{d{}^F\mathbf{v}^{S^C}}{dt}+{}^F\mathbf{\alpha}^S\times \overline{S^CS^*}+{}^F\mathbf{\omega}^S\times \left({}^F\mathbf{\omega}^S\times \overline{S^CS^*}\right) \\
- &=\begin{cases}
-    \dot{u}_1-\dot{u}_3dcos\phi+\left(u_2^2+u_3^2\right)dsin\phi &\mathbf{n}_1 \\
-    -\dot{u}_3dsin\phi-u_3^2dcos\phi &\mathbf{n}_2 \\
-    +\dot{u}_2dsin\phi+u_2u_3dcos\phi &\mathbf{n}_3 
-   \end{cases} \\
- {}^F\mathbf{a}^{C_1^*} &= \frac{d{}^F\mathbf{v}^{S^C}}{dt}+{}^F\mathbf{\alpha}^{S_C}\times \overline{S^CC_1^*}+{}^F\mathbf{\omega}^{S_C}\times \left({}^F\mathbf{\omega}^{S_C}\times \overline{S^CC_1^*}\right) \\
- &=\begin{cases}
-    \dot{u}_1-L\dot{u}_2 &\mathbf{n}_1 \\
-    +0 &\mathbf{n}_2 \\
-    +Lu_2^2 &\mathbf{n}_3 
-   \end{cases} \\
- {}^F\mathbf{a}^{C_2^*} &= \frac{d{}^F\mathbf{v}^{S^C}}{dt}+{}^F\mathbf{\alpha}^{S_C}\times \overline{S^CC_2^*}+{}^F\mathbf{\omega}^{S_C}\times \left({}^F\mathbf{\omega}^{S_C}\times \overline{S^CC_2^*}\right) \\
- &=\begin{cases}
-    \dot{u}_1+L\dot{u}_2 &\mathbf{n}_1 \\
-    +0 &\mathbf{n}_2 \\
-    -Lu_2^2 &\mathbf{n}_3 
-   \end{cases} 
-\end{split} \end{align} where,
-$F$, $S$, $C_1$ and $C_2$ denote world, main body, left wheel and right wheel frames
-$S^C$ denotes the center of mass of the main body
-$\mathbf{n}_1$, $\mathbf{n}_2$, $\mathbf{n}_3$ are unit vectors along forward, upward and left-to-right-wheel directions respectively
-$u_1$, $u_2$, $u_3$ denote $x$ (forward motion), $\psi$ (spin motion) and $\phi$ (tilt of main body) 
-respectively and they are positive along/about the unit vectors $\mathbf{n}_1$, $\mathbf{n}_2$, $\mathbf{n}_3$
-$\mathbf{d}$ is the vector from wheel axis center to the center of mass of the main body
-$L$ is the distance between the wheels
-$R$ is the radius of the wheels
-${}^F\mathbf{\omega}^S$
-${}^F\mathbf{\omega}^{C_1}$
-${}^F\mathbf{\omega}^{C_2}$
-${}^F\mathbf{v}^{S^C}$
-${}^F\mathbf{v}^{S^*}$
-${}^F\mathbf{v}^{C_1^*}$
-${}^F\mathbf{v}^{C_2^*}$
-${}^F\mathbf{\alpha}^S$
-${}^F\mathbf{\alpha}^{C_1}$
-${}^F\mathbf{\alpha}^{C_2}$
-${}^F\mathbf{a}^{S^*}$
-${}^F\mathbf{a}^{C_1^*}$
-${}^F\mathbf{a}^{C_2^*}$
+\begin{align} \begin{split}
+ {}^1\omega_1 &= {}^1A_0{}^0\omega_0+{}^1e_1\dot{q}_1 \\
+ {}^1V_1 &= {}^1A_0{}^0\left({}^0V_0+{}^0\omega_0\times {}^0P_1\right) \\
+\end{split} \end{align}
 
+\begin{align} \begin{split}
+ E_1 &= \frac{1}{2}\left(\omega_1^TJ_{G1}\omega_1+M_1V_1^TV_1+2\mathbf{MS}_1^T(V_1\times\omega_1)\right) \\
+ U_1 &= -\left[\begin{matrix}{}^0\mathbf{g}^T & 0 \end{matrix} \right]{}^0T_1\left[\begin{matrix}\mathbf{MS}_1 \\ M_1 \end{matrix} \right]
+\end{split}\end{align}
+
+\subsection{Kinetic and Potential Energy of the Wheels}
+\begin{align} \begin{split}
+ {}^L\omega_L &= \left[\begin{matrix} 0 & \dot{\psi} & -\frac{1}{R}\dot{x}+\frac{L}{2R}\dot{\psi} \end{matrix}\right]^T \\
+ {}^LV_L &= \left[\begin{matrix} \dot{x}-\dot{\psi}\frac{L}{2} & 0 & 0 \end{matrix}\right]^T \\
+ E_L &= \frac{1}{2}\left(\omega_L^TJ_{Gw}\omega_L+M_wV_L^TV_L+2\mathbf{MS}_w^T(V_L\times\omega_L)\right) 
+\end{split}\end{align}
+\begin{align} \begin{split}
+ {}^R\omega_R &= \left[\begin{matrix} 0 & \dot{\psi} & -\frac{1}{R}\dot{x}-\frac{L}{2R}\dot{\psi} \end{matrix}\right]^T \\
+ {}^RV_R &= \left[\begin{matrix} \dot{x}+\dot{\psi}\frac{L}{2} & 0 & 0 \end{matrix}\right]^T \\
+ E_R &= \frac{1}{2}\left(\omega_R^TJ_{Gw}\omega_R+M_wV_R^TV_R+2\mathbf{MS}_w^T(V_R\times\omega_R)\right) 
+\end{split}\end{align}
+
+\subsection{Applying Lagrange Method to find matrices $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$}
+The Lagrange formulation describes the behavior of a dynamic system in terms of work and energy stored in the
+system. The Lagrange equations are commonly written in the form:
+\begin{align}
+  \Gamma_i = \frac{d}{dt}\frac{\partial L}{\partial \dot{q}_i}-\frac{\partial L}{\partial q_i} \quad for\; i \in \mathbb{F} \label{eq:Lagrange}
+\end{align} where $L$ is the Lagrangian of the robot defined as the difference berween the kinetic energy $E$ and potential 
+energy $U$ of the system:
+\[
+ L = E-U
+\]
+\subsubsection{General Form of the Dynamic Equations}
+The kinetic energy of the system is a quadratic function in the joint velocities such that:
+\begin{align}
+ &E = \frac{1}{2}\mathbf{\dot{q}^TA\dot{q}}
+\end{align} where $\mathbf{A}$ is the $n\times n$ symmetric and positive definite \textit{inertia matrix} of the robot.
+Its elements are functions of the joint positions. The $(i,j)$ element of $\mathbf{A}$ is denoted $A_{ij}$. Since the 
+potential energy is a function of the joint positions, equation \ref{eq:Lagrange} leads to:
+\begin{align}
+ &\mathbf{\Gamma=A(q)\ddot{q}+C(q,\dot{q})\dot{q}+Q(q)}
+\end{align} where:
+\begin{itemize}
+ \item $\mathbf{C(q,\dot{q})\dot{q}}$ is the $n\times 1$ vector of Coriolis and centrifugal torques, such that: 
+ $\mathbf{C\dot{q} = \dot{A}\dot{q}}-\frac{\partial E}{\partial \mathbf{q}}$
+ \item $\mathbf{Q} = \left[\begin{matrix} Q_1 & Q_2 & Q_3 & Q_{4l} & ... & Q_{10l} & Q_{4r} & ... & Q_{10r} \end{matrix} \right]^T$ 
+ is the vector of gravity torques
+\end{itemize}
+So the dynamic model of a tree-structured robot is described by $n$ coupled and nonlinear second order differential
+equations. The elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$ are functions of geometric and inertial 
+parameters of the robot.
+
+\subsubsection{Computation of the elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$}
+To compute the elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$, we begin by symbollically computing the 
+expressions of the kinetic and potential energies of all the links of the robot. Then we proceed as follows:
+\begin{itemize}
+  \item the elements $A_{ij}$ is equal to the coefficient of $\left(\frac{\dot{q}_i^2}{2}\right)$ in the expression of
+  the kinetic energy, while $A_{ij}$, for $i \neq j$, is equal to the coefficient of $\dot{q}_i\dot{q}_j$
+  \item for calculating the elements of $\mathbf{C}$, there exist several forms of the vector $\mathbf{C(q,\dot{q})\dot{q}}$.
+ Using the \textit{Christoffell symbols} $c_{i,jk}$, the $(i,j)$ elements of the matrix $\mathbf{C}$ can be written as:
+ \begin{align}
+  \begin{cases}
+   C_{ij} = \sum\limits^{n}_{k=1}c_{i,jk}\dot{q}_k \\
+   c_{i,jk} = \frac{1}{2}\left[\frac{\partial A_{ij}}{\partial q_k} + \frac{\partial A_{ik}}{\partial q_j} - \frac{\partial A_{jk}}{\partial q_i}\right]
+  \end{cases} \label{eqC}
+ \end{align}
+ \item The $Q_i$ element of the vector $\mathbf{Q}$ is calculated according to:
+ \begin{align}
+  Q_i = \frac{\partial U}{\partial q_i}
+ \end{align}
+\end{itemize}
+
+\subsubsection{Resulting Matrices}
+\begin{align} \begin{split}
+ &\scalemath{0.595}{\mathbf{A} = \left[ \begin{matrix} M_1+2M_w+2\frac{\mathbf{ZZ}_w}{R^2} & \mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R} & -\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi \\ 
+   \mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R} & \mathbf{XX}_1+2\mathbf{YY}_w+2M_wL^2-(\mathbf{XX}_1+\mathbf{YY}_1)cos^2\phi+\mathbf{XY}_1sin(2\phi)+\frac{2L^2\mathbf{ZZ}_w}{R^2} & \mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi \\
+   -\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi & \mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi  & \mathbf{ZZ}_1 \end{matrix} \right]} \\
+  &\scalemath{0.595}{\mathbf{C} = \left[ \begin{matrix} 0 & 0 & -\dot{\phi}\left(\mathbf{MX}_1cos\phi-\mathbf{MY}_1sin\phi\right) \\ 
+    0 & \frac{\dot{\phi}}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right) & \dot\psi\left(\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)cos\phi sin\phi\right)-\dot\phi\left(\mathbf{YZ}_1sin\phi-\mathbf{XZ}_1cos\phi\right) \\ 
+    0 & -\frac{\dot{\psi}}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right) & 0 \end{matrix} \right]} \\
+ &\scalemath{0.595}{\mathbf{Q} = \left[ \begin{matrix} 0 \\ 0 \\ \mathbf{MX}_1gcos\phi - \mathbf{MY}_1gsin\phi \end{matrix} \right]}
+\end{split} \end{align}
+
+\subsubsection{Comparing to our previous Work \cite{munzir2013balancing}}
+As a sanity check let's compare this result to our earlier work in \cite{munzir2013balancing} i.e. equations \ref{eq4}-\ref{eq5}.
+To do so, we are going to make $\dot\psi = \ddot\psi = 0$. This reduces the LHS of our new equations to:
+\begin{align} \begin{split}
+ &\mathbf{A\ddot{q}+C\dot{q}+Q} = \\ &\scalemath{0.6}{\left[ \begin{matrix} M_1+2M_w+2\frac{\mathbf{ZZ}_w}{R^2} & -\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi \\ 
+   -\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi  & \mathbf{ZZ}_1 \end{matrix} \right] \left[\begin{matrix} \ddot{x} \\ \ddot{\phi} \end{matrix} \right]
+   + \left[ \begin{matrix} 0 & -\dot{\phi}\left(\mathbf{MX}_1cos\phi-\mathbf{MY}_1sin\phi\right) \\ 0 & 0 \end{matrix} \right] \left[\begin{matrix} \dot{x} \\ \dot{\phi} \end{matrix} \right]
+   + \left[ \begin{matrix} 0 \\ \mathbf{MX}_1gcos\phi - \mathbf{MY}_1gsin\phi \end{matrix} \right]} \label{eq:2dim}
+\end{split} \end{align}
+Observations:
+\begin{enumerate}[label=(\roman*)]
+ \item The two equations are equivalent to the LHS of equations \ref{eq4}-\ref{eq5} except for the rotor inertia term $I_m$
+ that is missing in our new equations. That is only because we did not consider the effect of rotor inertia in our current analysis
+ \item To see the equivalence more clearly, the following substitution will be helpful: 
+ \begin{itemize}
+  \item $M_1 = m$, $2M_w = M$, $2\mathbf{ZZ}_w=I_w$, $\phi=-\theta$, $\dot{\phi} = -\dot{\theta}$, $\ddot{\phi}=-\ddot{\theta}$ that have 
+  to with the definition of the variables in the two analyses
+  \item $\mathbf{MY}_1 = ml$ and $\mathbf{MX}_1 = 0$ since the center of mass of the pendulum in the earlier analysis was at 
+  $(0,l,0)$ if placed in the frame $R_1$ in the current analysis
+  \item $\mathbf{ZZ}_1 = ml^2+I$ as the inertia of body $I$ was defined about the wheel axis in our earlier analysis but it
+  is defined around the center of mass in this analysis. Parallel axis theorem on inertia gives us this relationship.
+ \end{itemize}
+ This reduces the equation \ref{eq:2dim} to:
+ \begin{align} \begin{split}
+ &\mathbf{A\ddot{q}+C\dot{q}+Q} \\ = &\scalemath{0.6}{\left[ \begin{matrix} m+M+\frac{I_w}{R^2} & -mlcos\theta \\ 
+   -mlcos\theta  & ml^2+I \end{matrix} \right] \left[\begin{matrix} \ddot{x} \\ -\ddot{\theta} \end{matrix} \right]
+   + \left[ \begin{matrix} 0 & \dot{\theta}mlsin\theta \\ 0 & 0 \end{matrix} \right] \left[\begin{matrix} \dot{x} \\ -\dot{\theta} \end{matrix} \right]
+   + \left[ \begin{matrix} 0 \\ mlgsin\theta \end{matrix} \right]} \\
+  = &\scalemath{0.6}{\left[ \begin{matrix} \left(m+M+\frac{I_w}{R^2}\right)\ddot{x} + mlcos\theta\ddot{\theta} \\ 
+   -mlcos\theta\ddot{x} -(ml^2+I)\ddot{\theta} \end{matrix} \right] 
+   + \left[ \begin{matrix} -mlsin\theta{\dot{\theta}}^2 \\  0 \end{matrix} \right] + \left[ \begin{matrix} 0 \\ mlgsin\theta \end{matrix} \right]} \\
+  = &\scalemath{0.6}{\left[ \begin{matrix} \left(m+M+\frac{I_w}{R^2}\right)\ddot{x} + mlcos\theta\ddot{\theta} - mlsin\theta{\dot{\theta}}^2  \\ 
+   -mlcos\theta\ddot{x} -(ml^2+I)\ddot{\theta} + mlgsin\theta \end{matrix} \right]}
+ \end{split} \end{align}
+ This expression for LHS matches exactly with the LHS of equations \ref{eq4}-\ref{eq5}.
+\end{enumerate}
+
+\subsubsection{Comparing the spin motion equations to those in \cite{kim2005dynamic}}
+\begin{itemize}
+
+\item First look at the added terms due to spin in the two equations we discussed in the last section. The first equation 
+contains the additional term:
+\[
+ \left(\mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R}\right)\ddot\psi
+\]
+If the body is symmetrical about the $X_0Y_0$ plane (which was assumed true in our \cite{kim2005dynamic}) then $\mathbf{MZ}_1$
+will be zero. As for the $\mathbf{YZ}_w$ it is zero if the wheel is symmetrical about its $YZ$ plane parallel to the $Y_0Z_0$
+plane passing through its center. And wheels indeed have this characteristic. So this term reduces to zero. And so it is
+no surprise that such a term doesn't appear in equation \ref{eq1}. Though we have a term in equation one which is:
+\[
+ m_sdsin\phi{\dot{\psi}}^2
+\]
+and we have no such term in our equation. The only way we could have a ${\dot{\psi}}^2$ in our results would be if $\mathbf{C}_{12}$
+was non-zero. Now using equations \ref{eqC}, we have:
+\begin{align}
+\begin{split}
+ C_{12} &= c_{1,21}\dot{x} + c_{1,22}\dot{\psi} + c_{1,23}\dot{\phi} \\
+ c_{1,21} &= \frac{1}{2}\left[\frac{\partial A_{12}}{\partial x} + \frac{\partial A_{11}}{\partial \psi} - \frac{\partial A_{21}}{\partial x}\right] \\
+ c_{1,22} &= \frac{1}{2}\left[\frac{\partial A_{12}}{\partial \psi} + \frac{\partial A_{12}}{\partial \psi} - \frac{\partial A_{22}}{\partial x}\right] \\
+ c_{1,23} &= \frac{1}{2}\left[\frac{\partial A_{12}}{\partial \phi} + \frac{\partial A_{13}}{\partial \psi} - \frac{\partial A_{23}}{\partial x}\right]
+\end{split}
+\end{align}
+
+Since $\frac{\partial A_{ij}}{\partial x} = \frac{\partial A_{ij}}{\partial \psi} = 0$ as none of the elements of $A$ have a dependency on $x$ or $\psi$
+the expression for $C_{12}$ reduces to:
+\[
+ C_{12} = \frac{1}{2}\frac{\partial A_{12}}{\partial \phi}\dot{\phi}
+\]
+The only way we could have a non-zero $C_{12}$ would be if $\mathbf{A}_{12}$ was a function of $\phi$. As we can see the $A$ matrix, 
+that is not the case. And hence there is no way using our method to have this term in our equations.
+After this analysis, it seemed probable that the $\dot\psi^2$ term in the first equation is an error. So we checked the derivation
+in the paper. This derivation can be found in the appendix. It turns out that this term is indeed present.
+Now, we will question our own methodology to see where the problem may be. We will follow the derivation of $\dot\phi^2$ term in our
+first equation assuming a similar term needs to be present in the original energy expression for $\dot\psi^2$ and is somehow missed
+in our analysis.
+The coefficient of $\phi^2$ is deduced from the element $C_{13}$. The expression for $C_{13}$ is:
+\begin{align}
+\begin{split}
+ C_{13} &= c_{1,31}\dot{x} + c_{1,32}\dot{\psi} + c_{1,33}\dot{\phi} \\
+ c_{1,31} &= \frac{1}{2}\left[\frac{\partial A_{13}}{\partial x} + \frac{\partial A_{11}}{\partial \phi} - \frac{\partial A_{31}}{\partial x}\right] \\
+ c_{1,32} &= \frac{1}{2}\left[\frac{\partial A_{13}}{\partial \psi} + \frac{\partial A_{12}}{\partial \phi} - \frac{\partial A_{32}}{\partial x}\right] \\
+ c_{1,33} &= \frac{1}{2}\left[\frac{\partial A_{13}}{\partial \phi} + \frac{\partial A_{13}}{\partial \phi} - \frac{\partial A_{33}}{\partial x}\right]
+\end{split}
+\end{align}
+Again $\frac{\partial A_{ij}}{\partial x} = \frac{\partial A_{ij}}{\partial \psi} = 0$ as none of the elements of $A$ have a dependency on $x$ or $\psi$.
+Also, $\frac{\partial A_{11}}{\partial \phi} = \frac{\partial A_{12}}{\partial \phi} = 0$ as both $A_{11}$ and $A_{12}$ are independent of $\phi$. So,
+the expression for $C_{13}$ reduces to:
+\[
+ C_{13} = \frac{\partial A_{13}}{\partial \phi}\dot{\phi}
+\]
+The question now is, what is the origin of the term $A_{13}$. This could give clue regarding a similar term missing in the energy expression evaluation
+leading to a term at $A_{12}$ similat to $A_{13}$ this giving us eventually the required $\dot\psi^2$ in the final equations.
+As we know, $A_{13}$ is the coefficient of $\dot{x}\dot\phi$ in the energy expression.
+
+
+\item As for the additional terms in the third equation, we have:
+\[
+ (\mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi)\ddot\psi
+\]
+No such term appears in equation \ref{eq3}. This could be because of certain assumptions on symmetry of the body that makes the
+product inertia terms equal to zero (although that's not entirely possible to achieve for $\mathbf{XZ}_1$).
+We also have:
+\[
+ -\frac{\dot{\psi}^2}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right)
+\]
+We have a term with $\dot \phi^2$ in equation \ref{eq3}. And that seems to be just the result of a typo. As their coefficient also
+contains a $sin(2\phi)$ term (although it is expressed as $sin\phi cos\phi$ which is equivalent).
+
+
+\item Now we proceed to compare the third equation introduced due to spin. Let us write down the two equations and then we will make 
+comparisons. Equation from \cite{kim2005dynamic} has LHS $=$:
+\[
+ \left\lbrace(3L^2+1/2R^2)m_c+m_sd^2sin^2\phi+I_2\right\rbrace\ddot{\psi}+m_sd^2sin\phi cos\phi\dot{\psi}\dot{\phi}
+\]
+The equation we derived has the LHS $=$:
+\begin{align}\begin{split} 
+&\scalemath{0.75}{\left(\mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R}\right)\ddot{x} + \left(\mathbf{XX}_1+2\mathbf{YY}_w+2M_wL^2-(\mathbf{XX}_1+\mathbf{YY}_1)cos^2\phi+\mathbf{XY}_1sin(2\phi)+\frac{2L^2\mathbf{ZZ}_w}{R^2}\right)\ddot{\psi}} \\
+&\scalemath{0.75}{+\left(\mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi\right)\ddot{\phi} + \left(\frac{\dot{\phi}}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right)\right)\dot\psi} \\
+&\scalemath{0.75}{+\left(\dot\psi\left(\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)cos\phi sin\phi\right)-\dot\phi\left(\mathbf{YZ}_1sin\phi+\mathbf{XZ}_1cos\phi\right)\right)\dot\phi }
+\end{split} \end{align}
+We can see the equivalence of these expression by noticing that under the assumptions of symmetry a number of terms were ommited from the
+expression in \cite{kim2005dynamic}. This includes $\mathbf{MZ}_1 = \mathbf{YZ}_w = \mathbf{XY}_1 = \mathbf{XZ}_1 = \mathbf{YZ}_1 = 0$ that makes the first 
+and third terms $=0$ in our expression. Also the last two can be added together. The resulting simplified expression looks like:
+\begin{align}\begin{split} 
+&\scalemath{0.75}{\left(2M_wL^2+\frac{2L^2\mathbf{ZZ}_w}{R^2}+\mathbf{XX}_1sin^2\phi-\mathbf{YY}_1cos^2\phi+2\mathbf{YY}_w\right)\ddot{\psi}+(\mathbf{XX}_1-\mathbf{YY}_1)cos\phi sin\phi\dot\psi\dot\phi}
+\end{split} \end{align}
+
+\section{Appendix}
+\subsection{Deriving the equation in \cite{kim2005dynamic}}
+We take the expressions for velocities and accelerations derived in the paper and we evaluate the closed form
+expression in the paper for generalized inertia forces. The resulting expression should match the one derived 
+in the paper.
+
+\lstinputlisting[language=Matlab]{../3-matlab/kim/dynamics.m}
+
+The resulting expressions are:
+
+\begin{align}
+ F_1 &= \scalemath{0.8}{-\frac{1}{R^2}(2R^2\ddot{x}m_C + 2I_{w3}\ddot{x} + R^2\ddot{x}m_S - R^2d\ddot{\phi}m_Scos\phi + R^2d\dot{\phi}^2m_Ssin\phi + R^2d\dot{\psi}^2m_Ssin\phi)} \nonumber \\
+     &= \scalemath{0.8}{-2\ddot{x}m_C - \frac{2I_{w3}}{R^2}\ddot{x} - \ddot{x}m_S + d\ddot{\phi}m_Scos\phi - d\dot{\phi}^2m_Ssin\phi - d\dot{\psi}^2m_Ssin\phi} \nonumber \\
+     &= \scalemath{0.8}{-(m_S + 2m_C + \frac{2I_{w3}}{R^2})\ddot{x} + m_Sdcos\phi\ddot{\phi} - m_Sdsin\phi(\dot{\phi}^2 + \dot{\psi}^2)} \nonumber \\
+ F_2 &= \scalemath{0.8}{-\frac{1}{R^2}(2I_{w3}L^2\ddot{\psi} + I_2R^2\ddot{\psi} + 2I_{w2}R^2\ddot{\psi} + 2L^2R^2\ddot{\psi}m_C + R^2d^2\ddot{\psi}m_Ssin\phi^2} \nonumber \\ 
+         & \hskip 3em + \scalemath{0.8}{\frac{1}{2}R^2d^2\dot{\phi}\dot{\psi}m_Ssin(2\phi))} \nonumber \\
+     &= \scalemath{0.8}{-\frac{2I_{w3}L^2}{R^2}\ddot{\psi} - I_2\ddot{\psi} - 2I_{w2}\ddot{\psi} - 2L^2\ddot{\psi}m_C - d^2\ddot{\psi}m_Ssin\phi^2 - \frac{1}{2}d^2\dot{\phi}\dot{\psi}m_Ssin(2\phi)} \nonumber \\
+     &= \scalemath{0.8}{-(2m_CL^2 +\frac{2I_{w3}L^2}{R^2} + 2I_{w2} + m_Sd^2sin\phi^2 + I_2 )\ddot{\psi} - m_Sd^2sin\phi cos\phi\dot{\phi}\dot{\psi}} \nonumber \\
+ F_3 &= \scalemath{0.8}{-d^2\ddot{\phi}m_S - I_3\ddot{\phi} + d\ddot{x}m_Scos\phi + \frac{1}{2}(d^2\dot{\psi}^2m_Ssin(2\phi))} \nonumber \\
+     &= \scalemath{0.8}{-(m_Sd^2 + I_3)\ddot{\phi} + m_Sdcos\phi\ddot{x} + m_Sd^2sin\phi cos\phi\dot{\psi}^2} \nonumber  
+\end{align}
+The expressions match exactly as are there in the paper if $I_{w3} = \frac{m_CR^2}{2}$ and $I_{w2} = \frac{m_C}{4R^2}$.
+The paper has made a typo in the last equation using $\dot{\phi}^2$ instead of $\dot{\psi}^2$. 
+
+
+
+
+% \begin{align}
+%  \tilde{F}_r &= \sum_{i=1}^{3}\tilde{v}_r^{P_i} \cdot R_i \hskip 1em (r=1,2,3) \\
+%  \tilde{F}_1 &= (\tilde{v}_1^{C_1} \cdot R_{C_1}) + (\tilde{v}_1^{C_2} \cdot R_{C_2}) + (\tilde{v}_1^{S} \cdot R_S) \hskip 1em (r=1,2,3)
+% \end{align}
+
+
+\end{itemize}
 \bibliographystyle{plain}
 \bibliography{reference}
 

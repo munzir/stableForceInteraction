@@ -1,0 +1,39 @@
+So I am returning to the work after 8 weeks of running away.
+
+Trying to figure out what's going on. 
+
+Looks like the tree structure model is done
+
+But the pendulum equations are a mess. A lot of things seem to be unexplained.
+
+Also it appears that errors in my analysis will grow as I move forward.
+
+Trying to figure out the model with more accuracy requires me to dig deeper into the
+reasons for current errors. 
+
+Also things to be done for moving forwards should be understood completely so that 
+I have confidence in completing this work.
+
+Todos:
+
+1- Dig a bit deeper to figure out the problems with pendulum equations
+2- Understand the theory of rotor inertia properly before moving forward
+3- understand the effect of forces
+4- understand friction
+5- combining the two
+-----
+6- non-linearities in the actual robot
+7- brakes
+8- parameter guesstimation
+9- parameter estimation
+10- simulation
+
+===============
+1- Dig a bit deeper to figure out the problems with pendulum equations
+
+I'm hating it. What do I do?
+Organize this stuff in your mind. So what's going on. You derived pendulum equations using your own method. This thing
+has tons of variables that look yucky. Try to go through each and understand all of them.
+Then you had derived a model in an earlier work without spin. And then there are two other works being refered here
+each having its own assumptions about symmetry and its own method of derivation. In order to understand the error you will
+have to show where the extra terms in our work or in their work come from. This requires.
