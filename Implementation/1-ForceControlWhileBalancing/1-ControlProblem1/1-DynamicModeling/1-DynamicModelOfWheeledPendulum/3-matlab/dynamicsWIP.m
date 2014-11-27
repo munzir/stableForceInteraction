@@ -31,6 +31,10 @@ V1 = A0in1*(V0 + cross(w0, P1));
 JG1 = [XX1 XY1 XZ1; XY1 YY1 YZ1; XZ1 YZ1 ZZ1];
 MS1 = [MX1 MY1 MZ1]';
 
+w1_in0 = [0; dpsi; dphi]; V1_in0 = [dx; 0; 0]; 
+MS1_in0 = [MX1*cos(phi)-MY1*sin(phi); MX1*sin(phi)+MY1*cos(phi); MZ1];
+E1_in0 = 0.5*(w1_in0'*JG1*w1_in0 + m1*V1_in0'*V1_in0 + 2*MS1_in0'*cross(V1_in0, w1_in0));
+
 E1 = 0.5*(w1'*JG1*w1 + m1*V1'*V1 + 2*MS1'*cross(V1, w1));
 U1 = -[gVec' 0]*T1in0*[MS1;m1];
 

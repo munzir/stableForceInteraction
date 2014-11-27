@@ -7,6 +7,7 @@
 \usepackage{bbm}
 \usepackage{amsfonts}
 \usepackage{listings}
+\usepackage{pbox}
 \usepackage[usenames,dvipsnames]{color}
  
 % This is the color used for MATLAB comments below
@@ -334,7 +335,7 @@ expressions of the kinetic and potential energies of all the links of the robot.
 \subsubsection{Resulting Matrices}
 \begin{align} \begin{split}
  &\scalemath{0.595}{\mathbf{A} = \left[ \begin{matrix} M_1+2M_w+2\frac{\mathbf{ZZ}_w}{R^2} & \mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R} & -\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi \\ 
-   \mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R} & \mathbf{XX}_1+2\mathbf{YY}_w+2M_wL^2-(\mathbf{XX}_1+\mathbf{YY}_1)cos^2\phi+\mathbf{XY}_1sin(2\phi)+\frac{2L^2\mathbf{ZZ}_w}{R^2} & \mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi \\
+   \mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R} & \mathbf{XX}_1+2\mathbf{YY}_w+2M_wL^2-(\mathbf{XX}_1-\mathbf{YY}_1)cos^2\phi+\mathbf{XY}_1sin(2\phi)+\frac{2L^2\mathbf{ZZ}_w}{R^2} & \mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi \\
    -\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi & \mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi  & \mathbf{ZZ}_1 \end{matrix} \right]} \\
   &\scalemath{0.595}{\mathbf{C} = \left[ \begin{matrix} 0 & 0 & -\dot{\phi}\left(\mathbf{MX}_1cos\phi-\mathbf{MY}_1sin\phi\right) \\ 
     0 & \frac{\dot{\phi}}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right) & \dot\psi\left(\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)cos\phi sin\phi\right)-\dot\phi\left(\mathbf{YZ}_1sin\phi-\mathbf{XZ}_1cos\phi\right) \\ 
@@ -414,7 +415,7 @@ The only way we could have a non-zero $C_{12}$ would be if $\mathbf{A}_{12}$ was
 that is not the case. And hence there is no way using our method to have this term in our equations.
 After this analysis, it seemed probable that the $\dot\psi^2$ term in the first equation is an error. So we checked the derivation
 in the paper. This derivation can be found in the appendix. It turns out that this term is indeed present.
-Now, we will question our own methodology to see where the problem may be. We will follow the derivation of $\dot\phi^2$ term in our
+Now, we will question our own methodology to see where the problem may be. We will follow the derivation of $\dot\phi^2$ term in ouenergy expressionr
 first equation assuming a similar term needs to be present in the original energy expression for $\dot\psi^2$ and is somehow missed
 in our analysis.
 The coefficient of $\phi^2$ is deduced from the element $C_{13}$. The expression for $C_{13}$ is:
@@ -432,7 +433,22 @@ the expression for $C_{13}$ reduces to:
 \[
  C_{13} = \frac{\partial A_{13}}{\partial \phi}\dot{\phi}
 \]
-The question now is, what is the origin of the term $A_{13}$. This could give clue regarding t
+The question now is, what is the origin of the term $A_{13}$. This could give clue regarding a similar term missing in the energy expression evaluation
+leading to a term at $A_{12}$ similat to $A_{13}$ this giving us eventually the required $\dot\psi^2$ in the final equations.
+As we know, $A_{13}$ is the coefficient of $\dot{x}\dot\phi$ in the energy expression.
+Investigating further, if we trace back the derivation of the $\dot\psi^2$ term in \cite{kim2005dynamic} we have:
+\small{
+\begin{align}
+ \frac{\partial v_S}{\partial \dot{x}}& \cdot (m_S\,\omega_S \times (\omega_S \times r_S)) \nonumber \\
+   &= \frac{\partial}{\partial \dot{x}}\left(\left[\begin{matrix} \dot{x}-\dot{\phi}dcos\phi \\ -\dot{\phi}dsin\phi \\ \dot{\psi}dsin\phi\end{matrix}\right]\right)
+       \cdot \left(m_S\,\left[\begin{matrix} 0 \\ \dot\psi \\ \dot\phi \end{matrix} \right] \times \left(\left[\begin{matrix} 0 \\ \dot\psi \\ \dot\phi \end{matrix} \right] 
+       \times \left[\begin{matrix} -dsin\phi \\ dcos\phi \\ 0 \end{matrix} \right]\right)\right) \nonumber \\
+   &= m_S\left[\begin{matrix} 1 \\ 0 \\ 0\end{matrix}\right] \cdot \left(\left[\begin{matrix} 0 \\ \dot\psi \\ \dot\phi \end{matrix} \right] \times 
+       \left[\begin{matrix}  -dcos\phi\dot{\phi} \\ -dsin\phi\dot{\phi} \\ dsin\phi\dot{\psi} \end{matrix} \right]\right)  \nonumber \\
+   &= m_S\left[\begin{matrix} 1 \\ 0 \\ 0\end{matrix}\right] \cdot \left[\begin{matrix} dsin\phi(\dot\phi^2+\dot\psi^2) \\ -dcos\phi\dot\phi^2 \\ dcos\phi\dot\phi\dot\psi \end{matrix} \right] \nonumber \\
+   &= m_Sdsin\phi(\dot\phi^2+\dot\psi^2)
+\end{align}}
+
 
 
 \item As for the additional terms in the third equation, we have:
@@ -466,7 +482,128 @@ and third terms $=0$ in our expression. Also the last two can be added together.
 \begin{align}\begin{split} 
 &\scalemath{0.75}{\left(2M_wL^2+\frac{2L^2\mathbf{ZZ}_w}{R^2}+\mathbf{XX}_1sin^2\phi-\mathbf{YY}_1cos^2\phi+2\mathbf{YY}_w\right)\ddot{\psi}+(\mathbf{XX}_1-\mathbf{YY}_1)cos\phi sin\phi\dot\psi\dot\phi}
 \end{split} \end{align}
+\end{itemize}
 
+\section{Nonholonomic}
+\begin{align}
+ &\mathbf{q} = \left[\begin{matrix} x_0 & y_0 & \theta_l & \theta_r & \phi \end{matrix}\right]^T \nonumber
+\end{align}
+Nonholonomic constraints:
+\begin{align}
+ \dot{x}_0sin\psi-\dot{y}_0cos\psi &= 0 \nonumber \\
+ \dot{x}_0sin\psi+\dot{y}_0cos\psi &= \frac{R}{2}(\dot\theta_l+\dot\theta_r) 
+\end{align}
+Substituting $\psi = \frac{R}{L}(\theta_l-\theta_r)$ and $\dot{x} = \dot{x}_0cos\psi+\dot{y}_0sin\psi$ in the derivation
+for the dynamics in preceding sections the resulting matrices as follows:
+\begin{align}
+ &\mathbf{A(q)\ddot{q}+C(q,\dot{q})\dot{q}+Q(q) = \Gamma + G[\begin{matrix} \lambda_1 & \lambda_2 \end{matrix}]^T} \\
+ &\mathbf{A}= \left[\begin{matrix}
+           \mathbb{M}cos^2\psi &  \frac{1}{2}\mathbb{M}sin2\psi &           0 &           0 & -m_Sdcos\phi cos\psi \\
+ \frac{1}{2}\mathbb{M}sin2\psi &            \mathbb{M}sin^2\psi &           0 &           0 & -m_Sdcos\phi sin\psi \\
+                             0 &                              0 &  \mathbb{I} & -\mathbb{I} & 0 \\
+                             0 &                              0 & -\mathbb{I} &  \mathbb{I} & 0 \\
+          -m_Sdcos\phi cos\psi &           -m_Sdcos\phi sin\psi &           0 &           0 & I_3+m_Sd^2   
+   \end{matrix}\right] \nonumber \\
+ &\mathbf{C}= \scalemath{0.8}{\left[\begin{matrix}
+    \frac{1}{2}\mathbb{M}s2\psi\dot\psi & -\frac{1}{2}\mathbb{M}c2\psi\dot\psi &                         \mathbb{S}_1 &                        -\mathbb{S}_1 & \frac{1}{2}m_Sd(2c\psi s\phi\dot\phi-s\psi c\phi\dot\psi) \\
+   -\frac{1}{2}\mathbb{M}c2\psi\dot\psi & -\frac{1}{2}\mathbb{M}s2\psi\dot\psi &                        -\mathbb{S}_2 &                         \mathbb{S}_2 & \frac{1}{2}m_Sd(2s\psi s\phi\dot\phi+c\psi c\phi\dot\psi) \\
+                          -\mathbb{S}_1 &                         \mathbb{S}_2 &  \frac{R}{L}\mathbb{N}s2\phi\dot\phi & -\frac{R}{L}\mathbb{N}s2\phi\dot\phi &                                                \mathbb{Z} \\
+                           \mathbb{S}_1 &                        -\mathbb{S}_2 & -\frac{R}{L}\mathbb{N}s2\phi\dot\phi &  \frac{R}{L}\mathbb{N}s2\phi\dot\phi &                                               -\mathbb{Z} \\
+   -\frac{1}{2}m_Sds\psi c\phi\dot\psi  &   \frac{1}{2}m_Sdc\psi c\phi\dot\psi &                          -\mathbb{Z} &                           \mathbb{Z} &                                                         0   
+     \end{matrix}\right]}  \nonumber \\
+  &\mathbf{Q} = [\begin{matrix} 0 & 0 & 0 & 0 & -m_Sdgsin\phi \end{matrix}]^T \nonumber \\
+  &\mathbf{\Gamma} = [\begin{matrix} 0 & 0 & \tau_l & \tau_r & \tau_l+\tau_r \end{matrix}]^T \nonumber \\
+  &\mathbf{G} = \left[\begin{matrix} sin\psi & -cos\psi & 0 & 0 & 0 \\ cos\psi & sin\psi & -\frac{R}{2} & -\frac{R}{2} & 0 \end{matrix}\right]^T \nonumber \\
+\end{align}
+where $\lambda_1$ and $\lambda_2$ are Lagrange multipliers and 
+\begin{align}
+ &\mathbb{M} = \frac{2I_{w3}}{R^2}+2m_C+m_S \nonumber \\
+ &\mathbb{I} = 2I_{w3}+2R^2m_C+\frac{R^2}{L^2}\left(2I_{w2}+(I_1+m_Sd^2)sin^2\phi+I_2cos^2\phi\right) \nonumber \\
+ &\mathbb{N} = \frac{R}{2L}(m_Sd^2 + I_1 - I_2) \nonumber \\
+ &\mathbb{S}_1 = \frac{R}{2L}(\mathbb{M}(\dot{x}_0 s2\psi-\dot{y}_0 c2\psi)-m_Sds\psi c\phi\dot\phi) \nonumber \\
+ &\mathbb{S}_2 = \frac{R}{2L}(\mathbb{M}(\dot{x}_0 c2\psi+\dot{y}_0 s2\psi)-m_Sdc\psi c\phi\dot\phi) \nonumber \\
+ &\mathbb{Z} = \mathbb{N}s2\phi\dot\psi + \frac{R}{2L}m_Sdc\phi(\dot{x}_0s\psi-\dot{y}_0c\psi)  \nonumber
+\end{align}
+Eliminating Lagrange multipliers gives us the exact same equations that we had in our earlier derivation.
+The code for this is found at stableForceInteraction/Implementation/1-ForceControlWhileBalancing/1-ControlProblem1/1-DynamicModeling/1-DynamicModelOfWheeledPendulum/3-matlab/kim/nonholonomic.
+
+\section{Energy expression in the world frame}
+Define:
+
+Frame $0$: The world frame fixed to the ground
+
+Frame $1$: The frame with origin of on the middle of the the two wheels but all axes always parallel to those of Frame $0$
+
+Frame $2$: The frame with $z$-axis along the $z$-axis of frame $1$ while the $x$-axis along the heading direction of the robot
+
+Frame $3$: The frame fixed to the body of the robot with $z$-axis connecting the mid-point between wheels to the center of mass of the robot
+
+\begin{align}
+ {}^0T_1 &= \left[\begin{matrix}  & {}^0A_1 & & {}^0P_1 \\ 0 & 0 & 0 & 1\end{matrix}\right]
+ = \left[\begin{matrix} {}^0\mathbf{x}_1 & {}^0\mathbf{y}_1 & {}^0\mathbf{z}_1 & {}^0P_1 \\ 0 & 0 & 0 & 1\end{matrix}\right] 
+ = \left[\begin{matrix} 1 & 0 & 0 & x_0 \\ 0 & 1 & 0 & y_0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{matrix}\right] \\
+ {}^1T_2 &= \left[\begin{matrix}  & {}^1A_2 & & {}^1P_2 \\ 0 & 0 & 0 & 1\end{matrix}\right]
+ = \left[\begin{matrix} {}^1\mathbf{x}_2 & {}^1\mathbf{y}_2 & {}^1\mathbf{z}_2 & {}^1P_2 \\ 0 & 0 & 0 & 1\end{matrix}\right] 
+ = \left[\begin{matrix} cos\psi & -sin\psi & 0 & 0 \\ sin\psi & cos\psi & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\end{matrix}\right] \\
+ {}^2T_3 &= \left[\begin{matrix}  & {}^2A_3 & & {}^2P_3 \\ 0 & 0 & 0 & 1\end{matrix}\right]
+ = \left[\begin{matrix} {}^2\mathbf{x}_3 & {}^2\mathbf{y}_3 & {}^2\mathbf{z}_3 & {}^2P_3 \\ 0 & 0 & 0 & 1\end{matrix}\right] 
+ = \left[\begin{matrix} cos\phi & 0 & -sin\phi & 0 \\ 0 & 1 & 0 & 0 \\ sin\phi & 0 & cos\phi & 0 \\ 0 & 0 & 0 & 1\end{matrix}\right] \\
+ {}^0V_0 &= \left[\begin{matrix} 0 & 0 & 0 \end{matrix}\right]^T \\
+ {}^0\omega_0 &= \left[\begin{matrix} 0 & 0 & 0 \end{matrix}\right]^T \\
+ \dot{q}_1 &= \dot{x} \\
+ \dot{q}_2 &= \dot{\psi} \\
+ \dot{q}_3 &= \dot{\phi} \\
+ {}^1e_1 &= \left[\begin{matrix} cos\psi & sin\psi & 0 \end{matrix}\right]^T \\
+ {}^2e_2 &= \left[\begin{matrix} 0 & 0 & 1 \end{matrix}\right]^T \\
+ {}^3e_3 &= \left[\begin{matrix} 0 & -1 & 0 \end{matrix}\right]^T \\
+ {}^1\omega_1 &= {}^1\mathbf{A}_0 {}^0\omega_0 \\
+ {}^2\omega_2 &= {}^2\mathbf{A}_1 {}^1\omega_1 + \dot{q}_2 {}^2e_2 \\
+ {}^3\omega_3 &= {}^3\mathbf{A}_2 {}^2\omega_2 + \dot{q}_3 {}^3e_3 \\
+ {}^1V_1 &= {}^1A_0({}^0V_0 + {}^0\omega_0 \times {}^0P_1) + \dot{q}_1 {}^1e_1 \\
+ {}^2V_3 &= {}^2A_1({}^1V_1 + {}^1\omega_1 \times {}^1P_2) \\
+ {}^3V_3 &= {}^3A_2({}^2V_2 + {}^2\omega_2 \times {}^2P_3) \\
+\end{align}
+
+\section{Newton-Euler}
+\subsection{Kinematics}
+Let $\mathbf{i}$, $\mathbf{j}$ and $\mathbf{k}$ be the unite vectors of the frame $xyz$ whose origin is at the center
+of the the two wheel, its $z$-axis is always pointing upwards and its $x$-axis is along the heading direction of the
+robot.
+\subsubsection{Velocities}
+\begin{align}
+ \omega_{xyz} &= \dot\psi \mathbf{k} \\
+ \v_{xyz} &= \dot{x} \mathbf{i} \\
+ \omega_B &= \dot\phi\mathbf{j} + \dot{\psi}\mathbf{k} \\
+ v_B      &= v_{xyz} + \omega_B \times d \\
+          &= (\dot{x}+\dot\phi dcos\phi)\mathbf{i} + \dot\psi dsin\phi\mathbf{j} - \dot\phi dsin\phi \mathbf{k}\\
+ \omega_L &= \left( \frac{1}{R}\dot{x} - \frac{L}{R}\dot\psi \right) \mathbf{j} + \dot{\psi} \mathbf{k} \\
+ v_L      &= (\dot{x} - \dot\psi L) \mathbf{i} \\
+ \omega_R &= \left( \frac{1}{R}\dot{x} + \frac{L}{R}\dot\psi \right) \mathbf{j} + \dot\psi \mathbf{k} \\
+ v_{R}    &= (\dot{x} + \dot\psi L) \mathbf{i} \\ 
+\end{align}
+\subsubsection{Accelerations}
+The following is what has been done in \cite{kim2005dynamic}.
+\begin{align}
+ \alpha_B &= \ddot\psi \mathbf{k} + \ddot\phi\mathbf{j} \\
+ \alpha_L &= \left(-\frac{1}{R} \dot{x} \dot\psi + \frac{L}{R}\dot\psi^2 \right) \mathbf{i} + \ddot\psi \mathbf{k} + \left( \frac{1}{R} \ddot{x} - \frac{L}{R}\ddot\psi \right) \mathbf{j} \\
+ \alpha_R &= \left(-\frac{1}{R} \dot{x} \dot\psi - \frac{L}{R}\dot\psi^2 \right) \mathbf{i} + \ddot\psi \mathbf{k} + \left( \frac{1}{R} \ddot{x} + \frac{L}{R}\ddot\psi \right) \mathbf{j} \\
+ a_B      &= \frac{d v_{xyz}}{dt} + \alpha_B \times \mathbf{d} + \omega_B \times (\omega_B \times \mathbf{d})\\
+          &= \left(\ddot{x} + \ddot\phi dcos\phi - (\dot\psi^2 + \dot\phi^2)dsin\phi\right) \mathbf{i} 
+             + \left( -\ddot\phi dsin\phi - \dot\phi^2dcos\phi\right) \mathbf{k} + \left( \ddot\psi dsin\phi + \dot\psi\dot\phi dcos\phi\right) \mathbf{j} \\
+ a_L      &= \frac{d v_{xyz}}{dt} + \alpha_{xyz} \times \overline{O_{xyz}L} + \omega_{xyz} \times (\omega_{xyz} \times \overline{O_{xyz}L}) \\
+          &= (\ddot{x}-L\ddot\psi) \mathbf{i} - (L\dot\psi^2)\mathbf{j} \\
+ a_R      &= \frac{d v_{xyz}}{dt} + \alpha_{xyz} \times \overline{O_{xyz}R} + \omega_{xyz} \times (\omega_{xyz} \times \overline{O_{xyz}R}) \\
+          &= (\ddot{x}+L\ddot\psi) \mathbf{i} + (L\dot\psi^2)\mathbf{j} 
+\end{align}
+We think there is mistake in the analysis of accelerations. According to our understanding, this is what should have happened:
+\begin{align}
+ \alpha_B &= \frac{d}{dt}\left( \dot\phi\mathbf{j} + \dot{\psi}\mathbf{k} \right) \\
+          &= \ddot\phi\mathbf{j} + \dot\phi(\omega_{xyz} \times \mathbf{j}) + \ddot{\psi}\mathbf{k} + \dot\psi(\omega_{xyz} \times \mathbf{k}) \\
+          &= \ddot\phi\mathbf{j} + \dot\phi(\dot\psi \mathbf{k} \times \mathbf{j}) + \ddot{\psi}\mathbf{k} + \dot\psi(\dot\psi \mathbf{k} \times \mathbf{k}) \\
+          &= \ddot\phi\mathbf{j} +  \ddot{\psi}\mathbf{k} \\
+\end{align}
+
+ 
 \section{Appendix}
 \subsection{Deriving the equation in \cite{kim2005dynamic}}
 We take the expressions for velocities and accelerations derived in the paper and we evaluate the closed form
@@ -478,7 +615,7 @@ in the paper.
 The resulting expressions are:
 
 \begin{align}
- F_1 &= \scalemath{0.8}{-\frac{1}{R^2}(2R^2\ddot{x}m_C + 2I_{w3}\ddot{x} + R^2\ddot{x}m_S - R^2d\ddot{\phi}m_Scos\phi + R^2d\dot{\phi}^2m_Ssin\phi + R^2d\dot{\psi}^2m_Ssin\phi)} \nonumber \\
+ F_1 &= \scalemath{0.8}{-\frac{1}{R^2}(2R^2\ddot{x}m_C + 2I_{w3}\ddot{x} + R^2\ddot{x}m_S - R^2d\ddot{\phi}m_Scos\phi + R^2d\dot{\phi}^2m_Ssin\phi + R^2d\dot{\psi}^2m_Ssin\phi)} \nonumber 
      &= \scalemath{0.8}{-2\ddot{x}m_C - \frac{2I_{w3}}{R^2}\ddot{x} - \ddot{x}m_S + d\ddot{\phi}m_Scos\phi - d\dot{\phi}^2m_Ssin\phi - d\dot{\psi}^2m_Ssin\phi} \nonumber \\
      &= \scalemath{0.8}{-(m_S + 2m_C + \frac{2I_{w3}}{R^2})\ddot{x} + m_Sdcos\phi\ddot{\phi} - m_Sdsin\phi(\dot{\phi}^2 + \dot{\psi}^2)} \nonumber \\
  F_2 &= \scalemath{0.8}{-\frac{1}{R^2}(2I_{w3}L^2\ddot{\psi} + I_2R^2\ddot{\psi} + 2I_{w2}R^2\ddot{\psi} + 2L^2R^2\ddot{\psi}m_C + R^2d^2\ddot{\psi}m_Ssin\phi^2} \nonumber \\ 
@@ -491,35 +628,108 @@ The resulting expressions are:
 The expressions match exactly as are there in the paper if $I_{w3} = \frac{m_CR^2}{2}$ and $I_{w2} = \frac{m_C}{4R^2}$.
 The paper has made a typo in the last equation using $\dot{\phi}^2$ instead of $\dot{\psi}^2$. 
 
+We can write down the $A$ and $C$ matrices using the above equations so that it becomes easier to match it 
+term by term with our derived equations. So we have:
+
+\begin{align} \begin{split}
+ &\scalemath{0.595}{\mathbf{A} = \left[ \begin{matrix} -(m_S + 2m_C + \frac{2I_{w3}}{R^2}) & 0 & m_Sdcos\phi \\ 
+   0 & -(2m_CL^2 +\frac{2I_{w3}L^2}{R^2} + 2I_{w2} + m_Sd^2sin\phi^2 + I_2 ) & 0 \\
+   m_Sdcos\phi & 0  & -(m_Sd^2 + I_3) \end{matrix} \right]} \\
+ &\scalemath{0.595}{\mathbf{C} = \left[ \begin{matrix} 0 & - m_Sdsin\phi\dot{\psi} & - m_Sdsin\phi\dot{\phi} \\ 
+     0 & - m_Sd^2sin\phi cos\phi\dot{\phi} & 0 \\ 
+    0 & m_Sd^2sin\phi cos\phi\dot{\psi} & 0 \end{matrix} \right]} 
+\end{split} \end{align}
 
 
+\tiny{
+$M_1 = m_S$, $M_w = m_C$, $\left[\begin{matrix} \mathbf{MX}_1 \\ \mathbf{MY}_1 \\ \mathbf{MZ}_1 \end{matrix}\right] = \left[\begin{matrix} 0 \\ m_Sd \\ 0\end{matrix}\right]$, 
+$\left[\begin{matrix} \mathbf{XX}_w & \mathbf{XY}_w & \mathbf{XZ}_w \\ \mathbf{XY}_w & \mathbf{YY}_w & \mathbf{YZ}_w \\ \mathbf{XZ}_w & \mathbf{YZ}_w & \mathbf{ZZ}_w \end{matrix}\right] 
+= \left[\begin{matrix} I_{w1} & 0 & 0 \\ 0 & I_{w2} & 0 \\ 0 & 0 & I_{w3} \end{matrix}\right]$ and
+$\left[\begin{matrix} \mathbf{XX}_1 & \mathbf{XY}_1 & \mathbf{XZ}_1 \\ \mathbf{XY}_1 & \mathbf{YY}_1 & \mathbf{YZ}_1 \\ \mathbf{XZ}_1 & \mathbf{YZ}_1 & \mathbf{ZZ}_1 \end{matrix}\right] 
+= \left[\begin{matrix} I_1+m_Sd^2 & 0 & 0 \\ 0 & I_2 & 0 \\ 0 & 0 & I_3+m_Sd^2 \end{matrix}\right]$}
 
-% \begin{align}
-%  \tilde{F}_r &= \sum_{i=1}^{3}\tilde{v}_r^{P_i} \cdot R_i \hskip 1em (r=1,2,3) \\
-%  \tilde{F}_1 &= (\tilde{v}_1^{C_1} \cdot R_{C_1}) + (\tilde{v}_1^{C_2} \cdot R_{C_2}) + (\tilde{v}_1^{S} \cdot R_S) \hskip 1em (r=1,2,3)
-% \end{align}
+\begin{table}
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|c|c|c|c|}
+ \hline 
+ Element & Derived Expression & Equivalent form in \cite{kim2005dynamic} & Expression in \cite{kim2005dynamic} \\ \hline
+ $A_{11}$ & $M_1+2M_w+2\frac{\mathbf{ZZ}_w}{R^2}$ 
+          & $m_S+2m_C+2\frac{I_{w3}}{R^2}$ 
+          & $-(m_S + 2m_C + \frac{2I_{w3}}{R^2})$ \\ \hline 
+ $A_{12}$ & $\mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R}$ 
+          & $0-2\frac{0}{R} = 0$ 
+          & $0$ \\ \hline 
+ $A_{13}$ & $-\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi$ 
+          & $-m_Sdcos\phi-0sin\phi = -m_Sdcos\phi$ 
+          & $m_Sdcos\phi$ \\ \hline 
+ $A_{21}$ & $\mathbf{MZ}_1-2\frac{\mathbf{YZ}_w}{R}$ 
+          & $0-2\frac{0}{R} = 0$ 
+          & $0$ \\ \hline 
+ $A_{22}$ & \pbox{20cm}{$\mathbf{XX}_1+2\mathbf{YY}_w+2M_wL^2-(\mathbf{XX}_1-\mathbf{YY}_1)cos^2\phi$ 
+                        \\ $+\mathbf{XY}_1sin(2\phi)+\frac{2L^2\mathbf{ZZ}_w}{R^2}$ }
+          & \pbox{20cm}{$I_1+m_Sd^2+2I_{w2}+2m_CL^2-(I_1+m_Sd^2-I_2)cos^2\phi+0sin(2\phi)+\frac{2L^2I_{w3}}{R^2}$ 
+                        \\ $= 2m_CL^2+\frac{2I_{w3}L^2}{R^2}+2I_{w2} + (I_1+m_Sd^2)sin^2\phi+I_2cos^2\phi$ }
+          & $-(2m_CL^2 +\frac{2I_{w3}L^2}{R^2} + 2I_{w2} + m_Sd^2sin\phi^2 + I_2 )$ \\ \hline 
+ $A_{23}$ & $\mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi$ 
+          & $0cos\phi+0sin\phi = 0$ 
+          & $0$ \\ \hline 
+ $A_{31}$ & $-\mathbf{MY}_1cos\phi-\mathbf{MX}_1sin\phi$ 
+          & $-m_Sdcos\phi-0sin\phi = -m_Sdcos\phi$ 
+          & $m_Sdcos\phi$ \\ \hline 
+ $A_{32}$ & $\mathbf{YZ}_1cos\phi+\mathbf{XZ}_1sin\phi$ 
+          & $0cos\phi+0sin\phi = 0$ 
+          & $0$ \\ \hline 
+ $A_{33}$ & $\mathbf{ZZ}_1$ 
+          & $m_Sd^2 + I_3$ 
+          & $-(m_Sd^2 + I_3)$ \\ \hline 
+ $C_{11}$ & $0$ 
+          & $0$ 
+          & $0$ \\ \hline 
+ $C_{12}$ & $0$ 
+          & $0$ 
+          & $- m_Sdsin\phi\dot{\psi}$ \\ \hline 
+ $C_{13}$ & $-\dot{\phi}\left(\mathbf{MX}_1cos\phi-\mathbf{MY}_1sin\phi\right)$ 
+          & $-\dot{\phi}\left(0cos\phi-m_Sdsin\phi\right) = m_Sdsin\phi\dot{\phi}$ 
+          & $- m_Sdsin\phi\dot{\phi}$ \\ \hline 
+ $C_{21}$ & $0$ 
+          & $0$ 
+          & $0$ \\ \hline 
+ $C_{22}$ & $\frac{\dot{\phi}}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right)$ 
+          & \pbox{20cm}{$\frac{\dot{\phi}}{2}\left(2 \times 0cos(2\phi)+(I_1+m_Sd^2-I_2)sin(2\phi)\right)$
+                        \\ $= (I_1+m_Sd^2-I_2)sin\phi cos\phi\dot{\phi}$} 
+          & $- m_Sd^2sin\phi cos\phi\dot{\phi}$ \\ \hline 
+ $C_{23}$ & \pbox{20cm}{$\dot\psi\left(\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)cos\phi sin\phi\right) $ 
+                        \\ $-\dot\phi\left(\mathbf{YZ}_1sin\phi-\mathbf{XZ}_1cos\phi\right)$ }
+          & \pbox{20cm}{$\dot\psi\left(0cos(2\phi)+(I_1+m_Sd^2-I_2)cos\phi sin\phi\right)-\dot\phi\left(0sin\phi-0cos\phi\right)$ 
+                        \\ $ = (I_1+m_Sd^2-I_2)cos\phi sin\phi\dot\psi$ }
+          & $0$ \\ \hline 
+ $C_{31}$ & $0$ 
+          & $0$ 
+          & $0$ \\ \hline 
+ $C_{32}$ & $-\frac{\dot{\psi}}{2}\left(2\mathbf{XY}_1cos(2\phi)+(\mathbf{XX}_1-\mathbf{YY}_1)sin(2\phi)\right)$ 
+          & \pbox{20cm}{$-\frac{\dot{\psi}}{2}\left(2\times 0cos(2\phi)+(I_1-I_2)sin(2\phi)\right)$ 
+                        \\ $ = -(I_1+m_Sd^2-I_2)sin\phi cos\phi\dot{\psi}$ }
+          & $m_Sd^2sin\phi cos\phi\dot{\psi}$ \\ \hline 
+ $C_{33}$ & $0$ 
+          & $0$ 
+          & $0$ \\ \hline
+\end{tabular}
+}
+\end{table}
 
+Mismatched elements:
+$A_{22}$, $C_{12}$, $C_{22}$, $C_{23}$ and $C_{32}$.
 
+Resulting difference in the equations:
+\begin{itemize}
+ \item Equation 1: $m_Sdsin\phi\dot\psi^2$
+ \item Equation 2: $(I_1-I_2)sin^2\phi\ddot{\psi} + (2(I_1-I_2)+m_Sd^2)sin\phi cos\phi\dot{\phi}\dot{\psi}$
+ \item Equation 3: $-(I_1-I_2)sin\phi cos\phi\dot\psi^2$
 \end{itemize}
+
+
 \bibliographystyle{plain}
 \bibliography{reference}
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
