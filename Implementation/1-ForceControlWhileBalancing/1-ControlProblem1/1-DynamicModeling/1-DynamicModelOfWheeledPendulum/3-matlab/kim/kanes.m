@@ -16,6 +16,7 @@ syms tau_R tau_L R real
 syms t X(t) PSI(t) PHI(t) dX dPSI dPHI ddX ddPSI ddPHI real
 dX=diff(X,t);dPSI=diff(PSI,t);dPHI=diff(PHI,t);
 ddX=diff(dX,t);ddPSI=diff(dPSI,t);ddPHI=diff(dPHI,t);
+q = [x psii phi]'; dq = [dx dpsi dphi]'; ddq = [ddx ddpsi ddphi]';
 
 mydiff = @(H) formula(subs(diff(symfun(subs(H,[x,psii,phi,dx,dpsi,dphi,...
     ddx,ddpsi,ddphi],[X,PSI,PHI,dX,dPSI,dPHI,ddX,ddPSI,ddPHI]),t),t),...
@@ -45,10 +46,13 @@ alphaR=ddpsi*K+(ddx/R+ddpsi*L/R)*J;%+(dx/R+dpsi*L/R)*cross(w,J);
 Iw=[Iwx 0 0;0 Iwy 0;0 0 Iwz];
 
 HL=Iw*wL; HR=Iw*wR;
-delHL=mydiff(HL); delHR=mydiff(HR);
+dHL=mydiff(HL)+cross(w,HL); dHR=mydiff(HR)+cross(w,HL);
 % delHL=Iw*(ddpsi*K+(ddx/R-ddpsi*L/R)*J); delHR=Iw*(ddpsi*K+(ddx/R+ddpsi*L/R)*J);
-SL=0.5*mw*aL'*aL+0.5*alphaL'*(delHL)+alphaL'*(cross(wL,HL));
-SR=0.5*mw*aR'*aR+0.5*alphaR'*(delHR)+alphaR'*(cross(wR,HR));
+KL=sym(zeros(3,1)); KR=sym(zeros(3,1));
+for i_=1:3
+    KL(i_)=mw*aL'*diff(vL,dq(i_))+dHL'*diff(wL,dq(i_));
+    KR(i_)=mw*aR'*diff(vR,dq(i_))+dHR'*diff(wR,dq(i_));
+end
 
 %% Body
 
@@ -67,17 +71,11 @@ Rot = [cos(phi) 0 sin(phi);0 1 0;-sin(phi) 0 cos(phi)];
 IB=Rot*[Ix 0 0;0 Iy 0; 0 0 Iz]*Rot';
 
 HB=IB*wB;
-% Computed by MATLAB:
-%  -dpsi*(Ix*cos(phi)*sin(phi) - Iz*cos(phi)*sin(phi))
-%                                              Iy*dphi
-%                 dpsi*(Iz*cos(phi)^2 + Ix*sin(phi)^2)
-% Simplified by me:
-%
-%
-%
-% delHB=IB*(ddpsi*K+ddphi*J); 
-delHB=mydiff(HB);
-SB=0.5*m*aB'*aB+0.5*alphaB'*(delHB)+alphaB'*(cross(wB,HB));
+dHB=mydiff(HB)+cross(w,HB);
+KB=sym(zeros(3,1));
+for i_=1:3
+    KB(i_)=m*aB'*diff(vB,dq(i_))+dHB'*diff(wB,dq(i_));
+end
 V=m*g*d*cos(phi);
 
 
@@ -88,10 +86,7 @@ dW=tau_L*J'*(wL-dphi*J)+tau_R*J'*(wR-dphi*J);
 
 %% Equations
 
-S=SL+SR+SB;
-
-K=[diff(S,ddx);diff(S,ddpsi);diff(S,ddphi)];
-q = [x psi phi]'; dq = [dx dpsi dphi]'; ddq = [ddx ddpsi ddphi]';
+K=KL+KR+KB;
 AA = sym(zeros(3,3)); CC = sym(zeros(3,3)); 
 QQ=sym(zeros(3,1)); Gamma=sym(zeros(3,1));
 for i=1:3

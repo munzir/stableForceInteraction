@@ -25,7 +25,6 @@ k=cos(phi)*K+sin(phi)*I;
 w=dpsi*K;
 alpha=ddpsi*K;
 vO=dx*I;
-aO=ddx*I+dx*cross(w,I);
 rOL=L*J; rOR=-L*J;
 vL=vO+cross(w,rOL); vR=vO+cross(w,rOR);
 wL=dpsi*K+(dx/R-dpsi*L/R)*J; 
