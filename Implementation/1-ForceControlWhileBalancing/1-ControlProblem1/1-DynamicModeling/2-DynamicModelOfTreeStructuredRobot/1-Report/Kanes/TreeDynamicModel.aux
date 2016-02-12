@@ -1,18 +1,68 @@
 \relax 
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction to Kane's Formulation}{1}}
+\newlabel{kanes}{{1}{1}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Frames of references on the robot}}{2}}
 \newlabel{fig:frames}{{1}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Finding Dynamic Model for our robot}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Transformations}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Velocities and Accelerations of Frames}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Inertial Forces}{4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Potential Energy}{4}}
-\newlabel{eq:PE1}{{7}{4}}
-\bibstyle{plain}
-\bibdata{reference}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Expression for Kinetic Energy}{5}}
-\newlabel{sec:expressionKE}{{A}{5}}
-\newlabel{eq:appKE}{{11}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Comparison with Lagrange}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Lagrange}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Kane's}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Transformations}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Velocities and Accelerations of Frames}{3}}
+\newlabel{recursiveAngVel}{{3}{3}}
+\newlabel{recursiveAngAcc}{{4}{3}}
+\newlabel{recursiveLinVel}{{5}{3}}
+\newlabel{recursiveLinAcc}{{6}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Kane's Left-Hand Side}{4}}
+\newlabel{aGk}{{8}{4}}
+\newlabel{kanesLHSTerm}{{12}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Kane's Right-Hand Side}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Joint Torques}{5}}
+\newlabel{jointTorque1}{{13}{5}}
+\newlabel{diffOmega}{{14}{6}}
+\newlabel{jointTorque2}{{15}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}End-effector Forces and Torques}{6}}
+\newlabel{endEff1}{{16}{6}}
+\newlabel{diffVe}{{18}{7}}
+\newlabel{endEff2}{{19}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Gravitational Forces}{8}}
+\newlabel{gravity1}{{21}{8}}
+\newlabel{gravity2}{{23}{8}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}MATLAB code For Finding the Dynamic Model}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Map Container for all the Frame Information}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Functions associated with the Map Container}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Kane's Left-Hand Side}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Kane's Right-Hand Side}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Appendix}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}\texttt  {dynamicModel.m}}{11}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/dynamicModel.m}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}\texttt  {getKrangFrames()}}{11}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/getKrangFrames.m}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}\texttt  {kanesLHS()}}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/kanesLHS.m}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}\texttt  {getAC()}}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/getAC.m}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}\texttt  {angVel()}}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/angVel.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}\texttt  {angAcc()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/angAcc.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.7}\texttt  {linVel()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/linVel.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.8}\texttt  {linAcc()}}{16}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/linAcc.m}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.9}\texttt  {Rot()}}{17}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/Rot.m}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.10}\texttt  {Tf()}}{17}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/Tf.m}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.11}\texttt  {mass()}}{17}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/mass.m}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.12}\texttt  {mCOM()}}{17}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/mCOM.m}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.13}\texttt  {inertiaMat()}}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/inertiaMat.m}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.14}\texttt  {qVec()}}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/qVec.m}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.15}\texttt  {dqVec()}}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/dqVec.m}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.16}\texttt  {ddqVec()}}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/ddqVec.m}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.17}\texttt  {getcoeff()}}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/getcoeff.m}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.18}\texttt  {kanesRHS.m}}{19}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Kanes/kanesRHS.m}{19}}

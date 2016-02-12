@@ -1,0 +1,28 @@
+Explain the rationale behind doing this.
+
+Explain the process.
+
+3 angular velocities
+3 linear velocities
+3 angular accelerations
+3 linear accelerations
+3 gravity vectors
+3 mSxg
+3 maG
+3 dHnew
+3 LHS
+3 E
+3 G
+
+Final form
+
+Verification
+
+Appendix
+
+
+=======
+1. write latex formulas for the closed forms
+2. print stuff not at the end but at appropriate places
+3. print latex form of matrices
+4. convert2latex modification such that it does not ignore any line

@@ -7,9 +7,53 @@
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{bbm}
-
+\usepackage{relsize}
+\usepackage{textcomp}
 \newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
 % \scalemath{1.0}
+
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATLAB code listing
+%
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+ 
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab, % Use MATLAB
+frame=single, % Single frame around code
+basicstyle=\tiny\ttfamily, % Use small true type font
+keywordstyle=[1]\color{Blue}\bfseries, % MATLAB functions bold and blue
+keywordstyle=[2]\color{Purple}, % MATLAB function arguments purple
+keywordstyle=[3]\color{Blue}\underbar, % User functions underlined and blue
+identifierstyle=, % Nothing special about identifiers
+% Comments small dark green courier
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+stringstyle=\color{Purple}, % Strings are purple
+showstringspaces=false, % Don't put marks in string spaces
+tabsize=5, % 5 spaces per tab
+%
+%%% Put standard MATLAB functions not included in the default
+%%% language here
+morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+%
+%%% Put MATLAB function parameters here
+morekeywords=[2]{on, off, interp},
+%
+%%% Put user defined functions here
+morekeywords=[3]{FindESS, homework_example},
+%
+morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+numbers=left, % Line numbers on left
+firstnumber=1, % Line numbers start with line 1
+numberstyle=\tiny\color{Blue}, % Line numbers are blue
+stepnumber=5 % Line numbers go in steps of 5
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
 
 %opening
 \title{Equations Of Motion of Krang on Fixed Wheels}
@@ -71,11 +115,11 @@ So the dynamic model of a tree-structured robot is described by $n$ coupled and 
 equations. The elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$ are functions of geometric and inertial 
 parameters of the robot.
 
-\subsection{Computation of the elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$}
+\subsection{Computation of the elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$} \label{sec:matrices}
 To compute the elements of $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$, we begin by symbollically computing the 
 expressions of the kinetic and potential energies of all the links of the robot. Then we proceed as follows:
  \begin{itemize}
-  \item the elements $A_{ij}$ is equal to the coefficient of $\left(\frac{\dot{q}_i^2}{2}\right)$ in the expression of
+  \item the elements $A_{ii}$ is equal to the coefficient of $\left(\frac{\dot{q}_i^2}{2}\right)$ in the expression of
   the kinetic energy, while $A_{ij}$, for $i \neq j$, is equal to the coefficient of $\dot{q}_i\dot{q}_j$
   \item for calculating the elements of $\mathbf{C}$, there exist several forms of the vector $\mathbf{C(q,\dot{q})\dot{q}}$.
  Using the \textit{Christoffell symbols} $c_{i,jk}$, the $(i,j)$ elements of the matrix $\mathbf{C}$ can be written as:
@@ -83,11 +127,11 @@ expressions of the kinetic and potential energies of all the links of the robot.
   \begin{cases}
    C_{ij} = \sum\limits^{n}_{k=1}c_{i,jk}\dot{q}_k \\
    c_{i,jk} = \frac{1}{2}\left[\frac{\partial A_{ij}}{\partial q_k} + \frac{\partial A_{ik}}{\partial q_j} - \frac{\partial A_{jk}}{\partial q_i}\right]
-  \end{cases}
+  \end{cases} \label{Cmat}
  \end{align}
  \item The $Q_i$ element of the vector $\mathbf{Q}$ is calculated according to:
  \begin{align}
-  Q_i = \frac{\partial U}{\partial q_i}
+  Q_i = \frac{\partial U}{\partial q_i} \label{Qmat}
  \end{align}
  \end{itemize}
 
@@ -140,8 +184,8 @@ write down these transformation matrices for our system as follows:
 The angular and linear velocities of the frames can be calculated using the recursive formulation:
 
 \begin{align}
- &{}^j\omega_j={}^jA_i{}^i\omega_i+{}^je_j\dot{q}_j \\
- &{}^jV_j={}^jA_i\left({}^iV_i+{}^i\omega_i \times {}^iP_j\right)
+ &{}^j\omega_j={}^jA_i{}^i\omega_i+{}^je_j\dot{q}_j \label{recursiveAngVel}\\
+ &{}^jV_j={}^jA_i\left({}^iV_i+{}^i\omega_i \times {}^iP_j\right) \label{recursiveLinVel}
 \end{align} where ${}^i\omega_j$ and ${}^iV_j$ denote the angular and linear velocities repectively of frame $j$ measured with respect to the 
 world frame and represented in frame $i$. ${}^je_j$ denotes the direction of local angular velocity of frame $j$ represented in frame $j$. 
 $i, j \in \mathbb{F}$ identify the frames and $i$ identifies the antecedent frame of $j$. So, the rotation ${}^jA_i$ and the 
@@ -202,7 +246,7 @@ where $L_{0,j}$ is the position vector from the origin $O_0$ to $O_j$ and $\math
 the vectors appearing in \ref{eq:PE1} into frame $R_0$, we obtain:
 \begin{align}
  U_j &= -M_j\,{}^0\mathbf{g}^T({}^0P_j+{}^0A_j\,{}^jS_j) \\ &= -{}^0\mathbf{g}^T(M_j\,{}^0P_j+{}^0A_j\,{}^j\mathbf{MS}_j) \\ 
- &= -\left[\begin{matrix} {}^0\mathbf{g}^T && 0 \end{matrix} \right] {}^0T_j\left[ \begin{matrix} {}^j\mathbf{MS}_j \\ M_j \end{matrix} \right]
+ &= -\left[\begin{matrix} {}^0\mathbf{g}^T && 0 \end{matrix} \right] {}^0T_j\left[ \begin{matrix} {}^j\mathbf{MS}_j \\ M_j \end{matrix} \right] \label{eq:PE}
 \end{align}
 Given the frames defined in figure \ref{fig:frames}, ${}^0\mathbf{g} = \left[\begin{matrix}0 & 0 & -g \end{matrix}\right]^T$.
 
@@ -277,13 +321,91 @@ denotes the rotor velocity of actuator $j$. In the case of a prismatic joint, $I
 In order to consider the rotor inertia in the dynamic model of the robot, we add the inertia (or mass) $I_{aj}$
 to the $A_{jj}$ element of the matrix $\mathbf{A}$.
 
+\section{MATLAB code}
 
+The dynamic model is generated using a script \texttt{dynamicModel.m} found in the folder 
+\textit{\relsize{-1} stableForceInteraction/Implementation/1-ForceControlWhileBalancing/1-ControlProblem1/1-DynamicModeling/2-DynamicModelOfTreeStructuredRobot/2-matlab/Lagrange}.
+The function populates the frame information in a map container using \texttt{getKrangFrames()}, then calculates the 
+total kinetic energy, total potential energy, then the matrices $\mathbf{A}$, $\mathbf{C}$ and $\mathbf{Q}$ using functions
+\texttt{totalKE()}, \texttt{totalPE()}, \texttt{findA()}, \texttt{findC()} and \texttt{findQ()}. The resulting matrices 
+are saved in the symbolic variables \texttt{AA}, \texttt{CC} and \texttt{QQ} which can be loaded in the workspace
+by loading the mat file \texttt{Lagrange.mat}.
+
+\subsection{Map Container for all the Frame Information}
+
+The function \texttt{getKrangFrames()} populates the information in a map container \texttt{f}. A map container is a data structure
+in MATLAB that stores a list of data that is retrievable using a key. We store a \texttt{frame} structure in each
+cell of the map and use strings $s \in \mathbf{S} = \lbrace$ \texttt{\textquotesingle 0\textquotesingle }, \texttt{\textquotesingle 1\textquotesingle }, 
+\texttt{\textquotesingle 2\textquotesingle }, \texttt{\textquotesingle 3\textquotesingle }, \texttt{\textquotesingle 4l\textquotesingle }, 
+\texttt{\textquotesingle 5l\textquotesingle }, \texttt{\textquotesingle 6l\textquotesingle }, \texttt{\textquotesingle 7l\textquotesingle },
+\texttt{\textquotesingle 8l\textquotesingle }, \texttt{\textquotesingle 9l\textquotesingle }, \texttt{\textquotesingle 10l\textquotesingle },
+\texttt{\textquotesingle 4r\textquotesingle }, \texttt{\textquotesingle 5r\textquotesingle }, \texttt{\textquotesingle 6r\textquotesingle }, 
+\texttt{\textquotesingle 7r\textquotesingle }, \texttt{\textquotesingle 8r\textquotesingle }, \texttt{\textquotesingle 9r\textquotesingle }, 
+\texttt{\textquotesingle 10r\textquotesingle } $\rbrace$ as a key to retrieve information. The \texttt{frame} structure
+stores the following elements:
+\begin{itemize}[label={}]
+ \item[\texttt{x}] the unit vector along $x$-axis represented in the antecedent frame
+ \item[\texttt{y}] the unit vector along $y$-axis represented in the antecedent frame
+ \item[\texttt{z}] the unit vector along $z$-axis represented in the antecedent frame
+ \item[\texttt{P}] the position of the origin frame represented in the antecedent frame
+ \item[\texttt{e}] the unit vector along direction of positive rotation of the frame represented in the local frame
+ \item[\texttt{a}] the string $\in \mathbf{S}$ (defined above) that is the key that maps to the antecedent frame
+ \item[\texttt{q}] the symbolic variable used for representing the generalized position $q$ associated with this frame
+ \item[\texttt{dq}] the symbolic variable used for representing the generalized speed $\dot{q}$ associated with this frame
+ \item[\texttt{ddq}] the symbolic variable used for representing the generalized acceleration $\ddot{q}$ associated with this frame
+ \item[\texttt{o}] the row number in the inertia matrix $\mathbf{A}$ (i.e. in the final dynamic model $\mathbf{A\ddot{q}+C\dot{q}+Q=F}$) 
+ that corresponds to the current joint 
+ \item[\texttt{param}] array of ten symbolic variables used to represent the inertial parameters of the joint
+ $\scalemath{0.75}{\left[\begin{matrix} m & \mathbf{MX} & \mathbf{MY} & \mathbf{MZ} & \mathbf{XX} & \mathbf{YY} & \mathbf{ZZ} & \mathbf{XY} & \mathbf{XZ} & \mathbf{YZ} \end{matrix}\right]^T}$
+\end{itemize}
+
+\subsection{Functions associated with the Map Container}
+
+There are a number of functions that take the map container \texttt{f} as the input argument and construct a useful
+information as an output. Here is a list of those functions:
+\begin{itemize}[label={}]
+ \item[\texttt{\relsize{-2} isBefore(f, key1, key2)}] returns \texttt{true} if frame 1 (identified by \texttt{key1}) is before frame 2 
+ (identified by \texttt{key2}) in the tree structure of the robot
+ \item[\texttt{\relsize{-2} Rot(f, key1, key2)}] returns rotation transform ${}^jA_i$ i.e. represention of frame i (identified by \texttt{key1}) in frame j (identified by \texttt{key2})
+ \item[\texttt{\relsize{-2} Tf(f, key1, key2)}] returns rotation transform ${}^jT_i$ i.e. represention of frame i (identified by \texttt{key1}) in frame j (identified by \texttt{key2})
+ \item[\texttt{\relsize{-2} qVec(f)}] generates the vector $\mathbf{q}$ containing generalized positions of all frames
+ \item[\texttt{\relsize{-2} dqVec(f)}] generates the vector $\mathbf{\dot{q}}$ containing generalized speeds of all frames
+ \item[\texttt{\relsize{-2} mass(f, key)}] returns the mass of the frame identified by the \texttt{key}
+ \item[\texttt{\relsize{-2} mCOM(f, key)}] returns the mass times COM ($\scalemath{0.75}{\mathbf{MS}=\left[\begin{matrix} \mathbf{MX} & \mathbf{MY} & \mathbf{MZ} \end{matrix}\right]^T}$)
+ of the joint identified by the \texttt{key} represented in the local frame
+ \item[\texttt{\relsize{-2} inertiaMat(f, key)}] returns the inertia matrix 
+ ($\scalemath{0.75}{\mathbf{J}=\left[\begin{matrix} \mathbf{XX} & \mathbf{XY} & \mathbf{XZ} \\ \mathbf{XY} & \mathbf{YY} & \mathbf{YZ} \\ \mathbf{XZ} & \mathbf{YZ} & \mathbf{ZZ} \end{matrix}\right]}$)
+ of the joint indentified by \texttt{key} represented in the local frame
+ \item[\texttt{\relsize{-2} angVel(f, key)}] returns the symbolic expression for the angular velocity ($\bar\omega$) of the joint represented in local frame calculated
+ recursively using eq. \ref{recursiveAngVel}
+ \item[\texttt{\relsize{-2} linVel(f, key)}] returns the symbolic expression for the linear velocity ($\bar{v}$) of the joint represented in local frame calculated
+ recursively using eq. \ref{recursiveLinVel}
+\end{itemize}
+
+\subsection{Main functions}
+
+The main functions that are used in the script to find the dynamic model are briefly explained here:
+\begin{itemize}[label={}]
+ \item[\texttt{totalKE()}] Finds the symbolic expression for the total kinetic energy of the system. This is done by calling function \texttt{KE()} for 
+ every joint which in turn uses the eq.\ref{eq:KE2}. The quantities such as inertia, velocities etc. needed for evaluating the 
+ kinetic energy expression are supplied by the helper functions dicussed in the previous section
+ \item[\texttt{totalPE()}] Finds the symbolic expression for the total potential energy of the system. This is done by calling function \texttt{PE()}
+ for every joint which in turn uses the eq.\ref{eq:PE} to find out the potential energy
+ \item[\texttt{findA()}] This function uses the method as described in section \ref{sec:matrices} to find the $\mathbf{A}$. 
+  The elements $A_{ii}$ is equal to the coefficient of $\left(\frac{\dot{q}_i^2}{2}\right)$ in the expression of
+  the kinetic energy, while $A_{ij}$, for $i \neq j$, is equal to the coefficient of $\dot{q}_i\dot{q}_j$
+ \item[\texttt{findC()}] This function uses the equation \ref{Cmat} to evaluate the symbolic expressions for the elements of
+ $\mathbf{C}$ matrix
+ \item[\texttt{findQ()}] This function uses the equation \ref{Qmat} to evaluate the symbolic expressions for the elements of
+ $\mathbf{Q}$ matrix
+\end{itemize}
 
 
 \bibliographystyle{plain}
 \bibliography{reference}
 
 \appendix
+
 \section{Expression for Kinetic Energy} \label{sec:expressionKE}
 We show here how the equation \ref{eq:KE2} was derived from \ref{eq:KE1}. Equation \ref{eq:KE1} is:
 \begin{align}
@@ -313,6 +435,60 @@ We show here how the equation \ref{eq:KE2} was derived from \ref{eq:KE1}. Equati
  E_j = \frac{1}{2}(\omega_j^TJ_{Gj}\omega_j+M_jV_j^TV_j + 2\mathbf{MS}_j^T(V_j \times \omega_j))
 \]
 
+\section{MATLAB Code Listings}
+
+In this section we present the code for the MATLAB functions discussed in the report.
+
+\subsection{\texttt{dynamicModel.m}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/dynamicModel.m}
+
+\subsection{\texttt{getKrangFrames()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/getKrangFrames.m}
+
+\subsection{\texttt{totalKE()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/totalKE.m}
+
+\subsection{\texttt{totalPE()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/totalPE.m}
+
+\subsection{\texttt{findA()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/findA.m}
+
+\subsection{\texttt{findC()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/findC.m}
+
+\subsection{\texttt{findQ()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/findQ.m}
+
+\subsection{\texttt{angVel()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/angVel.m}
+
+\subsection{\texttt{linVel()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/linVel.m}
+
+\subsection{\texttt{Rot()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/Rot.m}
+
+\subsection{\texttt{Tf()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/Tf.m}
+
+\subsection{\texttt{mass()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/mass.m}
+
+\subsection{\texttt{mCOM()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/mCOM.m}
+
+\subsection{\texttt{inertiaMat()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/inertiaMat.m}
+
+\subsection{\texttt{qVec()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/qVec.m}
+
+\subsection{\texttt{dqVec()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/dqVec.m}
+
+\subsection{\texttt{getcoeff()}}
+\lstinputlisting[language=Matlab]{../../2-matlab/Lagrange/getcoeff.m}
 
 
 

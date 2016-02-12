@@ -1,13 +1,7 @@
-function [A, C] = getAC(f, K, varargin)
+function [A, C] = getAC(f, K)
 
-if nargin == 2
-    dq=dqVec(f);
-    ddq=ddqVec(f);
-elseif nargin > 2
-    dq=[varargin{1}; dqVec(f)];
-    ddq=[varargin{2}; ddqVec(f)];
-end
-
+dq = dqVec(f);
+ddq = ddqVec(f);
 n=length(dq);
 A = sym(zeros(n,n)); C = sym(zeros(n,n)); 
 for i=1:n

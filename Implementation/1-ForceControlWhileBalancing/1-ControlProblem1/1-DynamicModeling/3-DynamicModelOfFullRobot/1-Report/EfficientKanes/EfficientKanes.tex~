@@ -1,0 +1,95 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[thinlines]{easytable}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{textcomp}
+\usepackage{relsize}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{mathtools}
+\usepackage{multicol}
+\setcounter{MaxMatrixCols}{20}
+\allowdisplaybreaks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATLAB code listing
+%
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+ 
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab, % Use MATLAB
+frame=single, % Single frame around code
+basicstyle=\tiny\ttfamily, % Use small true type font
+keywordstyle=[1]\color{Blue}\bfseries, % MATLAB functions bold and blue
+keywordstyle=[2]\color{Purple}, % MATLAB function arguments purple
+keywordstyle=[3]\color{Blue}\underbar, % User functions underlined and blue
+identifierstyle=, % Nothing special about identifiers
+% Comments small dark green courier
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\tiny,
+stringstyle=\color{Purple}, % Strings are purple
+showstringspaces=false, % Don't put marks in string spaces
+tabsize=5, % 5 spaces per tab
+%
+%%% Put standard MATLAB functions not included in the default
+%%% language here
+morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+%
+%%% Put MATLAB function parameters here
+morekeywords=[2]{on, off, interp},
+%
+%%% Put user defined functions here
+morekeywords=[3]{FindESS, homework_example},
+%
+morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+numbers=left, % Line numbers on left
+firstnumber=1, % Line numbers start with line 1
+numberstyle=\tiny\color{Blue}, % Line numbers are blue
+stepnumber=5 % Line numbers go in steps of 5
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+% \scalemath{1.0}
+
+
+%opening
+\title{Efficient Computation of the Dynamic Model for Krang}
+\author{Munzir Zafar}
+
+\begin{document}
+
+\maketitle
+
+In our earlier report we derived the model of the robot, Golem Krang, using Kane's formulation. Since the purpose of deriving the model
+is either simulation or control, both of which require us to calculate the dynamics of the robot as fast as possible, we are stuck with a problem.
+Due to large number of degrees of freedom, the final expression for the dynamics of the system is extremely long. Also, it contains a repetition
+of same combination of terms. Thus the computation using the final form that will come out as a result of applying the results of the report
+mentioned earlier, are going to be inefficient. Even if the final expression is not directly used but the resursive formulation is used to 
+calculate the terms still suffers with the same problem. For this reason, it will be nice if we can reduce the amount of computation time
+that is required to compute the dynamics of the system in run-time.
+
+We use the ideas presented in \cite{kane1983use}. The basic idea is simple. As we derive the kinematics of the system recursively, we keep substituting the resulting expressions,
+that are combinations of more than one variables, with one new variable. And we derive the kinematics of the succeeding links (in the serial structure) in terms 
+of the substitute variables. And then we repeat this substitution process at each step. This allows us to express the final expression in simpler closed forms,
+and alse if the substitutions are encoded, a potential recurring combination of variables will be evaluated/computed just once within an iteration thus
+resulting the overall computation time significantly.
+
+
+I am going through the worst time of my life. And I really would appreciate some support. I have not been able to control my addiction.
+And it is precisely my addiction that has brought me to the point where I am today. After a long period of giving up I have
+decided to give it one more try. I have been fasting pretty regularly and that seemed to help. I feel extremely lonely in this struggle.
+
+\tiny
+\input{../../2-matlab/EfficientKanes/dynamicModelAuto2.tex}
+
+\bibliographystyle{plain}
+\bibliography{reference}
+
+\end{document}

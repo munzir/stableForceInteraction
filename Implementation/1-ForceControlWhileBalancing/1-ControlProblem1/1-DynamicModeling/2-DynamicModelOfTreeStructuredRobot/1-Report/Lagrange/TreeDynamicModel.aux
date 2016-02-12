@@ -6,22 +6,67 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Frames of references on the robot}}{2}}
 \newlabel{fig:frames}{{1}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Computation of the elements of $\mathbf  {A}$, $\mathbf  {C}$ and $\mathbf  {Q}$}{2}}
+\newlabel{sec:matrices}{{1.2}{2}}
+\newlabel{Cmat}{{4}{2}}
+\newlabel{Qmat}{{5}{3}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Finding $\mathbf  {A}$, $\mathbf  {C}$ and $\mathbf  {Q}$ for our robot}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Transformations}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Angular and Linear Velocities of Frames}{4}}
+\newlabel{recursiveAngVel}{{7}{4}}
+\newlabel{recursiveLinVel}{{8}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Kinetic Energy}{4}}
 \newlabel{eq:KE1}{{10}{4}}
 \newlabel{eq:KE2}{{11}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Potential Energy}{5}}
 \newlabel{eq:PE1}{{12}{5}}
+\newlabel{eq:PE}{{15}{5}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Effects of forces and torques on the end effectors}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Jacobians for the two-armed robot}{5}}
-\bibstyle{plain}
-\bibdata{reference}
-\bibcite{khalil2004modeling}{1}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Other terms in the Lagrange Equations}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Considering Friction}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Considering rotor inertia}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Expression for Kinetic Energy}{7}}
-\newlabel{sec:expressionKE}{{A}{7}}
-\newlabel{eq:appKE}{{19}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}MATLAB code}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Map Container for all the Frame Information}{7}}
+\bibstyle{plain}
+\bibdata{reference}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Functions associated with the Map Container}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Main functions}{8}}
+\bibcite{khalil2004modeling}{1}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Expression for Kinetic Energy}{9}}
+\newlabel{sec:expressionKE}{{A}{9}}
+\newlabel{eq:appKE}{{19}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}MATLAB Code Listings}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}\texttt  {dynamicModel.m}}{10}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/dynamicModel.m}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}\texttt  {getKrangFrames()}}{10}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/getKrangFrames.m}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}\texttt  {totalKE()}}{12}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/totalKE.m}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}\texttt  {totalPE()}}{12}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/totalPE.m}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}\texttt  {findA()}}{12}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/findA.m}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}\texttt  {findC()}}{13}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/findC.m}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}\texttt  {findQ()}}{13}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/findQ.m}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}\texttt  {angVel()}}{13}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/angVel.m}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}\texttt  {linVel()}}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/linVel.m}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.10}\texttt  {Rot()}}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/Rot.m}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.11}\texttt  {Tf()}}{14}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/Tf.m}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.12}\texttt  {mass()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/mass.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.13}\texttt  {mCOM()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/mCOM.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.14}\texttt  {inertiaMat()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/inertiaMat.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.15}\texttt  {qVec()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/qVec.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.16}\texttt  {dqVec()}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/dqVec.m}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.17}\texttt  {getcoeff()}}{16}}
+\@writefile{lol}{\contentsline {lstlisting}{../../2\textendash matlab/Lagrange/getcoeff.m}{16}}

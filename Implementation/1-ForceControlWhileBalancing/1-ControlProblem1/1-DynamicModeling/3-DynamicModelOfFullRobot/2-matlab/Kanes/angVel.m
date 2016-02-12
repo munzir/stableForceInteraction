@@ -1,4 +1,4 @@
-function w = angVel(f, key, varargin)
+function w = angVel(f, key)
 
 % Calculate angular velocity of the current frame represented in the same
 % frame.
@@ -9,21 +9,14 @@ function w = angVel(f, key, varargin)
 disp(['   Computing angVel of ', key]);
 
 
-if(f(key).gotAngVel) 
+if(f(key).gotAngVel) % This serves two purposes:
+                     % 1. Base condition for recursive call as Frame 0 is
+                     % setup to be gotAngVel = true
+                     % 2. If this link has already been evaluated then
+                     % don't go into recursion
     w=f(key).angVel;
-else
-
-    if(nargin == 2)
-        w0 = [0; 0; 0];
-    else w0 = varargin{1};
-    end
-
-    if(isequal(f(key).a, '0')) % if it's the first link in the chain
-        w = Rot(f, f(key).a, key) * w0 + f(key).e*f(key).dq;
-    else % recursive call if the frame is not the first link in the chain
-        w = Rot(f, f(key).a, key) * angVel(f, f(key).a) + f(key).e*f(key).dq;
-    end
-
+else % recursive call 
+    w = Rot(f, f(key).a, key) * angVel(f, f(key).a) + f(key).e*f(key).dq;
     frame = f(key);
     frame.angVel = w;
     frame.gotAngVel = true;

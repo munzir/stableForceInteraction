@@ -1,0 +1,152 @@
+three platforms: 
+	DART
+	MATLAB
+	Stanford's
+
+==============
+DART:
+1. Collect as much documentation as possible for DART
+2. Read about its installation and usage
+3. Install
+4. Use
+
+- Simulation by the student last Fall'
+- Loading of the model
+- How can I insert my own dynamic model in it
+
+===============
+
+Can had made some krang-specific changes to dart and had made a copy in the Software/project/dart folder.
+I am attempting to install that version of dart on my computer.
+I start by doing a "git pull" in that folder. then i will
+
+- cd build ... cmake .. .... make all install 
+- there will be dependency problems. I will install dependencies one by one
+- will look into how to use dart and grip to my purposes
+- look into the dynamic simulation that can mentioned in the discussion of full body of krang
+- look how i can modify the software to simulate the equations that i have derived
+
+================
+
+done git pull 
+moved the build folder in the Documents/Software/project/dart/ to ...stableForceInteraction/.../4-Simulation/ directory just in case I will need the build directory again.
+created a build directory and run cmake on it ..
+got the error:
+CMake Error: your CXX compiler: "CMAKE_CXX_COMPILER-NOTFOUND" was not found.   Please set CMAKE_CXX_COMPILER to a valid compiler path or name.
+The internet gave me the following solution:
+sudo apt-get install build-essential -y 
+error resolved. 
+=================
+next error:
+Could not find Eigen3
+-- EIGEN3_INCLUDEDIR = EIGEN3_INCLUDEDIR-NOTFOUND
+CMake Error at /usr/share/cmake-2.8/Modules/FindPackageHandleStandardArgs.cmake:91 (MESSAGE):
+  Could NOT find OpenGL (missing: OPENGL_gl_LIBRARY)
+Doing "sudo apt-get install libeigen3-dev" removes eigen3 problem
+Doing "sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev" removes opengl problems.
+==================
+Next problem:
+CMake Error at /usr/share/cmake-2.8/Modules/FindBoost.cmake:1202 (message):
+  Unable to find the requested Boost libraries.
+
+  Unable to find the Boost header files.  Please set BOOST_ROOT to the root
+  directory containing Boost or BOOST_INCLUDEDIR to the directory containing
+  Boost's headers.
+Doing "sudo apt-get install libboost-all-dev" removes this problem.
+==================
+Next problem:
+-- checking for module 'flann'
+--   package 'flann' not found
+-- Could not find flann
+-- FLANN_INCLUDEDIR = FLANN_INCLUDEDIR-NOTFOUND
+-- checking for module 'ccd'
+--   package 'ccd' not found
+-- Could not find ccd
+-- CCD_INCLUDEDIR = CCD_INCLUDEDIR-NOTFOUND
+-- checking for module 'fcl'
+--   package 'fcl' not found
+-- Could not find fcl
+-- FCL_INCLUDEDIR = FCL_INCLUDEDIR-NOTFOUND
+-- Could not find assimp
+-- ASSIMP_INCLUDEDIR = ASSIMP_INCLUDEDIR-NOTFOUND
+-- Could not find tinyxml
+-- Could not find tinyxml2
+CMake Error at /usr/share/cmake-2.8/Modules/FindPackageHandleStandardArgs.cmake:91 (MESSAGE):
+  Could NOT find DARTExt (missing: DARTExt_FOUND)
+Call Stack (most recent call first):
+  /usr/share/cmake-2.8/Modules/FindPackageHandleStandardArgs.cmake:252 (_FPHSA_FAILURE_MESSAGE)
+  cmake/FindDARTExt.cmake:183 (find_package_handle_standard_args)
+  CMakeLists.txt:86 (find_package)
+
+Doing "sudo apt-get install libflann-dev" removes the flann problem
+libccd was not able to be installed
+...
+
+==============
+
+I checked the installation links on dartsim wiki. Got something useful:
+dart 3.0 requires:
+    OpenGL libraries
+    libassimp3, libassimp-dev (>=3.0)
+    libeigen3-dev
+    libboost-all-dev (=1.46 if precise or =1.49 if quantal)
+    flann (>=1.8)
+    libccd (>=1.4)
+    libfcl (>=0.2.7, compiled with boost 1.46 in precise and 1.49 in quantal) libraries
+    urdfdom_headers
+    urdfdom
+    console_bridge
+
+dart 4.0 requires:
+DART requires the following dependencies:
+
+    Mandatory
+        OpenGL libraries
+        libassimp3, libassimp-dev (>=3.0)
+        libeigen3-dev
+        libboost-all-dev (=1.46 if precise or =1.49 if quantal)
+        flann (>=1.8)
+        libccd (>=1.4)
+        libfcl (>=0.2.7, compiled with boost 1.46 in precise and 1.49 in quantal) libraries
+        urdfdom_headers
+        urdfdom
+        console_bridge
+    Optional
+        nlopt
+        ipopt
+        snopt
+
+dart 4.1 requires:
+DART requires the following dependencies:
+
+    Mandatory for core
+        OpenGL libraries
+        libassimp3, libassimp-dev (>=3.0)
+        libeigen3-dev
+        libboost-all-dev (=1.46 if precise or =1.49 if quantal)
+        libccd (>=1.4)
+        libfcl (>=0.2.7, compiled with boost 1.46 in precise and 1.49 in quantal) libraries
+    Mandatory for non-core
+        flann (>=1.8)
+        urdfdom_headers
+        urdfdom
+        console_bridge
+    Optional
+        libbullet-dev (>=2.81)
+        nlopt
+        ipopt
+        snopt
+
+======
+Turns out that the version of libboost I had installed was greater than 1.46 so I had to remove it using "sudo apt-get --purge remove libboost-dev libboost-doc" and install libboost manually from "http://sourceforge.net/projects/boost/files/boost/1.46.0/". Followed the steps on "file:///home/munzir/Downloads/boost_1_46_0/more/getting_started/unix-variants.html" to install it. They were as follows:
+1. unzip the downloaded folder
+2. cd ~/Downloads/boost_1_46_0
+3. sudo ./bootstrap --prefix=/usr/local/
+4. sudo ./bjam install
+Once done I created a new build folder in Dart and did "cmake .." and the boost version detected was 1.46
+=====
+The version of flann is also incorrect. The one installed is 1.7. While we need >=1.8. So "sudo apt-get --purge remove libfalnn-dev libflann1" removed the existing version and then I downloaded version 1.8.4 from the website "http://www.cs.ubc.ca/research/flann/". It was a simple cmake build and install procedure. The dart cmake when rebuilt detected this version of flann.
+=====
+Installed libccd using "git clone https://github.com/dartsim/libccd" inside the Downloads folder, it created a libccd folder within this folder. Then within hte folder a simple cmake installation did the job.
+=====
+

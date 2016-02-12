@@ -1,0 +1,2 @@
+/home/munzir/Documents/Software/project/dart/build/src/CMakeFiles/dart.dir
+/home/munzir/Documents/Software/project/dart/build/CMakeFiles/uninstall.dir

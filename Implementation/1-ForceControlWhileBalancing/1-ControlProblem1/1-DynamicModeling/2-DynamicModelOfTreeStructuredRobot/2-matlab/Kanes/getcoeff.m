@@ -1,5 +1,7 @@
 function c = getcoeff(P, x, a)
 
+% in the symbolic expression P return the coefficient of the term x^a
+
 [C, T] = coeffs(P, x); 
 n=length(C); 
 exists = 0; 

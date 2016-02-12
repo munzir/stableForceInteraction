@@ -25,4 +25,6 @@ elseif(isBefore(f, key1, key2)) % if frame1 is before frame2 in the chain
               0 0 0 1];
          key = f(key).a;
      end
+elseif(isequal(key1, key2))
+    T = sym(eye(4));
 end        

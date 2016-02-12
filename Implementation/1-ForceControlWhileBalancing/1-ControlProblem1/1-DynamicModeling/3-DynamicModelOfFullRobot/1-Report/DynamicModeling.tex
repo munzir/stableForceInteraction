@@ -1,0 +1,1012 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[thinlines]{easytable}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{textcomp}
+\usepackage{relsize}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{mathtools}
+\usepackage{multicol}
+\setcounter{MaxMatrixCols}{20}
+\allowdisplaybreaks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATLAB code listing
+%
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+ 
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab, % Use MATLAB
+frame=single, % Single frame around code
+basicstyle=\tiny\ttfamily, % Use small true type font
+keywordstyle=[1]\color{Blue}\bfseries, % MATLAB functions bold and blue
+keywordstyle=[2]\color{Purple}, % MATLAB function arguments purple
+keywordstyle=[3]\color{Blue}\underbar, % User functions underlined and blue
+identifierstyle=, % Nothing special about identifiers
+% Comments small dark green courier
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\tiny,
+stringstyle=\color{Purple}, % Strings are purple
+showstringspaces=false, % Don't put marks in string spaces
+tabsize=5, % 5 spaces per tab
+%
+%%% Put standard MATLAB functions not included in the default
+%%% language here
+morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+%
+%%% Put MATLAB function parameters here
+morekeywords=[2]{on, off, interp},
+%
+%%% Put user defined functions here
+morekeywords=[3]{FindESS, homework_example},
+%
+morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+numbers=left, % Line numbers on left
+firstnumber=1, % Line numbers start with line 1
+numberstyle=\tiny\color{Blue}, % Line numbers are blue
+stepnumber=5 % Line numbers go in steps of 5
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+% \scalemath{1.0}
+
+%opening
+\title{Equations Of Motion of Krang}
+\author{Munzir Zafar}
+
+\begin{document}
+
+\maketitle
+
+In this report we attempt to find the dynamic model of Golem Krang. It is a serial robot with a tree-structure (due to two arms branching out) that is balanced on two wheels as an inverted pendulum. So it is a humanoid insofar as it is bimanual and dynamically stable (i.e. an inverted pendulum). But it has two wheels instead of two legs. Figure \ref{fig:frames} shows the frames of references we will be using to determine the transforms and the coordinates on the robot. Also $\dot{x}$ is the heading speed of the robot and $\dot\psi$ is the spin speed of the robot. We denote these frames using symbol $R_i$ where $i \in \mathbb{F} = \lbrace 0$, $1$, $2$, $3$, $4l$, $5l$, $6l$, $7l$, $8l$, $9l$, $10l$, $4r$, $5r$, $6r$, $7r$, $8r$, $9r$, $10r \rbrace$. $R_0$ is the world frame fixed in the middle of the two wheels. $R_1, R_2, R_3$ are fixed on the base, spine and torso with their rotations represented by $q_{imu}$, $q_w$ and $q_{torso}$ respectively. Frames $R_{4l}, ... R_{10l}$ are frames fixed on the links 
+left 7-DOF arm with their motion represented by $q_{1l}, ... q_{7l}$. Similarly, frames $R_{4r}, ... R_{10r}$ are frames fixed on the links right 7-DOF arm with their motion represented by $q_{1r}, ... q_{7r}$.  All equations in the 
+following text that do not show $r$ or $l$ in the subscript where they are supposed to, will mean that the respective equations are valid for both subscripts.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{Figures/frames.png}
+ \caption{Frames of references on the robot}
+ \label{fig:frames}
+\end{figure}
+
+\section{Generalized Coordinates}
+
+We select twenty-one generalized co-ordinates: $\{q\} = \{$ $X_0$, $Y_0$, $\theta_L$, $\theta_R$, $q_{imu}$, $q_{w}$, $q_{torso}$, $q_{1l}$, $...$, $q_{7l}$, $q_{1r}$, $...$, $q_{7r} \}$. Where:
+\begin{itemize}[label={}]
+ \item[$X_0, Y_0$] are the position coordintes of $O$ wrt a Newtonian reference frame $xyz$ fixed on ground
+ \item[$\theta_L, \theta_R$] are the rotation angles of the left and right wheels respectively
+\end{itemize}
+
+Given this Newtonian frame of reference we can define $\psi$ as the heading direction ($x_0$) measured as
+an angle from the $x$-axis of the Newtonian frame.
+
+\section{Constraint Equations}
+Let $\bar{i}_0$, $\bar{j}_0$ and $\bar{k}_0$ be the unit vectors in frame $x_0y_0z_0$ and $\bar{I}$, $\bar{J}$ and 
+$\bar{K}$ be the unit vectors in frame $xyz$.
+
+Under the assumption of no slipping/skidding, we have two constraint equations:
+
+\begin{align} 
+ \bar{v}_L &= R\dot\theta_L\bar{i}_0 \label{constraintOne}\\
+ \bar{v}_R &= R\dot\theta_R\bar{i}_0 \label{constraintTwo}
+\end{align}
+
+Since
+\begin{align}
+ \bar{v}_L &= \bar{v}_0 + \bar\omega_0 \times \bar{r}_{L/O} \nonumber \\
+ &= \dot{X}_0 \bar{I} + \dot{Y}_0 \bar{J} + \dot{\psi} \bar{K} \times (\frac{L}{2}\bar{j}_0) \nonumber \\
+ &= \dot{X}_0 (cos\psi\bar{i}_0 - sin\psi\bar{j}_0) + \dot{Y}_0 (sin\psi\bar{i}_0+cos\psi\bar{k}_0) - \frac{L}{2}\dot{\psi} \bar{i}_0 \nonumber \\
+ &= (\dot{X}_0 cos\psi + \dot{Y}_0 sin\psi - \frac{L}{2}\dot{\psi}) \bar{i}_0 - (\dot{X}_0 sin\psi - \dot{Y}_0 cos\psi)\bar{j}_0 \nonumber 
+\end{align}
+
+And similarly,
+\begin{align}
+ \bar{v}_R  &= (\dot{X}_0 cos\psi + \dot{Y}_0 sin\psi + \frac{L}{2}\dot{\psi}) \bar{i}_0 - (\dot{X}_0 sin\psi - \dot{Y}_0 cos\psi)\bar{j}_0 \nonumber 
+\end{align}
+
+Comparing the coefficients of $\bar{i}_0$ in eqs. \ref{constraintOne}-\ref{constraintTwo} gives:
+\begin{align}
+ \dot{X}_0 cos\psi + \dot{Y}_0 sin\psi - \frac{L}{2}\dot{\psi} &= R\dot\theta_L \label{thetaL} \\
+ \dot{X}_0 cos\psi + \dot{Y}_0 sin\psi + \frac{L}{2}\dot{\psi} &= R\dot\theta_R \label{thetaR} 
+\end{align}
+Subtraction and addition of the two equations gives us:
+\begin{align}
+ \dot{\psi} &= \frac{R}{L}(\dot\theta_R - \dot\theta_L) \label{psiThetaRelationship} \\
+ \dot{X}_0 cos\psi + \dot{Y}_0 sin\psi &= \frac{R}{2}(\dot\theta_L + \dot\theta_R) \label{constraint1} 
+\end{align}
+Eq. \ref{psiThetaRelationship} can be integrated to give $\psi = \frac{R}{L}(\theta_R - \theta_L)$ which can be substituted in
+eq. \ref{constraint1} to give our first constraint equation relating the first four generalized co-ordinates.
+
+Comparing the coefficients of $\bar{j}_0$ in eqs. \ref{constraintOne}-\ref{constraintTwo} gives us our second constraint equation:
+\begin{align}
+ \dot{X}_0 sin\psi - \dot{Y}_0 cos\psi &= 0 \label{constraint2}
+\end{align}
+
+Eqs. \ref{constraint1}-\ref{constraint2} give the two constraint equations relating our generalized velocities as a 
+result of the nonholonomic constrainsts. Twenty-one generalized coordinates with two constraint equations leads
+to nineteen degrees of freedom.
+
+\section{Defining Generalized Velocities}
+It is easier to derive the dynamic model of the system in terms of the generalized velocities:
+$\{\dot{q}\} = \{$ $\dot{x}$, $\dot{\psi}$, $\dot{q}_{imu}$, $\dot{q}_{w}$, $\dot{q}_{torso}$, $\dot{q}_{1l}$, $...$, $\dot{q}_{7l}$, $\dot{q}_{1r}$, $...$, $\dot{q}_{7r} \}$. 
+These nineteen velocities can take
+arbitrary values all of whom will be kinematically admissible. In other words, they represent
+our nineteen degrees of freedom. Here $\dot{x}$ should be refered
+to as a quasi-velocity as this velocity has meaning only as a velocity but its corresponding
+position variable $x$ does not give any physical meaning. Although, the infinitesimal change of
+position $\delta x = \dot{x} dt$ (sometimes refered to as virtual displacement) has physical
+meaning.
+
+The older generalized velocities can be calculated from the new ones as follows:
+\begin{align}
+ \dot{X}_0 &= \dot{x}cos\psi \label{relStart}\\
+ \dot{Y}_0 &= \dot{x}sin\psi \\
+ \dot\theta_L &= \frac{1}{R}\dot{x} - \frac{L}{2R}\dot{\psi} \\
+ \dot\theta_R &= \frac{1}{R}\dot{x} + \frac{L}{2R}\dot{\psi} \label{relEnd}
+\end{align}
+Where the first two relationships are derived by comparing the coefficients in 
+$\dot{X}_0\bar{I}+\dot{Y}_0\bar{J} = \bar{v}_0 = \dot{x}\bar{i}_0 = \dot{x}(cos\psi\bar{I}+sin\psi\bar{J})$.
+And the next
+two relationships are derived by substituting the the first two relationships in eqs. \ref{thetaL}-\ref{thetaR}.
+When these relationships (\ref{relStart}-\ref{relEnd}) are substituted in our constraint equations \ref{constraint1}-\ref{constraint2}, both
+sides of the equations vanish. Indicating that these twenty degrees of freedom are not bound by any constraint.
+We will now derive nineteen dynamic equations in terms of our new generalized velocities. Those equations in
+conjunction with these relationships can solve for all twenty-two generalized coordinates.
+
+We will be using the Kane's formulation. This is done because the presence of quasi-velocity prohibits us from using Lagrange method for dynamic modeling.
+
+\section{Introduction to Kane's Formulation}
+\begin{align}
+ \sum_{\substack{k}} \left[ m_k \bar{a}_{Gk} \cdot \left(\bar{v}_{Gk}\right)_j + \left( \frac{d\bar{H}_{Gk}}{dt} 
+ \right) \cdot \left( \bar\omega_k \right)_j \right] = \sum_{\substack{n}}  \bar{F}_n \cdot \left( \bar{v}_n \right)_j 
+ + \sum_{\substack{n}}  \bar{M}_m \cdot \left( \bar{\omega}_m \right)_j \;\; j=1 ... K \label{kanes}
+\end{align}
+where 
+\begin{itemize}[label={}]
+\item[$j$] is the unique number identifying each generalized co-ordinate in the system
+\item[$k$] is the unique number identifying each rigid body in the system
+\item[$n$] is the unique number identifying each external force acting on the system
+\item[$m$] is the unique number identifying each external torque acting on the system
+\item[$m_k$] is the mass of the $k$th body
+\item[$\bar{a}_{Gk}$] is the acceleration of the center of mass of $k$th body
+\item[$\bar{v}_{Gk}$] is the velocity of the center of mass of the $k$th body
+\item[$\bar{H}_{Gk}$] is the angular momentum of body $k$ about its center of mass
+\item[$\bar{\omega}_{k}$] is the angular velocity of the body $k$
+\item[$F_n$] is the $n$th external force
+\item[$M_m$] is the $m$th external moment
+\item[$\bar{v}_{n}$] is the velocity of the point at which external Force $F_n$ is acting
+\item[$\bar{\omega}_{m}$] is the angular velocity of the body on which torque is acting relative to the actuator applying the torque
+\item[$()_j$] $=\frac{\partial ()}{\partial \dot{q}_j}$ the partial derivative of the quantity in brackets $()$ with respect to the generalized
+velocity $\dot{q}_j$
+\end{itemize}
+
+
+\section{Kane's Left Hand Side}
+
+The left hand side of the Kane's equation containes a sum whose range is equal to the number of bodies in the system. We have nineteen bodies: Left-wheel ($L$), right wheel ($R$) and the seventeen links in the tree structure of robot each having a frame $R_i$ fixed on it where $i \in \{ 1, 2, 3, 4l, ... 10l, 4r, ... 10r \}$. Each term in the sum consists of the acceleration ($\bar{a}_{Gk}$), velocity ($\bar{v}_{Gk}$), angular momentum ($\bar{H}_{Gk}$) of the center of mass and the body's angular velocity ($\bar{\omega}_k$). And then some partial derivatives wrt to the generalized velocities ($(\bar{\omega}_k)_j=\frac{\partial \bar{\omega}_k}{\partial \dot{q}_j}$ and $(\bar{v}_{Gk})_j=\frac{\partial \bar{v}_{Gk}}{\partial \dot{q}_j}$). We will have nineteen equations corresponding to each generalized coordinate $\{\dot{q}\} = \{$ $\dot{x}$, $\dot{\phi}$, $\dot{\psi}$, $\dot{q}_{imu}$, $\dot{q}_{w}$, $\dot{q}_{torso}$, $\dot{q}_{1l}$, $...$, $\dot{q}_{7l}$, $\dot{q}_{1r}$, $...$, $\dot{q}_{7r} \}$.
+
+\subsection{Frame $x_0y_0z_0$} \label{frame0}
+
+The velocities and accelerations of the frame $x_0y_0z_0$ are needed to evaluate the afore-mentioned quantities related to each body. These velocities are as follows:
+
+\begin{align}
+ \bar\omega_0 &= \dot\psi\bar{k}_0 \\
+ \bar{v}_0 &= \dot{x}\bar{i}_0 \\
+ \bar\alpha_0 &= \ddot\psi\bar{k}_0 \\
+ \bar{a}_0 &= \ddot{x}\bar{i}_0 + \dot{x}\left( \dot\psi\bar{k}_0 \times \bar{i}_0 \right) \nonumber \\
+ &= \ddot{x}\bar{i}_0 + \dot{x}\dot\psi\bar{j}_0
+\end{align}
+
+\subsection{Wheels}
+
+\subsubsection{Left Wheel}
+This evaluation takes place in the $x_Ly_Lz_L$ frame fixed to the left wheel such that it is parallel to 
+frame $x_0y_0z_0$ when $\theta_L = 0$. So $\bar{i}_0 = cos\theta_L\bar{i}_L+sin\theta_L\bar{k}_L$, 
+$\bar{j}_0 = \bar{j}_L$ and $\bar{k}_0 = -sin\theta_L\bar{i}_L+cos\theta_L\bar{k}_L$.
+Angular velocity:
+\begin{align}
+ \bar{\omega}_L &= \dot\psi\bar{k}_0 + \dot\theta_L\bar{j_0} \nonumber \\
+ &= \dot\psi\bar{k}_0 + \left(\frac{1}{R}\dot{x}-\frac{L}{2R}\dot\psi\right)\bar{j}_0 \nonumber \\
+ &= -\dot\psi sin\theta_L\bar{i}_L + \left(\frac{1}{R}\dot{x}-\frac{L}{2R}\dot\psi\right)\bar{j}_L + \dot\psi cos\theta_L\bar{k}_L \label{kanesLHSVariableStart}
+\end{align}
+The terms that follow are also similarly to be expressed in frame $x_Ly_Lz_L$ but that step is skipped for brevity.
+Velocity:
+\begin{align}
+  \bar{v}_{GL} &= \bar{v}_0 + \bar{\omega}_0 \times \bar{r}_{L/O} \nonumber \\
+ &= \dot{x}\bar{i}_0 + \dot\psi\bar{k}_0 \times \frac{L}{2}\bar{j}_0 \nonumber \\
+ &= \left(\dot{x}-\frac{L}{2}\dot\psi\right)\bar{i}_0  
+\end{align}
+Linear acceleration:
+\begin{align}
+ \bar{a}_{GL} &= \bar{a}_0 + \bar\alpha_0 \times \bar{r}_{L/O} + \bar\omega_0 \times \left( \omega_0 \times \bar{r}_{L/O}\right) \nonumber \\
+ &= \ddot{x}\bar{i}_0 + \dot{x}\left(\dot\psi\bar{k}_0 \times \bar{i}_0\right)+ \ddot\psi\bar{k}_0 \times \frac{L}{2}\bar{j}_0 + \dot\psi\bar{k}_0 \times \left( \dot\psi\bar{k}_0 \times \frac{L}{2}\bar{j}_0\right) \nonumber \\
+ &= \left(\ddot{x}-\frac{L}{2}\ddot\psi\right)\bar{i}_0 + \left(\dot{x}\dot\psi- \frac{L}{2}\dot\psi^2\right)\bar{j}_0  
+\end{align}
+Angular momentum and its derivative:
+\begin{align}
+ \bar{H}_{GL} &= I_w\bar{\omega}_L \nonumber \\
+ \frac{d\bar{H}_{GL}}{dt} &= \frac{\partial \bar{H}_{GL}}{\partial t} + \bar\omega_L \times \bar{H}_{GL} \nonumber \\
+\end{align}
+where $I_w = \scalemath{0.75}{\left[\begin{matrix} \mathbf{ZZ}_w & 0 & 0 \\  0 & \mathbf{YY}_w & 0 \\ 0 & 0 & \mathbf{ZZ}_w \end{matrix}\right]}$. Due to symmetry the off-diogonal terms in the inertia matrix vanish, and the 
+inertia about $x_L$-axis and $z_L$-axis are both equal (signified by $\mathbf{ZZ}_w$).
+
+\subsubsection{Right Wheel}
+This evaluation takes place in the $x_Ry_Rz_R$ frame fixed to the right wheel such that it is parallel to 
+frame $x_0y_0z_0$ when $\theta_R = 0$. So $\bar{i}_0 = cos\theta_R\bar{i}_R+sin\theta_R\bar{k}_R$, 
+$\bar{j}_0 = \bar{j}_R$ and $\bar{k}_0 = -sin\theta_R\bar{i}_R+cos\theta_R\bar{k}_R$.
+Angular velocity:
+\begin{align}
+ \bar{\omega}_R &= \dot\psi\bar{k}_0 + \dot\theta_R\bar{j_0} \nonumber \\
+ &= \dot\psi\bar{k}_0 + \left(\frac{1}{R}\dot{x}+\frac{L}{2R}\dot\psi\right)\bar{j}_0 \nonumber \\
+ &= -\dot\psi sin\theta_L\bar{i}_R + \left(\frac{1}{R}\dot{x}+\frac{L}{2R}\dot\psi\right)\bar{j}_R + \dot\psi cos\theta_L\bar{k}_R 
+\end{align}
+The terms that follow are also similarly to be expressed in frame $x_Ry_Rz_R$ but that step is skipped for brevity.
+Velocity:
+\begin{align}
+  \bar{v}_{GR} &= \bar{v}_0 + \bar{\omega}_0 \times \bar{r}_{R/O} \nonumber \\
+ &= \dot{x}\bar{i}_0 + \dot\psi\bar{k}_0 \times \left(-\frac{L}{2}\bar{j}_0\right) \nonumber \\
+ &= \left(\dot{x}+\frac{L}{2}\dot\psi\right)\bar{i}_0  
+\end{align}
+Linear acceleration:
+\begin{align}
+ \bar{a}_{GR} &= \bar{a}_0 + \bar\alpha_0 \times \bar{r}_{R/O} + \bar\omega_0 \times \left( \omega_0 \times \bar{r}_{R/O}\right) \nonumber \\
+ &= \ddot{x}\bar{i}_0 + \dot{x}\left(\dot\psi\bar{k}_0 \times \bar{i}_0\right)+ \ddot\psi\bar{k}_0 \times \left(-\frac{L}{2}\bar{j}_0\right) + \dot\psi\bar{k}_0 \times \left( \dot\psi\bar{k}_0 \times \left(-\frac{L}{2}\bar{j}_0\right)\right) \nonumber \\
+ &= \left(\ddot{x}+\frac{L}{2}\ddot\psi\right)\bar{i}_0 + \left(\dot{x}\dot\psi + \frac{L}{2}\dot\psi^2\right)\bar{j}_0  
+\end{align}
+Angular momentum and its derivative:
+\begin{align}
+ \bar{H}_{GR} &= I_w\bar{\omega}_R \nonumber \\
+ \frac{d\bar{H}_{GR}}{dt} &= \frac{\partial \bar{H}_{GR}}{\partial t} + \bar\omega_R \times \bar{H}_{GR} \nonumber \\
+\end{align}
+
+\subsubsection{Wheel Contribution to Kane's LHS}
+The contribution of wheels to LHS of the equation corresponding to generalized speed $\dot{q}_j$ is:
+\begin{align}
+\scalemath{0.75}{
+   \left( m_w \bar{a}_{GL} \cdot \frac{\partial \bar{v}_{GL}}{\partial \dot{q}_j} + \left( \frac{d\bar{H}_{GL}}{dt} \right) \cdot \frac{\partial \bar\omega_L}{\partial \dot{q}_j} \right)
+ + \left( m_w \bar{a}_{GR} \cdot \frac{\partial \bar{v}_{GR}}{\partial \dot{q}_j} + \left( \frac{d\bar{H}_{GR}}{dt} \right) \cdot \frac{\partial \bar\omega_R}{\partial \dot{q}_j} \right)} \label{kanesWheels1}
+\end{align}
+Since:
+\begin{align}
+ \scalemath{0.75}{\frac{\partial \bar{v}_{GL}}{\partial \dot{q}_j}} &= 
+ \scalemath{0.75}{\begin{cases}
+  cos\theta_L\bar{i}_L+sin\theta_L\bar{k}_L \\ -\frac{L}{2}\left(cos\theta_L\bar{i}_L+sin\theta_L\bar{k}_L\right)\\ 0
+ \end{cases}}
+ &&\scalemath{0.75}{\frac{\partial \bar{v}_{GR}}{\partial \dot{q}_j} =  
+ \begin{cases}
+  cos\theta_R\bar{i}_R+sin\theta_R\bar{k}_R \\ \frac{L}{2}\left(cos\theta_R\bar{i}_R+sin\theta_R\bar{k}_R\right) \\ 0
+ \end{cases}} &
+ \scalemath{0.75}{\begin{matrix}
+  \mbox{for } \dot{q}_j = \dot{x} \\
+  \mbox{for } \dot{q}_j = \dot\psi \\
+  \mbox{Otherwise}
+ \end{matrix}} \\
+ \scalemath{0.75}{\frac{\partial \bar\omega_L}{\partial \dot{q}_j}} &= 
+ \scalemath{0.75}{\begin{cases}
+  \frac{1}{R}\bar{j}_L \\ -sin\theta_L\bar{i}_L-\frac{L}{2R}\bar{j}_L+cos\theta_L\bar{k}_L \\ 0
+ \end{cases}} 
+ &&\scalemath{0.75}{\frac{\partial \bar\omega_R}{\partial \dot{q}_j} =  
+ \begin{cases}
+  \frac{1}{R}\bar{j}_R \\ -sin\theta_R\bar{i}_R+\frac{L}{2R}\bar{j}_R+cos\theta_R\bar{k}_R \\ 0
+ \end{cases}} &
+ \scalemath{0.75}{\begin{matrix}
+  \mbox{for } \dot{q}_j = \dot{x} \\
+  \mbox{for } \dot{q}_j = \dot\psi \\
+  \mbox{Otherwise}
+ \end{matrix}}
+\end{align}
+Therefore the contribution is only there for the first two equations (i.e. for $\dot{q}_j \in \{ \dot{x}, \dot\psi \}$) and is zero for all other equations.
+The final expressions are:
+\begin{align}
+ \begin{matrix*}[r]
+  \dot{x}: & \left(2m_w+\frac{2\mathbf{YY}_w}{R^2}\right)\ddot{x}  \\ 
+  \dot\psi: & \left(\frac{m_wL^2}{2} + \frac{\mathbf{YY}_wL^2}{2R^2} + 2\mathbf{ZZ}_w\right) \ddot\psi 
+ \end{matrix*} \label{kanesWheels2}
+\end{align}
+
+\subsection{Serial Tree-Structure}
+
+\subsubsection{Recusrive Formulae}
+
+The angular and linear velocities of the frames on the rest of the robot can be calculated using the recursive formulation because it is a serial chain of links:
+
+\begin{align}
+ &{}^j\omega_j={}^jA_i{}^i\omega_i+\dot{q}_j\;{}^je_j \label{recursiveAngVel}\\
+ &{}^j\alpha_j={}^jA_i{}^i\alpha_i+\ddot{q}_j\;{}^je_j+\dot{q}_j\;({}^j\omega_j \times {}^je_j) \label{recursiveAngAcc}\\
+ &{}^jV_j={}^jA_i\left({}^iV_i+{}^i\omega_i \times {}^iP_j\right) \label{recursiveLinVel}\\
+ &{}^ja_j={}^jA_i\left({}^ia_i+{}^i\alpha_i \times {}^iP_j + {}^i\omega_i \times ({}^i\omega_i \times {}^iP_j)\right) \label{recursiveLinAcc}
+\end{align} where ${}^i\omega_j$, ${}^i\alpha_j$, ${}^ia_j$ and ${}^iV_j$ denote the angular velocity, linear velocity, 
+angular acceleration and linear acceleration repectively of frame $j$ measured with respect to the 
+world frame and represented in frame $i$. ${}^je_j$ denotes the direction of local angular velocity of frame $j$ represented in frame $j$. 
+$i, j \in \mathbb{F}$ identify the frames and $i$ identifies the antecedent frame of $j$. In order to successfully evaluate the expressions for each body we need the following terms:
+\begin{itemize}[label={}]
+ \item[$\bar\omega_0$] The angular velocity of frame $x_0y_0z_0$ (section \ref{frame0})
+ \item[$\bar{v}_0$] The linear velocity of frame $x_0y_0z_0$ (section \ref{frame0})
+ \item[$\bar\alpha_0$] The angular acceleration of frame $x_0y_0z_0$ (section \ref{frame0})
+ \item[$\bar{a}_0$] The linear acceleration of frame $x_0y_0z_0$ (section \ref{frame0})
+ \item[${}^jA_i$] The rotation transform of antecent frame $i$ in the current frame $j$ for all frames in the tree structure (section \ref{tf})
+ \item[${}^iP_j$] The position of the current frame $j$ for all frames in the tree structure wrt the antecedent frame $i$ of each frame (section \ref{tf})
+ \item[${}^je_j$] The direction of local angular velocity of frame $j$ represented in frame $j$ for all frames of  the tree structure (section \ref{localAngVelDir})
+\end{itemize}
+
+\subsubsection{Transformations} \label{tf}
+
+The transformation of frame $R_i$ into frame $R_j$ is represented by the homogeneous transformation matrix
+${}^{i}T_j$ such that.
+\begin{align}
+ {}^{i}T_j = \left[\begin{matrix}{}^{i}s_j & {}^{i}n_j & {}^{i}a_j & {}^{i}P_j \end{matrix} \right] 
+  = \left[\begin{matrix} & {}^iA_j & & {}^iP_j \\ 0 & 0 & 0 & 1 \end{matrix}\right]
+  = \left[\begin{matrix}s_x & n_x & a_x & P_x  \\ s_y & n_y & a_y & P_y 
+  \\ s_z & n_z & a_z & P_z \\ 0 & 0 & 0 & 1 \end{matrix} \right]
+\end{align}
+where ${}^is_j$, ${}^in_j$ and ${}^ia_j$ contain the components of the unit vectors along the $x_j$, 
+$y_j$ and $z_j$ axes respectively expressed in frame $R_i$, and where ${}^iP_j$ is the vector representing
+the coordinates of the origin of frame $R_j$ expressed in frame $R_i$.
+
+The transformation matrix ${}^iT_j$ can be interpreted as: (a) the transformation from frame $R_i$ to frame $R_j$
+and (b) the representation of frame $R_j$ with respect to frame $R_i$. Using figure \ref{fig:frames}, we can
+write down these transformation matrices for our system as follows:
+
+\[
+ \scalemath{0.75}{{}^0T_1 = \left[\begin{matrix} 0 & sq_{imu} & -cq_{imu} & 0 \\ -1 & 0 & 0 & 0 \\ 0 & cq_{imu} & sq_{imu} & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right],
+ {}^1T_2 = \left[\begin{matrix} 1 & 0 & 0 & 0 \\ 0 & cq_w & sq_w & L_1 \\ 0 & -sq_w & cq_w & -L_2 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^2T_3 = \left[\begin{matrix} -cq_{torso} & 0 & sq_{torso} & 0 \\ 0 & 1 & 0 & L_3 \\ -sq_{torso} & 0 & -cq_{torso} & L_4 \\ 0 & 0 & 0 & 1 \end{matrix}\right],}
+\]
+
+\[
+ \scalemath{0.75}{{}^3T_{4l} = \left[\begin{matrix} 0 & 1 & 0 & L_6 \\ cq_{1l} & 0 & -sq_{1l} & L_5 \\ -sq_{1l} & 0 & -cq_{1l} & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^3T_{4r} = \left[\begin{matrix} 0 & -1 & 0 & -L_6 \\ cq_{1r} & 0 & -sq_{1r} & L_5 \\ sq_{1r} & 0 & cq_{1r} & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^4T_5 = \left[\begin{matrix} -1 & 0 & 0 & 0 \\ 0 & -cq_2 & -sq_2 & 0 \\ 0 & -sq_2 & cq_2 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], }
+\]
+ 
+\[
+ \scalemath{0.75}{ {}^5T_6 = \left[\begin{matrix} -cq_3 & 0 & sq_3 & 0 \\ 0 & -1 & 0 & -L_7 \\ sq_3 & 0 & cq_3 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^6T_7 = \left[\begin{matrix} -1 & 0 & 0 & 0 \\ 0 & -cq_4 & -sq_4 & 0 \\ 0 & -sq_4 & cq_4 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^7T_8 = \left[\begin{matrix} -cq_5 & 0 & sq_5 & 0 \\ 0 & -1 & 0 & -L_8 \\ sq_5 & 0 & cq_5 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], }
+\]
+ 
+\[
+ \scalemath{0.75}{{}^8T_9 = \left[\begin{matrix} -1 & 0 & 0 & 0 \\ 0 & -cq_6 & -sq_6 & 0 \\ 0 & -sq_6 & cq_6 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right], 
+ {}^9T_{10} = \left[\begin{matrix} -cq_7 & -sq_7 & 0 & 0 \\ 0 & 0 & -1 & -L_9 \\ sq_7 & -cq_7 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{matrix}\right] }
+\]
+
+The rotation ${}^jA_i$ and the translation ${}^jP_i$ that appear in eqs. \ref{recursiveAngVel}-\ref{recursiveLinAcc} can not be directly deduced from the transformations listed above, as the they all represent ${}^iT_j$ (note the position of $i$ and $j$). Rather, we need to use following expressions to deduce our required transformations:
+\begin{align}
+ &{}^jA_i = {}^iA_j^T \nonumber \\ 
+ &{}^jP_i = -{}^iA_j^T\,{}^iP_j \nonumber
+\end{align}
+
+\subsubsection{Local Angular Velocity Directions} \label{localAngVelDir}
+
+The unit vectors along the direction of angular velocities of the frames in the tree-structure each represented in its local frame are as follows  (using figure \ref{fig:frames}).
+
+\[
+\scalemath{0.75}{{}^0e_0 = \left[\begin{matrix}0 & 0 & 1\end{matrix}\right]^T,
+{}^1e_1 = \left[\begin{matrix}-1 & 0 & 0\end{matrix}\right]^T, 
+{}^2e_2 = \left[\begin{matrix}-1 & 0 & 0\end{matrix}\right]^T, 
+{}^3e_3 = \left[\begin{matrix}0 & -1 & 0\end{matrix}\right]^T,}
+\]
+\[
+\scalemath{0.75}{{}^4e_4 = \left[\begin{matrix}0 & -1 & 0\end{matrix}\right]^T,
+{}^5e_5 = \left[\begin{matrix}-1 & 0 & 0\end{matrix}\right]^T, 
+{}^6e_6 = \left[\begin{matrix}0 & -1 & 0\end{matrix}\right]^T, 
+{}^7e_7 = \left[\begin{matrix}-1 & 0 & 0\end{matrix}\right]^T,}
+\]
+\[
+\scalemath{0.75}{{}^8e_8 = \left[\begin{matrix}0 & -1 & 0\end{matrix}\right]^T,
+{}^9e_9 = \left[\begin{matrix}-1 & 0 & 0\end{matrix}\right]^T, 
+{}^{10}e_{10} = \left[\begin{matrix}0 & 0 & -1\end{matrix}\right]^T}
+\]
+
+This information can now be used to derive expressions for the velocities and accelerations of the frames.
+
+\subsubsection{Simplified Kane's Left-Hand Side Term for each body in the Tree-Structure}
+The inertial forces i.e. the term inside the brackets on the LHS in Kane's formulation can be simplified by expansion
+and manipulation that results in cancelation of terms leading to a simplified expression. We show the details of this
+manipulation here. The final expression is the outcome in the end which we will use in our code to find the
+dynamic model.
+
+\begin{align}
+ \scalemath{0.775}{\bar{v}_{Gk}}&\scalemath{0.775}{=\bar{v}_k+\bar{\omega}_k \times \bar{S}_k} \\
+ \scalemath{0.775}{\bar{a}_{Gk}}&\scalemath{0.775}{=\bar{a}_k+\bar{\alpha}_k \times \bar{S}_k + \bar{\omega}_k \times (\bar{\omega}_k \times \bar{S}_k)} \label{aGk} \\
+ \scalemath{0.775}{\bar{H}_{Gk}}&\scalemath{0.775}{=\mathbf{J}_{Gk} \bar{\omega}_k} \\ 
+ \scalemath{0.775}{\frac{d\bar{H}_{Gk}}{dt}}&\scalemath{0.775}{=\mathbf{J}_{Gk} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{Gk} \bar{\omega}_k} \nonumber \\
+ &\scalemath{0.775}{=(\mathbf{J}_{k}+m_k\mathbf{S}^{\times}_k\mathbf{S}^{\times}_k) \bar{\alpha}_k + \bar{\omega}_k \times (\mathbf{J}_{k}+m_k\mathbf{S}^{\times}_k\mathbf{S}^{\times}_k) \bar{\omega}_k} \nonumber \\
+ &\scalemath{0.775}{=\mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k + m_k\mathbf{S}^{\times}_k\mathbf{S}^{\times}_k\bar{\alpha}_k + \bar{\omega}_k \times (m_k\mathbf{S}^{\times}_k\mathbf{S}^{\times}_k \bar{\omega}_k)} \\
+ \scalemath{0.775}{m_k \bar{a}_{Gk} \cdot \left(\bar{v}_{Gk}\right)_j} &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k+\bar{\omega}_k \times \bar{S}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + m_k \bar{a}_{Gk} \cdot \left(\bar{\omega}_k \times \bar{S}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j - m_k \left( \bar{a}_k+\bar{\alpha}_k \times \bar{S}_k + \bar{\omega}_k \times (\bar{\omega}_k \times \bar{S}_k) \right) \cdot \left(\bar{S}_k \times \bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j - m_k \left( \bar{a}_k-\bar{S}_k \times \bar{\alpha}_k - \bar{\omega}_k \times (\bar{S}_k \times \bar{\omega}_k) \right) \cdot \left(\bar{S}_k \times \left(\bar{\omega}_k\right)_j\right)} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j - m_k \left( \bar{a}_k-\mathbf{S}^{\times}_k \bar{\alpha}_k - \mathbf{\omega}^{\times}_k \mathbf{S}^{\times}_k \bar{\omega}_k \right)^T  \mathbf{S}^{\times}_k \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j - m_k \left( \mathbf{S}^{\times T}_k \bar{a}_k -  \mathbf{S}^{\times T}_k \mathbf{S}^{\times}_k \bar{\alpha}_k - \mathbf{S}^{\times T}_k \mathbf{\omega}^{\times}_k \mathbf{S}^{\times}_k \bar{\omega}_k \right)^T  \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + m_k \left( \mathbf{S}^{\times}_k \bar{a}_k -  \mathbf{S}^{\times}_k \mathbf{S}^{\times}_k \bar{\alpha}_k - \mathbf{S}^{\times}_k \mathbf{\omega}^{\times}_k \mathbf{S}^{\times}_k \bar{\omega}_k \right)^T  \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + m_k \left( \bar{S}_k \times \bar{a}_k -  \bar{S}_k \times \bar{S}_k \times \bar{\alpha}_k - \bar{S}_k \times ( \bar{\omega}_k \times ( \bar{S}_k \times \bar{\omega}_k ) ) \right) \cdot  \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + m_k \left( \bar{S}_k \times \bar{a}_k -  \bar{S}_k \times \bar{S}_k \times \bar{\alpha}_k + \bar{\omega}_k \times ( ( \bar{S}_k \times \bar{\omega}_k ) \times  \bar{S}_k ) + ( \bar{S}_k \times \bar{\omega}_k ) \times ( \bar{S}_k \times \bar{\omega}_k )  \right) \cdot  \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + m_k \left( \bar{S}_k \times \bar{a}_k -  \bar{S}_k \times \bar{S}_k \times \bar{\alpha}_k - \bar{\omega}_k \times ( \bar{S}_k \times ( \bar{S}_k \times \bar{\omega}_k ) ) + 0  \right) \cdot  \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + \left( m_k \bar{S}_k \times \bar{a}_k -  m_k \mathbf{S}^{\times}_k \mathbf{S}^{\times}_k \bar{\alpha}_k - \bar{\omega}_k \times (m_k \mathbf{S}^{\times}_k \mathbf{S}^{\times}_k \bar{\omega}_k) \right) \cdot  \left(\bar{\omega}_k\right)_j} \\
+ \scalemath{0.775}{m_k \bar{a}_{Gk} \cdot \left(\bar{v}_{Gk}\right)_j} &\scalemath{0.775}{ + \left( \frac{d\bar{H}_{Gk}}{dt} \right) \cdot \left( \bar\omega_k \right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + \left( m_k \bar{S}_k \times \bar{a}_k -  m_k \mathbf{S}^{\times}_k \mathbf{S}^{\times}_k \bar{\alpha}_k - \bar{\omega}_k \times (m_k \mathbf{S}^{\times}_k \mathbf{S}^{\times}_k \bar{\omega}_k) \right) \cdot  \left(\bar{\omega}_k\right)_j} \nonumber \\
+ &\scalemath{0.775}{\hspace{40pt}+\left(\mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k + m_k\mathbf{S}^{\times}_k\mathbf{S}^{\times}_k\bar{\alpha}_k + \bar{\omega}_k \times (m_k\mathbf{S}^{\times}_k\mathbf{S}^{\times}_k \bar{\omega}_k)\right) \cdot \left( \bar\omega_k \right)_j} \nonumber \\
+ &\scalemath{0.775}{=  m_k \bar{a}_{Gk} \cdot \left(\bar{v}_k\right)_j + \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \left(\bar{\omega}_k\right)_j} \label{kanesTree1}
+\end{align}
+
+The terms $\bar\omega_k$, $\bar\alpha_k$, $\bar{v}_k$, $\bar{a}_k$ will be found using the recursive formulations in eqs. \ref{recursiveAngVel}-\ref{recursiveLinAcc}. And the 
+term $\bar{a}_{Gk}$ will be found using eq.\ref{aGk}. $\scalemath{0.75}{\bar{S}_k=\left[\begin{matrix} \mathbf{X}_k & \mathbf{Y}_k & \mathbf{Z}_k \end{matrix}\right]^T}$ 
+is the center of mass of the joint represented in the local frame. We will use the symbol $\mathbf{MS}_k$ to represent mass times center of mass ($m_k\mathbf{S}_k$) which is
+the vector the components of which are $\scalemath{0.75}{\mathbf{MS}=\left[\begin{matrix} \mathbf{MX} & \mathbf{MY} & \mathbf{MZ} \end{matrix}\right]^T}$. 
+Finally, $\scalemath{0.75}{\mathbf{J}_k=\left[\begin{matrix} \mathbf{XX}_k & \mathbf{XY}_k & \mathbf{XZ}_k \\ \mathbf{XY}_k & \mathbf{YY}_k & \mathbf{YZ}_k \\ \mathbf{XZ}_k & \mathbf{YZ}_k & \mathbf{ZZ}_k \end{matrix}\right]}$ is the inertia matrix of the joint represented in the local frame.
+
+The terms $\left(\bar{v}_k\right)_j = \frac{\partial \bar{v}_k }{\partial \dot{q}_j}$ and $\left( \bar\omega_k \right)_j = \frac{\partial \bar\omega_k}{\partial \dot{q}_j}$ can also be evaluated as follows. If it was a single serial chain:
+\begin{align}
+ \bar\omega_k &= \dot{q}_0\bar{e}_0 + \dot{q}_1\bar{e}_1 + \dot{q}_2\bar{e}_2 + ... + \dot{q}_k\bar{e}_k \nonumber \\
+ \frac{\partial \bar\omega_k}{\partial \dot{q}_j} &= \begin{cases}
+                                                      0         & \mbox{if } k < j \\
+                                                      \bar{e}_j & \mbox{if } k \geq j 
+                                                     \end{cases} \label{diffOmega}
+\end{align}
+Applying this result to our tree-structure we will have $\frac{\partial \bar\omega_k}{\partial \dot{x}} = 0$ as none of the angular velocities of the joints $\bar\omega_k$ depend on $\dot{x}$. As for $\dot{q}_j \neq \dot{x}$ the result will be $\bar{e}_j$ whenever $\bar\omega_k$ refers to speed of the link which is ahead of, or same as, the link whose speed is represented by $\dot{q}_j$ and $0$ otherwise.
+For $\left(\bar{v}_k\right)_j = \frac{\partial \bar{v}_k }{\partial \dot{q}_j}$ in case of a single serial chain we get:
+\begin{align}
+ \bar{v}_k &=  \bar{v}_{k-1} + \bar\omega_{k-1} \times \bar{r}_{O_{k}/O_{k-1}} \nonumber \\
+ &...  \nonumber \\
+ &= \bar{v}_0 + \bar\omega_0 \times \bar{r}_{O_1/O_0} + \bar\omega_1 \times \bar{r}_{O_2/O_1} + \bar\omega_2 \times \bar{r}_{O_3/O_2} + ... + \bar\omega_{k-1} \times \bar{r}_{O_{k}/O_{k-1}} \nonumber \\
+ &= \bar{v}_0 + \sum\limits_{\kappa=1}^k \left( \bar\omega_{\kappa-1} \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right)
+\end{align} 
+When partially differentiated wrt $\dot{q}_j$ ($\neq \dot{x}$) we can use eq. \ref{diffOmega} to get:
+\begin{align}
+ \frac{\partial \bar{v}_k}{\partial \dot{q}_j} &= \frac{\partial \bar{v}_0}{\partial \dot{q}_j} + \sum\limits_{\kappa=1}^k \left( \frac{\partial \bar\omega_{\kappa-1}}{\partial \dot{q}_j} \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right) \nonumber \\
+ &= 0 + \sum\limits_{\kappa=1}^{j} \left( \frac{\partial \bar\omega_{\kappa-1}}{\partial \dot{q}_j} \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right) 
+       + \sum\limits_{\kappa=j+1}^k \left( \frac{\partial \bar\omega_{\kappa-1}}{\partial \dot{q}_j} \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right) \nonumber \\
+ &= \sum\limits_{\kappa=1}^{j} \left( 0 \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right) + \sum\limits_{\kappa=j+1}^k \left( \bar{e}_j \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right) \nonumber \\
+ &= \bar{e}_j \times \sum\limits_{\kappa=j+1}^k \bar{r}_{O_\kappa/O_{\kappa-1}} \nonumber \\
+ &= \bar{e}_j \times \left( \bar{r}_{O_{j+1}/O_j} + \bar{r}_{O_{j+2}/O_{j+1}} + \bar{r}_{O_{j+3}/O_{j+2}} + ... + \bar{r}_{O_k/O_{k-1}}\right) \nonumber \\
+ &= \begin{cases}
+     0  & \mbox{for } k \leq j \\
+     \bar{e}_j \times \bar{r}_{O_k/O_j} & \mbox{for } k > j
+    \end{cases}
+\end{align}
+In eq. \ref{kanesTree1}, the term $\frac{\partial \bar{v}_k}{\partial \dot{q}_j}$ is operated by dot-product with $m_k\bar{a}_{Gk}$. Using the result above and then applying a triple-product identity, we will get:
+\[
+ m_k\bar{a}_{Gk} \cdot \frac{\partial \bar{v}_k}{\partial \dot{q}_j} = m_k\bar{a}_{Gk} \cdot \left( \bar{e}_j \times \bar{r}_{O_k/O_j} \right) 
+ = \left(\bar{r}_{O_k/O_j} \times m_k\bar{a}_{Gk} \right) \cdot \bar{e}_j \hskip 15pt \mbox{for } k > j
+\]
+
+For $\dot{q}_j = \dot{x}$ we have:
+\begin{align}
+ \frac{\partial \bar{v}_k}{\partial \dot{q}_j} &= \frac{\partial \bar{v}_k}{\partial \dot{q}_j} + \sum\limits_{\kappa=1}^k \left( \frac{\partial \bar\omega_\kappa}{\partial \dot{q}_j} \times \bar{r}_{O_\kappa/O_{\kappa-1}} \right) \nonumber \\
+ &=  \frac{\partial \bar{v}_0}{\partial \dot{x}} + 0 \nonumber \\
+ &=  \bar{i}_0 
+\end{align}
+So the sum of the contributions of all joints of the tree-structure for the LHS of Kane's equations are as follows:
+\begin{align}\scalemath{0.6}{
+ \begin{matrix*}[r] 
+  \dot{x}: & \sum\limits_{k \in \{ imu,w,torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left(m_k \bar{a}_{Gk}\right) \cdot \bar{i}_0 & + & 0 \\ \\
+  \dot{\psi}: & \sum\limits_{k \in \{ imu,w,torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left(\bar{r}_{O_k/O_0} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_0 & + & 
+  \sum\limits_{k \in \{ imu,w,torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_0\\ \\
+  \dot{q}_{imu}: & \sum\limits_{k \in \{ w,torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left(\bar{r}_{O_k/O_1} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_1 & + & 
+  \sum\limits_{k \in \{ imu,w,torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_1\\ \\
+  \dot{q}_{w}: & \sum\limits_{k \in \{ torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left(\bar{r}_{O_k/O_2} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_2 & + & 
+  \sum\limits_{k \in \{ w,torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_2\\ \\
+  \dot{q}_{torso}: & \sum\limits_{k \in \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left(\bar{r}_{O_k/O_3} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_3 & + & 
+  \sum\limits_{k \in \{ torso \} \cup \{ 4l,...,10l \} \cup \{ 4r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_3\\ \\
+  \dot{q}_{1l}: & \sum\limits_{k \in \{ 5l,...,10l \}} \left(\bar{r}_{O_k/O_{4l}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{4l} & + & 
+  \sum\limits_{k \in \{ 4l,...,10l \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{4l}\\ \\
+  \dot{q}_{2l}: & \sum\limits_{k \in \{ 6l,...,10l \}} \left(\bar{r}_{O_k/O_{5l}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{5l} & + & 
+  \sum\limits_{k \in \{ 5l,...,10l \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{5l}\\ \\
+  \dot{q}_{3l}: & \sum\limits_{k \in \{ 7l,...,10l \}} \left(\bar{r}_{O_k/O_{6l}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{6l} & + & 
+  \sum\limits_{k \in \{ 6l,...,10l \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{6l}\\ \\
+  \dot{q}_{4l}: & \sum\limits_{k \in \{ 8l,9l,10l \}} \left(\bar{r}_{O_k/O_{7l}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{7l} & + & 
+  \sum\limits_{k \in \{ 7l,...,10l \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{7l}\\ \\
+  \dot{q}_{5l}: & \sum\limits_{k \in \{ 9l,10l \}} \left(\bar{r}_{O_k/O_{8l}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{8l} & + & 
+  \sum\limits_{k \in \{ 8l,9l,10l \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{8l}\\ \\
+  \dot{q}_{6l}: & \left(\bar{r}_{O_{10l}/O_{9l}} \times m_{10l} \bar{a}_{G\;{10l}}\right) \cdot \bar{e}_{9l} & + & 
+  \sum\limits_{k \in \{ 9l,10l \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{9l}\\ \\
+  \dot{q}_{7l}: & 0 & + & 
+  \left( m_{10l} \bar{S}_{10l} \times \bar{a}_{10l} + \mathbf{J}_{10l} \bar{\alpha}_{10l} + \bar{\omega}_{10l} \times \mathbf{J}_{10l} \bar{\omega}_{10l}\right) \cdot  \bar{e}_{10l}\\ \\
+  \dot{q}_{1r}: & \sum\limits_{k \in \{ 5r,...,10r \}} \left(\bar{r}_{O_k/O_{4r}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{4r} & + & 
+  \sum\limits_{k \in \{ 4r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{4r}\\ \\
+  \dot{q}_{2r}: & \sum\limits_{k \in \{ 6r,...,10r \}} \left(\bar{r}_{O_k/O_{5r}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{5r} & + & 
+  \sum\limits_{k \in \{ 5r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{5r}\\ \\
+  \dot{q}_{3r}: & \sum\limits_{k \in \{ 7r,...,10r \}} \left(\bar{r}_{O_k/O_{6r}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{6r} & + & 
+  \sum\limits_{k \in \{ 6r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{6r}\\ \\
+  \dot{q}_{4r}: & \sum\limits_{k \in \{ 8r,9r,10r \}} \left(\bar{r}_{O_k/O_{7r}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{7r} & + & 
+  \sum\limits_{k \in \{ 7r,...,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{7r}\\ \\
+  \dot{q}_{5r}: & \sum\limits_{k \in \{ 9r,10r \}} \left(\bar{r}_{O_k/O_{8r}} \times m_k \bar{a}_{Gk}\right) \cdot \bar{e}_{8r} & + & 
+  \sum\limits_{k \in \{ 8r,9r,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{8r}\\ \\
+  \dot{q}_{6r}: & \left(\bar{r}_{O_{10r}/O_{9r}} \times m_{10r} \bar{a}_{G\;{10r}}\right) \cdot \bar{e}_{9r} & + & 
+  \sum\limits_{k \in \{ 9r,10r \}} \left( m_k \bar{S}_k \times \bar{a}_k + \mathbf{J}_{k} \bar{\alpha}_k + \bar{\omega}_k \times \mathbf{J}_{k} \bar{\omega}_k\right) \cdot  \bar{e}_{9r}\\ \\
+  \dot{q}_{7r}: & 0 & + & 
+  \left( m_{10r} \bar{S}_{10r} \times \bar{a}_{10r} + \mathbf{J}_{10r} \bar{\alpha}_{10r} + \bar{\omega}_{10r} \times \mathbf{J}_{10r} \bar{\omega}_{10r}\right) \cdot \bar{e}_{10r}\\ \\
+ \end{matrix*}} \label{kanesTree2}
+\end{align}
+
+\section{Kane's Right-Hand Side}
+The right hand side of the Kane's forumulation \ref{kanes} is the sum of some dot product terms. Each term is either the
+dot product of:
+\begin{itemize}
+ \item force applied on the system $\bar{F}_n$
+ \item the linear velocity $\bar{v}_n$ of the point differentiated partially wrt the the unique gerneralized speed 
+ $\dot{q}_j$ corresponding to each equation i.e. $\frac{\partial \bar{v}_n}{\partial \dot{q}_j}$\\
+\end{itemize}
+or the dot product of:
+\begin{itemize}
+ \item torque applied on the system $\bar{\tau}_n$
+ \item the angular velocity $\bar{\omega}_n$ of the body differentiated partially wrt the the unique gerneralized speed 
+ $\dot{q}_j$ corresponding to each equation i.e. $\frac{\partial \bar{\omega}_n}{\partial \dot{q}_j}$
+\end{itemize}
+
+So, in order to analyse the right-hand side of the equation, we need to list down all the forces and torques applied
+to the system and the points at which they are being applied. They are as follows. 
+\begin{itemize}[label={}]
+ \item[$\bar\tau_L, \bar\tau_R $] Torques applied by wheel motors (in the body) on the right wheel and left wheel at points 
+ $R$ and $L$ on the wheels
+ \item[$\bar\tau_j$] $=\tau_j\bar{e}_j$ The torque applied by each joint motor fixed on the antecedent joint moving the current joint. There
+ are 17 such torques as \[ \bar\tau_j \in \{ \bar\tau_{imu}, \bar\tau_{w}, \bar\tau_{torso}, \bar\tau_{1l}, ... , \bar\tau_{7l}, \bar\tau_{1r}, ... , \bar\tau_{7r} \} \]
+ Note that $\bar\tau_{imu} = -\bar\tau_R-\bar\tau_L$ is the sum of reactions torques experienced by the base in response to the wheel torques $\bar\tau_L$ and $\bar\tau_R $.
+ \item[$-\bar\tau_j$] $=-\tau_j\bar{e}_j$ The reaction torque experienced by each antecedent joint. Note that we do not consider 
+ $\tau_{imu}$ in this set of reaction torques as those are already covered in the first item in this list i.e. $\bar\tau_L, \bar\tau_R $.
+ So in this set of reaction torques we consider only 16 torques $\in \{ -\bar\tau_{w}$, $ -\bar\tau_{torso}$, $ -\bar\tau_{1l}$, $ ... $, $ -\bar\tau_{7l}$, $ -\bar\tau_{1r}$, $ ... $, $ -\bar\tau_{7r} \}$
+ \item[$\bar{F}_{gk}$] $=m_k\bar{g}$ is the weight of each joint $k$
+ \item[$\bar{F}_{el}, \bar{\tau}_{el}$] Force and torque applied by the e\mbox{for } k > jnvironment on the left hand end-effector at point $E_l$
+ \item[$\bar{F}_{er}, \bar{\tau}_{er}$] Force and torque applied by the environment on the right hand end-effector at point $E_r$
+\end{itemize}
+\subsection{Wheel Torques}
+The contribution of wheel motor torques on the right-hand side of Kane's equation corresponding to generalized speed $\dot{q}_j$ is:
+\begin{align}
+ &\bar\tau_L \cdot \frac{\partial \bar\omega_L}{\partial \dot{q}_j} + \bar\tau_R \cdot \frac{\partial \bar\omega_R}{\partial \dot{q}_j} \label{wheelTorque1}
+\end{align}
+where,
+\begin{itemize}[label={}]
+ \item[$\bar\tau_L$] $=\tau_L\bar{j}_0$
+ \item[$\bar\tau_R$] $=\tau_R\bar{j}_0$
+ \item[$\bar\omega_L$] $=\dot\psi\bar{k}_0 + \left(\frac{1}{R}\dot{x}-\frac{L}{2R}\dot\psi\right)\bar{j}_0$
+ \item[$\bar\omega_R$] $=\dot\psi\bar{k}_0 + \left(\frac{1}{R}\dot{x}+\frac{L}{2R}\dot\psi\right)\bar{j}_0$
+\end{itemize}
+Also,
+\begin{align}
+ \frac{\partial \bar\omega_L}{\partial \dot{q}_j} &= \begin{cases}
+							\frac{1}{R}\bar{j}_0 \\
+							-\frac{L}{2R}\bar{j}_0+\bar{k}_0  \\
+							0 
+						       \end{cases} &
+  \frac{\partial \bar\omega_R}{\partial \dot{q}_j} = \begin{cases}
+							\frac{1}{R}\bar{j}_0  \\
+							\frac{L}{2R}\bar{j}_0+\bar{k}_0 \\
+							0 
+						       \end{cases} &
+  \begin{matrix} \mbox{for } \dot{q}_j = \dot{x} \\ \mbox{for } \dot{q}_j = \dot\psi \\ \mbox{Otherwise} \end{matrix}
+\end{align}
+So
+\begin{align}
+ &\bar\tau_L \cdot \frac{\partial \bar\omega_L}{\partial \dot{q}_j} + \bar\tau_R \cdot \frac{\partial \bar\omega_R}{\partial \dot{q}_j} \nonumber \\
+ &= \begin{cases}
+     \frac{1}{R}\left( \tau_L + \tau_R \right) & \mbox{for } \dot{q}_j = \dot{x} \\
+     \frac{L}{2R}\left( \tau_R - \tau_L \right)& \mbox{for } \dot{q}_j = \dot\psi \\
+     0 & \mbox{Otherwise}
+    \end{cases} \label{wheelTorque2}
+\end{align}
+
+The contribution of the reaction torque $\bar\tau_{imu}$ experienced by the base, in reaction to the wheel torques ($\bar\tau_L, \bar\tau_R$, to Kane's RHS for generalized speed $\dot{q}_j$ will be:
+\begin{align}
+ &\bar\tau_{imu} \cdot \frac{\partial \bar\omega_1 }{\partial \dot{q}_j} \label{tauImu1} \\
+ &= -\left(\tau_L+\tau_R\right)\bar{j}_0 \cdot \frac{\partial \left( \dot\psi\bar{k}_0 + \dot{q}_{imu}\bar{j}_0  \right) }{\partial \dot{q}_j}  \nonumber \\
+ &= \begin{cases}
+     -\left(\tau_L+\tau_R\right) & \mbox{for } \dot{q}_j = \dot{q}_{imu} \\
+     0 & \mbox{Otherwise}
+    \end{cases} \label{tauImu2}
+\end{align}
+
+
+\subsection{Joint Torques}
+We will be discussing the effect of 16 joint torques $\in \{ \bar\tau_{w}$, $ \bar\tau_{torso}$, $ \bar\tau_{1l}$, $ ... $, $ \bar\tau_{7l}$, $ \bar\tau_{1r}$, $ ... $, $ \bar\tau_{7r} \}$ and their reactions.
+The contribution of motor torque on joint $k$ and its reaction, on the right-hand side of Kane's equation corresponding to generalized speed $\dot{q}_j$ is: 
+\begin{align}
+ &\tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_k}{\partial \dot{q}_j} - \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_{a(k)}}{\partial \dot{q}_j} \label{jointTorque1}
+\end{align}
+where $a(k) =$ antecedent frame of $k$. The first term is the contribution of action torques and the second term is the contribution
+of the reaction torques.
+If we take the summation of all joint torque contibutions each described by expression \ref{jointTorque1} i.e. for $k=1...K$, 
+to get get the right-hand side contribution by all joint torques in the kane's equaiton corresponding to a generalized speed $j$, 
+we will get a very simplified solution
+\begin{align}
+  \sum\limits_{k=1}^K &\left( \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_k}{\partial \dot{q}_j} - \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_{k-1}}{\partial \dot{q}_j} \right) \nonumber \\   
+ &= \sum\limits_{k=1}^{j-1} \left(          \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_k}{\partial \dot{q}_j} - \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_{k-1}}{\partial \dot{q}_j}\right) \nonumber \\
+      &\;\;\;+                              \tau_j\bar{e}_j \cdot \frac{\partial \bar\omega_j}{\partial \dot{q}_j} - \tau_j\bar{e}_j \cdot \frac{\partial \bar\omega_{j-1}}{\partial \dot{q}_j} \nonumber \\
+      &\;\;\;+ \sum\limits_{k=j+1}^K \left( \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_k}{\partial \dot{q}_j} - \tau_k\bar{e}_k \cdot \frac{\partial \bar\omega_{k-1}}{\partial \dot{q}_j} \right) \nonumber \\
+ &= \sum\limits_{k=1}^{j-1} \left(   0 - 0 \right) + \tau_j\bar{e}_j \cdot \bar{e}_j - 0 + \sum\limits_{k=j+1}^K \left( \tau_k\bar{e}_k \cdot \bar{e}_j - \tau_k\bar{e}_k \cdot \bar{e}_j \right) \nonumber \\
+ &= \tau_j \label{jointTorque2}
+\end{align}
+
+So the total joint torques contributions on the RHS of each Kane's equation is just the joint torque actuating the generalized speed wrt which the equaiton is being evaluated. This analysis applies directly to the  equations corresponding to generalized speeds $\in \{$ $\dot{q}_w$, $\dot{q}_{torso}$, $\dot{q}_{1l}$, $...$, $\dot{q}_{7l}$, $\dot{q}_{1r}$, $...$, $\dot{q}_{7r} \}$. So we know the RHS contributions of the 16 torques to the last 16 of the total of nineteen equations. For the first three equations corresponding to the speeds $\{ \dot{x}$, $\dot\psi$, $\dot{q}_{imu} \}$ we can prove that the contribution of all torques amounts to zero. For $\dot{x}$ it is easy to see that none of the angular velocities $\bar\omega_k$ depend on $\dot{x}$ hence the partial derivative vanishes. As for the case of $\dot\psi$ the contribution (expn. \ref{jointTorque1}) of each torques is $\tau_k\bar{e}_k\cdot\bar{k}_0-\tau_k\bar{e}_k\cdot\bar{k}_0 = 0$ and for $\dot{q}_{imu}$ it is equal to $\tau_k\bar{e}_k\cdot\bar{j}_
+0-\tau_k\bar{e}_k\cdot\bar{j}_0 = 0$.
+
+\subsection{End-effector Forces and Torques}
+Let $\bar{F}_{e}$ and $\bar\tau_{e}$ be the force and torque being applied by the environment on the end-effector. The contribution on the 
+RHS of Kane's equaiton corresponding to generalized speed $\dot{q}_j$ will be as follows assuming a single serial chain of links:
+\begin{align}
+ \bar{F}_{e} \cdot \frac{\partial \bar{v}_e}{\partial \dot{q}_j} + \bar\tau_{e} \cdot \frac{\partial \bar\omega_K}{\partial \dot{q}_j} \label{endEff1}
+\end{align}
+where $\bar{v}_e$ is the linear velocity of the point $E$ on the end-effector on which the force is being applied. And $\bar\omega_K$ is the angular velocity
+of the last joint on which the end-effector is mounted.
+\begin{align}
+ \bar{v}_e &= \bar{v}_K + \bar\omega_K \times \bar{r}_{e/O_{K}} \nonumber \\
+ &= \bar{v}_{K-1} + \bar\omega_{K-1} \times \bar{r}_{O_{K}/O_{K-1}} + \bar\omega_K \times \bar{r}_{E/O_{K}} \nonumber \\
+ &...  \nonumber \\
+ &= \bar{v}_0 + \bar\omega_0 \times \bar{r}_{O_1/O_0} + \bar\omega_1 \times \bar{r}_{O_2/O_1} + \bar\omega_2 \times \bar{r}_{O_3/O_2} + ... + \bar\omega_{K-1} \times \bar{r}_{O_{K}/O_{K-1}} + \bar\omega_K \times \bar{r}_{O_{K+1}/O_{K}} \nonumber \\
+ &= \bar{v}_0 + \sum\limits_{k=0}^K \left( \bar\omega_k \times \bar{r}_{O_{k+1}/O_k} \right)
+\end{align}
+where we have replace $E$ with $O_{K+1}$ for the convenience of writing the closed-form expression. When partially differentiated wrt $\dot{q}_j$ ($\neq \dot{x}$)
+we can use eq. \ref{diffOmega} to get:
+\begin{align}
+ \frac{\partial \bar{v}_e}{\partial \dot{q}_j} &= \frac{\partial \bar{v}_0}{\partial \dot{q}_j} + \sum\limits_{k=0}^K \left( \frac{\partial \bar\omega_k}{\partial \dot{q}_j} \times \bar{r}_{O_{k+1}/O_k} \right) \nonumber \\
+ &= 0 + \sum\limits_{k=0}^{j-1} \left( \frac{\partial \bar\omega_k}{\partial \dot{q}_j} \times \bar{r}_{O_{k+1}/O_k} \right) 
+       + \sum\limits_{k=j}^K \left( \frac{\partial \bar\omega_k}{\partial \dot{q}_j} \times \bar{r}_{O_{k+1}/O_k} \right) \nonumber \\
+ &= \sum\limits_{k=0}^{j-1} \left( 0 \times \bar{r}_{O_{k+1}/O_k} \right) + \sum\limits_{k=j}^K \left( \bar{e}_j \times \bar{r}_{O_{k+1}/O_k} \right) \nonumber \\
+ &= \bar{e}_j \times \sum\limits_{k=j}^K \bar{r}_{O_{k+1}/O_k} \nonumber \\
+ &= \bar{e}_j \times \left( \bar{r}_{O_{j+1}/O_j} + \bar{r}_{O_{j+2}/O_{j+1}} + \bar{r}_{O_{j+3}/O_{j+2}} + ... + \bar{r}_{O_{K+1}/O_K}\right) \nonumber \\
+ &= \bar{e}_j \times \bar{r}_{O_{K+1}/O_j} \nonumber \\
+ &= \bar{e}_j \times \bar{r}_{E/O_j} \nonumber 
+\end{align}
+For $\dot{q}_j = \dot{x}$ we have:
+\begin{align}
+ \frac{\partial \bar{v}_e}{\partial \dot{q}_j} &= \frac{\partial \bar{v}_0}{\partial \dot{q}_j} + \sum\limits_{k=0}^K \left( \frac{\partial \bar\omega_k}{\partial \dot{q}_j} \times \bar{r}_{O_{k+1}/O_k} \right) \nonumber \\
+ &=  \frac{\partial \bar{v}_0}{\partial \dot{x}} + 0 \nonumber \\
+ &=  \bar{i}_0 \nonumber 
+\end{align}
+So
+\begin{align}
+ \frac{\partial \bar{v}_e}{\partial \dot{q}_j} &= \begin{cases}
+                                                   \bar{i}_0 & \mbox{for } \dot{q}_j = \dot{x} \\
+                                                   \bar{e}_j \times \bar{r}_{E/O_j} & \mbox{Otherwise} 
+                                                  \end{cases} \label{diffVe}
+\end{align}
+Substituting eqs. \ref{diffVe} and \ref{diffOmega} in expression \ref{endEff1}, we get
+\begin{align}
+ \bar{F}_{e} \cdot \frac{\partial \bar{v}_e}{\partial \dot{q}_j} + \bar\tau_{e} \cdot \frac{\partial \bar\omega_K}{\partial \dot{q}_j} 
+ &= \begin{cases}
+      \bar{F}_{e} \cdot \bar{i}_0 + \bar\tau_{e} \cdot 0 & \mbox{for } \dot{q}_j = \dot{x} \\
+      \bar{F}_{e} \cdot \left(\bar{e}_j \times \bar{r}_{E/O_j}\right) + \bar\tau_{e} \cdot \bar{e}_j & \mbox{Otherwise}
+    \end{cases} \nonumber \\     
+ &= \begin{cases}
+     \left[\begin{matrix} \bar{i}_0^T & O_{1\times3} \end{matrix} \right]\left[\begin{matrix} \bar{F}_e \\ \bar{\tau}_e \end{matrix} \right] & \mbox{for } \dot{q}_j = \dot{x} \\
+     \left[\begin{matrix} \left[\bar{e}_j \times \bar{r}_{E/O_j}\right]^T & \bar{e}_j^T \end{matrix} \right]\left[\begin{matrix} \bar{F}_e \\ \bar{\tau}_e \end{matrix} \right] & \mbox{Otherwise}
+    \end{cases} \nonumber 
+\end{align}
+If we write all kane's equations in the form of a vector then the right hand side contribution of end-effector force and torque will become,
+\begin{align}
+ &\left[\begin{matrix}
+ \bar{i}_0^T & O_{1\times3}  \\
+ \left[\bar{e}_0 \times \bar{r}_{E/O_0}\right]^T & \bar{e}_1^T  \\
+ \left[\bar{e}_1 \times \bar{r}_{E/O_1}\right]^T & \bar{e}_2^T  \\
+ \left[\bar{e}_2 \times \bar{r}_{E/O_2}\right]^T & \bar{e}_3^T  \\
+ ... & \\
+ \left[\bar{e}_K \times \bar{r}_{E/O_K}\right]^T & \bar{e}_K^T  \\ 
+ \end{matrix} \right]
+ \left[\begin{matrix} \bar{F}_e \\ \bar{\tau}_e \end{matrix} \right] \nonumber \\ 
+ &= \mathbb{J}^T\mathbbm{f}_e \label{endEff2}
+\end{align}
+where
+\begin{align}
+ \mathbb{J} &= \left[\begin{matrix} \bar{i}_0 & \bar{e}_0 \times \bar{r}_{E/O_0} & ... & \bar{e}_K \times \bar{r}_{E/O_K} \\ O_{3\times1} & \bar{e}_1 & ... & \bar{e}_K\end{matrix} \right] \nonumber \\
+ \mathbbm{f} &= \left[\begin{matrix} \bar{F}_e \\ \bar{\tau}_e \end{matrix} \right] \nonumber
+\end{align}
+
+The matrix $\mathbb{J}$ is refered to as the Jacobian. And $\mathbbm{f}$ is the wrench (formal term to
+refer to a force/torque couple). This whole theory was assuming a single serial chain of the robot with a single
+end-effector. For the case of krang, we will have two wrenches $\mathbbm{f}_{el}$ and $\mathbbm{f}_{er}$ applied at 
+two end-effectors on the right and the left arms respectively. The points on which this wrench is being sensed
+on the two end-effectors is $E_L$ and $E_R$. So the contribution becomes:
+\begin{align}
+ \mathbb{J}_{L}^T\mathbbm{f}_{el} + \mathbb{J}_{R}^T\mathbbm{f}_{er}
+\end{align} where
+\begin{itemize}
+ \item $\scalemath{0.65}{\mathbb{J}_{L} = \left[ \begin{matrix} \bar{i}_0 & \bar{e}_0 \times \bar{r}_{E_L/O_0} & \bar{e}_1\times \bar{r}_{E_L/O_1} & \bar{e}_2\times \bar{r}_{E_L/O_2} 
+ & \bar{e}_3\times \bar{r}_{E_L/O_3} & \bar{e}_{4l}\times \bar{r}_{E_L/O_{4l}} & ... & \bar{e}_{10l}\times \bar{r}_{E_L/O_{10l}} & O_{3\times 7} \\ 
+ O_{3\times1} & \bar{e}_0 & \bar{e}_1 & \bar{e}_2 & \bar{e}_3 & \bar{e}_{4l} & ... & \bar{e}_{10l} & O_{3\times 7} \end{matrix} \right]}$
+ \item $\scalemath{0.64}{\mathbb{J}_{R} = \left[ \begin{matrix} \bar{i}_0 & \bar{e}_0 \times \bar{r}_{E_R/O_0} & \bar{e}_1\times \bar{r}_{E_R/O_1} & \bar{e}_2\times \bar{r}_{E_R/O_2} 
+ & \bar{e}_3\times \bar{r}_{E_R/O_3} & O_{3\times 7} & \bar{e}_{4r}\times \bar{r}_{E_R/O_{4r}} & ... & \bar{e}_{10r}\times \bar{r}_{E_R/O_{10r}} \\ 
+ O_{3\times1} & \bar{e}_0 & \bar{e}_1 & \bar{e}_2 & \bar{e}_3 & O_{3\times 7} & \bar{e}_{4r} & ... & \bar{e}_{10r}  \end{matrix} \right]}$
+\end{itemize}
+
+\subsection{Gravitational Forces}
+The contribution of the weight of a joint $k$ to the right-hand side of the equation corresponding to generalized speed
+$\dot{q}_j$ is
+\begin{align}
+ &m_k\bar{g} \cdot \frac{\partial \bar{v}_{Gk}}{\partial \dot{q}_j} \label{gravity1}
+\end{align}
+Now
+\begin{align}
+ \bar{v}_{Gk} &= \bar{v}_k + \bar\omega_k \times \bar{r}_{Gk/O_k} \nonumber \\
+ &= \bar{v}_{k-1} + \bar\omega_{k-1} \times r_{O_{k}/O_{k-1}} + \bar\omega_k \times \bar{r}_{Gk/O_k} \nonumber \\
+ &= \bar{v}_0 + \sum\limits_{i=1}^{k} \left( \bar\omega_{i-1} \times r_{O_{i}/O_{i-1}} \right) + \bar\omega_k \times \bar{r}_{Gk/O_k}  \nonumber 
+\end{align}
+For $\dot{q}_j = \dot{x}$ we have:
+\begin{align}
+ \frac{\partial \bar{v}_{Gk}}{\partial \dot{x}} &= \frac{\partial \bar{v}_0}{\partial \dot{x}} + \sum\limits_{i=1}^{k} \left( \frac{\partial \bar\omega_{i-1}}{\partial \dot{x}} \times r_{O_{i}/O_{i-1}} \right) \nonumber \\
+  &= \frac{\partial \dot{x}\bar{i}_0}{\partial \dot{x}} + \sum\limits_{i=1}^{k} \left( 0 \times r_{O_{i}/O_{i-1}} \right) \nonumber \\
+  &= \bar{i}_0
+\end{align}
+Now since $\bar{g} = -g\bar{k}_0$, we will have $m_k\bar{g} \cdot \frac{\partial \bar{v}_{Gk}}{\partial \dot{x}} = m_kg\bar{k}_0 \cdot \bar{i}_0 = 0$. So for $\dot{q}_j = \dot{x}$ the total contribution of all joint weights will be zero. 
+
+For $\dot{q}_j \neq \dot{x}$ we will have:
+\begin{align}
+ \frac{\partial \bar{v}_{Gk}}{\partial \dot{q}_j} &= \frac{\partial \bar{v}_0}{\partial \dot{q}_j} + \sum\limits_{i=1}^{k} \left( \frac{\partial \bar\omega_{i-1}}{\partial \dot{q}_j} \times r_{O_{i}/O_{i-1}} \right) + \frac{\partial \bar\omega_k}{\partial \dot{q}_j} \times \bar{r}_{Gk/O_k}  \nonumber \\ 
+ &= 0 + \sum\limits_{i=1}^{k} \left( \frac{\partial \bar\omega_{i-1}}{\partial \dot{q}_j} \times r_{O_{i}/O_{i-1}} \right) + \frac{\partial \bar\omega_k}{\partial \dot{q}_j} \times \bar{r}_{Gk/O_k}  \nonumber \\
+ &= \begin{cases}
+     0 & \mbox{if } k < j \\
+     \sum\limits_{i=j+1}^{k} \left( \bar{e}_j \times r_{O_{i}/O_{i-1}} \right) + \bar{e}_j \times \bar{r}_{Gk/O_k} & \mbox{if } k \geq j
+    \end{cases} \nonumber \\
+ &= \begin{cases}
+     0 & \mbox{if } k < j \\
+     \bar{e}_j \times \left( \sum\limits_{i=j+1}^{k} \bar{r}_{O_{i}/O_{i-1}} + \bar{r}_{Gk/O_k}\right) & \mbox{if } k \geq j
+    \end{cases} \nonumber \\
+ &= \begin{cases}
+     0 & \mbox{if } k < j \\
+     \bar{e}_j \times \bar{r}_{Gk/O_j} & \mbox{if } k \geq j
+    \end{cases} 
+\end{align}
+The total contributions of all joints (for $\dot{q}_j \neq \dot{x}$) will therefore be:
+\begin{align}
+ &\sum\limits_{k=1}^K \left( m_k\bar{g} \cdot \frac{\partial \bar{v}_{Gk}}{\partial \dot{q}_j} \right) \nonumber \\
+ &= \bar{g} \cdot \left( \sum\limits_{k=1}^{j-1} m_k\frac{\partial \bar{v}_{Gk}}{\partial \dot{q}_j} + \sum\limits_{k=j}^{K} m_k\frac{\partial \bar{v}_{Gk}}{\partial \dot{q}_j} \right) \nonumber \\ 
+ &= \bar{g} \cdot \left( \sum\limits_{k=1}^{j-1} 0 + \sum\limits_{k=j}^{K} m_k\left({e}_j \times \bar{r}_{Gk/O_j} \right) \right) \nonumber \\
+ &= \bar{g} \cdot \left( {e}_j \times \sum\limits_{k=j}^{K} m_k\bar{r}_{Gk/O_j} \right) \nonumber \\
+ &= \left( \sum\limits_{k=j}^{K} m_k\bar{r}_{Gk/O_j} \times \bar{g} \right) \cdot {e}_j \nonumber \\
+ &= \sum\limits_{k=j}^{K} \left( \bar{r}_{Gk/O_j} \times m_k\bar{g} \right) \cdot {e}_j \label{gravity2}
+\end{align}
+Note that this derivation is assuming a single serial chain. In the case of Krang however, if $j$ corresponds to a 
+speed of joint before the branching takes place i.e. if $j \in \{ imu, w, torso \}$ the range of summation will include
+all joints in the tree above the current joint. If $j$ corresponds to the speed of joint in one of the branches
+i.e. if $j \in \{ 1l, ... , 7l \}$ or $j \in \{ 1r, ... , 7r \}$ then the range of summation will only be consisting
+of joints following the current joint in the specific branch.
+
+\subsection{RHS Final Expressions}
+If we combine the contributions of all forces to the right hand side of the Kane's equation, this is what we will get:
+\begin{align}
+ \scalemath{0.5}{
+ \begin{matrix*}[r] 
+  & \mbox{Wheel/Joint} & & \mbox{Left EE} & & \mbox{Left EE} & & \mbox{Right EE} & & \mbox{Right EE} & & \mbox{Gravitational} \\
+  & \mbox{Torques}     & & \mbox{Force}   & & \mbox{Torque}  & & \mbox{Force}    & & \mbox{Torque}   & & \mbox{Forces} \\ \\
+  \dot{x}: & \frac{1}{R}\left(\tau_L+\tau_R\right) & + & \bar{F}_{el} \cdot \bar{i}_0  & + & 0 & + & \bar{F}_{er} \cdot \bar{i}_0 & + & 0 & + & 0 \\
+  \dot{\psi}: & \frac{L}{2R}\left(\tau_L-\tau_R\right) & + & \left(\bar{r}_{E_L/O_0} \times \bar{F}_{el} \right) \cdot \bar{e}_{0} & + & \bar\tau_{el} \cdot \bar{e}_0 & + &  \left(\bar{r}_{E_R/O_0} \times \bar{F}_{er} \right) \cdot \bar{e}_{0} & + & \bar\tau_{er} \cdot \bar{e}_0 & + & \sum\limits_{k \in \{imu,w,torso\} \cup \{ 4l, ... , 10l \} \cup \{ 4r, ... , 10r \}} \left( \bar{r}_{Gk/O_0} \times m_k\bar{g} \right) \cdot \bar{e}_{0} \\
+  \dot{q}_{imu}:& -\left(\tau_L+\tau_R\right) & + & \left(\bar{r}_{E_L/O_1} \times \bar{F}_{er} \right) \cdot \bar{e}_{1} & + & \bar\tau_{el} \cdot \bar{e}_1 & + &  \left(\bar{r}_{E_R/O_1} \times \bar{F}_{er} \right) \cdot \bar{e}_{1} & + & \bar\tau_{er} \cdot \bar{e}_1 & + & \sum\limits_{k \in \{imu,w,torso\} \cup \{ 4l, ... , 10l \} \cup \{ 4r, ... , 10r \}} \left( \bar{r}_{Gk/O_1} \times m_k\bar{g} \right) \cdot \bar{e}_{1} \\
+  \dot{q}_w:& \tau_w & + & \left(\bar{r}_{E_R/O_2} \times \bar{F}_{er} \right) \cdot \bar{e}_{2} & + & \bar\tau_{el} \cdot \bar{e}_2 & + &  \left(\bar{r}_{E_R/O_2} \times \bar{F}_{er} \right) \cdot \bar{e}_{2} & + & \bar\tau_{er} \cdot \bar{e}_2 & + & \sum\limits_{k \in \{w,torso\} \cup \{ 4l, ... , 10l \} \cup \{ 4r, ... , 10r \}} \left( \bar{r}_{Gk/O_2} \times m_k\bar{g} \right) \cdot \bar{e}_{2} \\
+  \dot{q}_{torso}:& \tau_{torso} & + & \left(\bar{r}_{E_L/O_3} \times \bar{F}_{el} \right) \cdot \bar{e}_{3} & + & \bar\tau_{er} \cdot \bar{e}_3 & + & \left(\bar{r}_{E_R/O_3} \times \bar{F}_{er} \right) \cdot \bar{e}_{3} & + & \bar\tau_{el} \cdot \bar{e}_3 & + & \sum\limits_{k \in \{torso\} \cup \{ 4l, ... , 10l \} \cup \{ 4r, ... , 10r \}} \left( \bar{r}_{Gk/O_3} \times m_k\bar{g} \right) \cdot \bar{e}_{3} \\
+  \dot{q}_{1l}: & \tau_{1l} & + & \left(\bar{r}_{E_L/O_{4l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{4l} & + & \bar\tau_{el} \cdot \bar{e}_{4l} & + &  0 & + & 0 & + & \sum\limits_{k \in \{ 4l, ... , 10l \}} \left( \bar{r}_{Gk/O_{4l}} \times m_k\bar{g} \right) \cdot \bar{e}_{4l} \\
+  \dot{q}_{2l}: & \tau_{2l} & + & \left(\bar{r}_{E_L/O_{5l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{5l} & + & \bar\tau_{el} \cdot \bar{e}_{5l} & + &  0 & + & 0 & + & \sum\limits_{k \in \{ 5l, ... , 10l \}} \left( \bar{r}_{Gk/O_{5l}} \times m_k\bar{g} \right) \cdot \bar{e}_{5l} \\
+  \dot{q}_{3l}: & \tau_{3l} & + & \left(\bar{r}_{E_L/O_{6l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{6l} & + & \bar\tau_{el} \cdot \bar{e}_{6l} & + &  0 & + & 0 & + &  \sum\limits_{k \in \{ 6l, ... , 10l \}} \left( \bar{r}_{Gk/O_{6l}} \times m_k\bar{g} \right) \cdot \bar{e}_{6l} \\
+  \dot{q}_{4l}: & \tau_{4l} & + & \left(\bar{r}_{E_L/O_{7l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{7l} & + & \bar\tau_{el} \cdot \bar{e}_{7l} & + &  0 & + & 0 & + & \sum\limits_{k \in \{ 7l, ... , 10l \}} \left( \bar{r}_{Gk/O_{7l}} \times m_k\bar{g} \right) \cdot \bar{e}_{7l} \\
+  \dot{q}_{5l}: & \tau_{5l} & + & \left(\bar{r}_{E_L/O_{8l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{8l} & + & \bar\tau_{el} \cdot \bar{e}_{8l} & + &  0 & + & 0 & + & \sum\limits_{k \in \{ 8l, 9l, 10l \}} \left( \bar{r}_{Gk/O_{8l}} \times m_k\bar{g} \right) \cdot \bar{e}_{8l} \\
+  \dot{q}_{6l}: & \tau_{6l} & + & \left(\bar{r}_{E_L/O_{9l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{9l} & + & \bar\tau_{el} \cdot \bar{e}_{9l} & + &  0 & + & 0 & + & \sum\limits_{k \in \{ 9l, 10l \}} \left( \bar{r}_{Gk/O_{9l}} \times m_k\bar{g} \right) \cdot \bar{e}_{9l} \\
+  \dot{q}_{7l}: & \tau_{7l} & + & \left(\bar{r}_{E_L/O_{10l}} \times \bar{F}_{el} \right) \cdot \bar{e}_{10l} & + & \bar\tau_{el} \cdot \bar{e}_{10l} & + &  0 & + & 0 & + & \left(\bar{r}_{G\;10l/O_{10l}} \times m_{10l}\bar{g} \right) \cdot \bar{e}_{10l} \\
+  \dot{q}_{1r}: & \tau_{1r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{4r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{4r} & + & \bar\tau_{er} \cdot \bar{e}_{4r} & + &  \sum\limits_{k \in \{ 4r, ... , 10r \}} \left( \bar{r}_{Gk/O_{4l}} \times m_k\bar{g} \right) \cdot \bar{e}_{4r} \\
+  \dot{q}_{2r}: & \tau_{2r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{5r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{5r} & + & \bar\tau_{er} \cdot \bar{e}_{5r} & + &  \sum\limits_{k \in \{ 5r, ... , 10r \}} \left( \bar{r}_{Gk/O_{5r}} \times m_k\bar{g} \right) \cdot \bar{e}_{5r} \\
+  \dot{q}_{3r}: & \tau_{3r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{6r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{6r} & + & \bar\tau_{er} \cdot \bar{e}_{6r} & + & \sum\limits_{k \in \{ 6r, ... , 10r \}} \left( \bar{r}_{Gk/O_{6r}} \times m_k\bar{g} \right) \cdot \bar{e}_{6r} \\
+  \dot{q}_{4r}: & \tau_{4r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{7r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{7r} & + & \bar\tau_{er} \cdot \bar{e}_{7r} & + & \sum\limits_{k \in \{ 7r, ... , 10r \}} \left( \bar{r}_{Gk/O_{7r}} \times m_k\bar{g} \right) \cdot \bar{e}_{7r} \\
+  \dot{q}_{5r}: & \tau_{5r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{8r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{8r} & + & \bar\tau_{er} \cdot \bar{e}_{8r} & + &  \sum\limits_{k \in \{ 8r, 9r, 10r \}} \left( \bar{r}_{Gk/O_{8r}} \times m_k\bar{g} \right) \cdot \bar{e}_{8r} \\
+  \dot{q}_{6r}: & \tau_{6r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{9r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{9r} & + & \bar\tau_{er} \cdot \bar{e}_{9r} & + & \sum\limits_{k \in \{ 9r, 10r \}} \left( \bar{r}_{Gk/O_{9r}} \times m_k\bar{g} \right) \cdot \bar{e}_{9r} \\
+  \dot{q}_{7r}: & \tau_{7r} & + & 0 & + & 0 & + & \left(\bar{r}_{E_R/O_{10r}} \times \bar{F}_{er} \right) \cdot \bar{e}_{10r} & + & \bar\tau_{er} \cdot \bar{e}_{10r} & + & \left(\bar{r}_{G\;10r/O_{10r}} \times m_{10r}\bar{g} \right) \cdot \bar{e}_{10r} 
+ \end{matrix*}}
+\end{align}
+
+
+\section{MATLAB code For Finding the Dynamic Model}
+
+The dynamic model is generated using a script \texttt{dynamicModel.m} found in the folder 
+\textit{\relsize{-1} stableForceInteraction/Implementation/1-ForceControlWhileBalancing/1-ControlProblem1/1-DynamicModeling/2-DynamicModelOfFullRobot/2-matlab/Kanes}.
+The script populates the frame information in a map container using \texttt{getKrangFrames()}. Then it
+calculates Kane's left-hand side contribution of the wheels using the function \texttt{kanesLHSWheels()}. This function uses eq.\ref{kanesWheels1} to calculate the expressions for LHS contributions of the wheels. The result of these contributions is stored in the vector \texttt{KKw}, a $19 \times 1$ vector of symbolic objects representing the contribution to the LHS of each of the nineteen equations by the two wheels. The LHS contribution by the tree-structure is then evaluated using the funciton \texttt{kanesLHSTree()}. This funciton uses eq.\ref{kanesTree1} to evaluate its expression. The result is stored in vector \texttt{KKTree}, a $19 \times 1$ vector of symbolic objects representing the contribution to the LHS of each of the nineteen equations by the 17 bodies in the tree structure. The contribution of each body is also stored separately in the second output \texttt{KHist}, a $19 \times 17$ matrix with each row corresponding to each equation and each column to each body in tree structure. The sum of vectors \texttt{KKw} and \texttt{KKTree} represents the final expression for Kane's LHS. This is fed as an input argument to function \texttt{getAC()} that generates the matrices $\mathbf{A}$ and $\mathbf{C}$ stored in \texttt{AA} and \texttt{CC} respectively. The variables \texttt{f}, \texttt{KKw}, \texttt{KKTree}, \texttt{KHist}, \texttt{AA} and \texttt{CC} are stored in the MAT file \texttt{LHS.mat}. Finally the function \texttt{KanesRHS()} generates the right-hand side expressions for Kane's eqautions using eq. \ref{wheelTorque1}, \ref{jointTorque1}, \ref{endEff1} and \ref{gravity1}. The result is stored in the $19 \times 1$ vector \texttt{K}. Other outputs of this function include: I) \texttt{KK}: A $19 \times 4$ matrix with each column containing contributions from wheel torques (column 1), joint torques (column 2), end effector forces/torques (column 3) and gravitational forces (column 4) respectively. Sum across all columns is stored in \texttt{K}. II) \texttt{KK2}: A $19 \times 16$ matrix with each column containing contribution from each of the 16 motors in the tree structure. Sum across all these columns is stored in \texttt{KK}'s second column. III) \texttt{KK3}: A $19 \times 4$ matrix with each column containing contributions from $\bar{F}_{el}$, $\bar{\tau}_{el}$, $\bar{F}_{er}$ and $\bar{\tau}_{er}$ respectively. The sum across all these columns is stored in \texttt{KK}'s third column. IV) \texttt{KK4}: A $19 \times 17$ matrix with each column containing the contribution by the weight of each body of the (17-link-long) tree structure. The sum across its columns is stored in the \texttt{KK}'s fourth column. The MAT-file \texttt{RHS.mat} contains the results of evaluation of the variables \texttt{K}, \texttt{KK}, \texttt{KK2}, \texttt{KK3} and \texttt{KK4}.
+
+Another script \texttt{dynamicModel2.m} found in the same folder uses the explicit forms we evaluated in this report to calculate the same dynamic model. It has the same function and output variables as described above with an underscore added to each (e.g. \texttt{kanesLHSWheels\_} and \texttt{KKw\_}) to differentiate from those defined in the last paragraph. The equations used by the functions in this file are eq. \ref{kanesWheels2} and \ref{kanesTree2} for the evaluation of LHS contributions from wheels and tree-structure respectively, and eq. \ref{wheelTorque2}, \ref{jointTorque2}, \ref{endEff2} and \ref{gravity2} for the evaluation of RHS contributions from wheel torques, joint torques, end-effector forces/torques and gravitational forces respectively.
+
+When the results of the outputs of the two scripts was compared, everything matched exactly, giving some form of certainty regarding the correctness of the work.
+
+
+\subsection{Map Container for all the Frame Information}
+
+The function \texttt{getKrangFrames()} populates the information in a map container \texttt{f}. A map container is a data structure
+in MATLAB that stores a list of data that is retrievable using a key. We store a \texttt{frame} structure in each
+cell of the map and use strings $s \in \mathbf{S} = \lbrace$ \texttt{\textquotesingle 0\textquotesingle }, \texttt{\textquotesingle 1\textquotesingle }, 
+\texttt{\textquotesingle 2\textquotesingle }, \texttt{\textquotesingle 3\textquotesingle }, \texttt{\textquotesingle 4l\textquotesingle }, 
+\texttt{\textquotesingle 5l\textquotesingle }, \texttt{\textquotesingle 6l\textquotesingle }, \texttt{\textquotesingle 7l\textquotesingle },
+\texttt{\textquotesingle 8l\textquotesingle }, \texttt{\textquotesingle 9l\textquotesingle }, \texttt{\textquotesingle 10l\textquotesingle },
+\texttt{\textquotesingle 4r\textquotesingle }, \texttt{\textquotesingle 5r\textquotesingle }, \texttt{\textquotesingle 6r\textquotesingle }, 
+\texttt{\textquotesingle 7r\textquotesingle }, \texttt{\textquotesingle 8r\textquotesingle }, \texttt{\textquotesingle 9r\textquotesingle }, 
+\texttt{\textquotesingle 10r\textquotesingle } $\rbrace$ as a key to retrieve information. The \texttt{frame} structure
+stores the following elements:
+\begin{itemize}[label={}]
+ \item[\texttt{x}] the unit vector along $x$-axis represented in the antecedent frame
+ \item[\texttt{y}] the unit vector along $y$-axis represented in the antecedent frame
+ \item[\texttt{z}] the unit vector along $z$-axis represented in the antecedent frame
+ \item[\texttt{P}] the position of the origin frame represented in the antecedent frame
+ \item[\texttt{e}] the unit vector along direction of positive rotation of the frame represented in the local frame
+ \item[\texttt{a}] the string $\in \mathbf{S}$ (defined above) that is the key that maps to the antecedent frame
+ \item[\texttt{q}] the symbolic variable used for representing the generalized position $q$ associated with this frame
+ \item[\texttt{dq}] the symbolic variable used for representing the generalized speed $\dot{q}$ associated with this frame
+ \item[\texttt{ddq}] the symbolic variable used for representing the generalized acceleration $\ddot{q}$ associated with this frame
+ \item[\texttt{o}] the row number in the inertia matrix $\mathbf{A}$ (i.e. in the final dynamic model $\mathbf{A\ddot{q}+C\dot{q}+Q=F}$) 
+ that corresponds to the current joint 
+ \item[\texttt{param}] array of ten symbolic variables used to represent the inertial parameters of the joint
+ $\scalemath{0.75}{\left[\begin{matrix} m & \mathbf{MX} & \mathbf{MY} & \mathbf{MZ} & \mathbf{XX} & \mathbf{YY} & \mathbf{ZZ} & \mathbf{XY} & \mathbf{XZ} & \mathbf{YZ} \end{matrix}\right]^T}$
+\end{itemize}
+
+\subsection{Functions associated with the Map Container}
+
+There are a number of functions that take the map container \texttt{f} as the input argument and construct a useful
+information as an output. Here is a list of those functions:
+\begin{itemize}[label={}]
+ \item[\texttt{\relsize{-2} isBefore(f, key1, key2)}] returns \texttt{true} if frame 1 (identified by \texttt{key1}) is before frame 2 
+ (identified by \texttt{key2}) in the tree structure of the robot
+ \item[\texttt{\relsize{-2} Rot(f, key1, key2)}] returns rotation transform ${}^jA_i$ i.e. represention of frame i (identified by \texttt{key1}) in frame j (identified by \texttt{key2})
+ \item[\texttt{\relsize{-2} Tf(f, key1, key2)}] returns rotation transform ${}^jT_i$ i.e. represention of frame i (identified by \texttt{key1}) in frame j (identified by \texttt{key2})
+ \item[\texttt{\relsize{-2} qVec(f)}] generates the vector $\mathbf{q}$ containing generalized positions of all frames
+ \item[\texttt{\relsize{-2} dqVec(f)}] generates the vector $\mathbf{\dot{q}}$ containing generalized speeds of all frames
+ \item[\texttt{\relsize{-2} ddqVec(f)}] generates the vector $\mathbf{\ddot{q}}$ containing generalized accelerations of all frames
+ \item[\texttt{\relsize{-2} mass(f, key)}] returns the mass of the frame identified by the \texttt{key}
+ \item[\texttt{\relsize{-2} mCOM(f, key)}] returns the mass times COM ($\scalemath{0.75}{\mathbf{MS}=\left[\begin{matrix} \mathbf{MX} & \mathbf{MY} & \mathbf{MZ} \end{matrix}\right]^T}$)
+ of the joint identified by the \texttt{key} represented in the local frame
+ \item[\texttt{\relsize{-2} inertiaMat(f, key)}] returns the inertia matrix 
+ ($\scalemath{0.75}{\mathbf{J}=\left[\begin{matrix} \mathbf{XX} & \mathbf{XY} & \mathbf{XZ} \\ \mathbf{XY} & \mathbf{YY} & \mathbf{YZ} \\ \mathbf{XZ} & \mathbf{YZ} & \mathbf{ZZ} \end{matrix}\right]}$)
+ of the joint indentified by \texttt{key} represented in the local frame
+ \item[\texttt{\relsize{-2} angVel(f, key)}] returns the symbolic expression for the angular velocity ($\bar\omega$) of the joint represented in local frame calculated
+ recursively using eq. \ref{recursiveAngVel}
+ \item[\texttt{\relsize{-2} angAcc(f, key)}] returns the symbolic expression for the angular acceleration ($\bar\alpha$) of the joint represented in local frame calculated
+ recursively using eq. \ref{recursiveAngAcc}
+ \item[\texttt{\relsize{-2} linVel(f, key)}] returns the symbolic expression for the linear velocity ($\bar{v}$) of the joint represented in local frame calculated
+ recursively using eq. \ref{recursiveLinVel}
+ \item[\texttt{\relsize{-2} linAcc(f, key)}] returns the symbolic expression for the linear acceleration ($\bar{a}$) of the joint represented in local frame calculated
+ recursively using eq. \ref{recursiveLinAcc}
+\end{itemize}
+
+\section{Conclusion}
+
+In this report we evaluated the dynamic model of the robot Golem Krang. We used Kane's formulation for the task because of the use of
+quasi-velocity in our generalized velocity set that prevents us from using Lagrange formulation. The dynamic model can be used in 
+designing of control systems and simulation of the robot. An accurate simulation will require a few steps that are not performed in this
+report: The accurate estimation of masses, center of masses, and inertial parameters of each link, accurate modeling of the current-torque 
+relationship of the joint motors (prior experience tells us that the relationship is highly non-linear) and the role of friction in the 
+dynamic model. These are challenging tasks yet necesssary if near-accurate numerical estimation of the dynamic model is to be obtained.
+
+% \subsection{Kane's Left-Hand Side}
+% The function \texttt{kanesLHS()} is written to calculate the symbolic expression for the left hand side of each equation.
+% The function iterates through each joint $k$ using the keys to the map container. For each joint it:
+% \begin{itemize}
+%  \item evaluates the symbolic expressions for the respective joint velocities and accelerations ($\bar\omega_k$, $\bar\alpha_k$, 
+%  $\bar{v}_k$ and $\bar{a}_k$) using the helper functions described in the previous subsection
+%  \item evaluates for this joint $k$ the symbolic expression for the term in the brackets, on which the summation
+%  is operating on the left-hand side of the original Kane's equation, using eq.\ref{kanesTree1}. A term
+%  for each equation with respect to each generalized speed $\dot{q}_j$ (i.e. a  sub-loop iterating through all generalized speeds). 
+%  This gives the contribution of the inertial forces of joint $k$ to the left-hand side
+%  of each equation in the Kane's formulation.
+%  \item adds the final expression to an accumulator (to apply the summation)
+% \end{itemize}
+% A vector of size the same as the number of Kane's eqations is thus generated each element of which corresponds to a unique generalized speed $q_j$ and
+% represents the sum of all joint contributions with respect to the unique joint speed corresponding to this element. So each element represents
+% the left-hand side of the each equation in the Kane's formulation.
+% 
+% Finally, once all the symbolic expressions are generated using \texttt{kanesLHS()}, we collect the coefficients of each $\ddot{q}_j$
+% and $\dot{q}_j$ in each equation to generate our $\mathbf{A}$ and $\mathbf{C}$ matrices in the final dynamic equation 
+% $\mathbf{A\ddot{q}+C\dot{q}+Q=F}$. These matrices are saved in the symbolic variable matrices \texttt{AA} and \texttt{CC}.
+% These variables can be loaded into the workspace by loading the file \texttt{kanesLHS.mat}.
+% 
+% \subsection{Kane's Right-Hand Side}
+% The evaluation of right-hand is written in a separate script \texttt{kanesRHS.m}. It uses the original closed form
+% expressions for the evaluation of the forces i.e. eqs. \ref{wheelTorque1}, \ref{tauImu1}, \ref{jointTorque1}, \ref{endEff1} and \ref{gravity1}. 
+% The derivation of the simplified expressions presented in eqs. \ref{wheelTorque2}, \ref{tauImu2}, \ref{jointTorque2}, \ref{endEff2} and \ref{gravity2} 
+% could also be used but we did not use them. We can write a separate code later to verify the results of the former by comparing it with the
+% result of derived expressions. We have not done that as yet.
+% 
+% The result of the right-hand side evaluation is stored in the symbolic variable vectors \texttt{a, b1, b2, b3, b4 and c}
+% containing contributions of $\bar\tau_j$, $\bar{F}_{el}$, $\bar\tau_{el}$, $\bar{F}_{er}$, $\bar\tau_{er}$ and
+% $\bar{F}_{gk}$ respectively. The code can be found in the appendix.
+% 
+
+% 
+% \section{Potential Energy}
+% The total potential energy $U$ of the robot is given by:
+% \begin{align}
+%  U = \sum_{\substack{j \in \mathbb{F}}} U_j = \sum_{\substack{j \in \mathbb{F}}} -M_j \mathbf{g}^T(L_{0,j}+S_j) \label{eq:PE1}
+% \end{align}
+% where $L_{0,j}$ is the position vector from the origin $O_0$ to $O_j$ and $\mathbf{g}$ is the gravitatonal acceleration. Projecting 
+% the vectors appearing in \ref{eq:PE1} into frame $R_0$, we obtain:
+% \begin{align}
+%  U_j &= -M_j\,{}^0\mathbf{g}^T({}^0P_j+{}^0A_j\,{}^jS_j) \\ &= -{}^0\mathbf{g}^T(M_j\,{}^0P_j+{}^0A_j\,{}^j\mathbf{MS}_j) \\ 
+%  &= -\left[\begin{matrix} {}^0\mathbf{g}^T && 0 \end{matrix} \right] {}^0T_j\left[ \begin{matrix} {}^j\mathbf{MS}_j \\ M_j \end{matrix} \right]
+% \end{align}
+% Given the frames defined in figure \ref{fig:frames}, ${}^0\mathbf{g} = \left[\begin{matrix}0 & 0 & -g \end{matrix}\right]^T$.
+% 
+\appendix
+
+\section{Code Listings}
+
+We present the code listings of the various functions in this section.
+
+\subsection{Script1}
+
+\subsection{\texttt{dynamicModel.m}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/dynamicModel.m}
+
+\subsection{\texttt{getKrangFrames()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/getKrangFrames.m}
+
+\subsection{\texttt{kanesLHSWeels()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/kanesLHSWheels.m}
+
+\subsection{\texttt{kanesLHSTree()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/kanesLHSTree.m}
+ 
+\subsection{\texttt{getAC()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/getAC.m}
+
+\subsection{\texttt{kanesRHS().m}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/kanesRHS.m}
+
+\subsection{Script2}
+
+\subsection{\texttt{dynamicModel2.m}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/dynamicModel.m}
+
+\subsection{\texttt{kanesLHSWeels\_()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/kanesLHSWheels.m}
+
+\subsection{\texttt{kanesLHSTree\_()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/kanesLHSTree.m}
+ 
+\subsection{\texttt{kanesRHS\_().m}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/kanesRHS.m}
+
+\subsection{Helper functions}
+
+\subsection{\texttt{angVel()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/angVel.m}
+ 
+\subsection{\texttt{angAcc()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/angAcc.m}
+
+\subsection{\texttt{linVel()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/linVel.m}
+ 
+\subsection{\texttt{linAcc()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/linAcc.m}
+ 
+\subsection{\texttt{Rot()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/Rot.m}
+ 
+\subsection{\texttt{Tf()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/Tf.m}
+ 
+\subsection{\texttt{mass()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/mass.m}
+ 
+\subsection{\texttt{mCOM()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/mCOM.m}
+ 
+\subsection{\texttt{inertiaMat()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/inertiaMat.m}
+ 
+\subsection{\texttt{qVec()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/qVec.m}
+ 
+\subsection{\texttt{dqVec()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/dqVec.m}
+ 
+\subsection{\texttt{ddqVec()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/ddqVec.m}
+ 
+\subsection{\texttt{getcoeff()}}
+\lstinputlisting[language=Matlab]{../2-matlab/Kanes/getcoeff.m}
+
+% \section{Efficient Kanes}
+% \small
+% \setlength\columnsep{50pt}
+% \input{../2-matlab/EfficientKanes/dynamicModelAuto.tex}
+
+\end{document}
